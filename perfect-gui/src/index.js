@@ -3,7 +3,7 @@ import "@babel/polyfill"
 import 'normalize.css'
 import './styles/main.scss'
 
-import perfectGUI from 'perfect-gui'
+import perfectGUI from '../../../src/es6/index'
 
 const element = document.getElementById('element');
 
@@ -84,20 +84,19 @@ function get_random_color() {
 
 const gui_2 = new perfectGUI({
     name: "...and drag and close them!",
-    width: 175
+    width: 175,
+    closed: true
 });
 
 gui_2.addButton({
-    text: "Do something",
+    text: "Toggle the first GUI",
     onclick: function() {
-        alert('Something');
-        console.log(this)
+        gui_1.toggleClose();
     }
 });
 gui_2.addButton({
     text: "Multiple line button text",
     onclick: () => {
         alert('Yay');
-        console.log(this)
     }
 });
