@@ -12,7 +12,7 @@ const gui_1 = new perfectGUI({
 });
 
 gui_1.addImage(
-    'Background 1',
+    'image 1',
     'https://images.unsplash.com/photo-1485254767195-60704c46702e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1502&q=80',
     () => {
         document.body.style.backgroundImage = `url(https://images.unsplash.com/photo-1485254767195-60704c46702e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1502&q=80)`;
@@ -21,7 +21,7 @@ gui_1.addImage(
     }
 );
 gui_1.addImage(
-    'Background 2',
+    'image 2',
     'https://images.unsplash.com/photo-1535370976884-f4376736ab06?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=564&q=80',
     () => {
         document.body.style.backgroundImage = `url(https://images.unsplash.com/photo-1535370976884-f4376736ab06?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=564&q=80)`;
@@ -30,7 +30,7 @@ gui_1.addImage(
     }
 );
 gui_1.addImage(
-    'Background 3',
+    'image 3',
     'https://images.unsplash.com/photo-1524721696987-b9527df9e512?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1490&q=80',
     () => {
         document.body.style.backgroundImage = `url(https://images.unsplash.com/photo-1524721696987-b9527df9e512?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1490&q=80)`;
@@ -39,33 +39,37 @@ gui_1.addImage(
     }
 );
 gui_1.addButton(
-    "Random background color",
+    "button",
     () => {
         document.body.style.backgroundImage = `none`;
         document.body.style.backgroundColor = get_random_color();
         document.getElementById('note').textContent = "";
     }
 );
-gui_1.addButton(
-    "Random element color",
+/* gui_1.addButton(
+    "button",
     () => {
         element.style.backgroundColor = get_random_color();
     }
-);
+); */
 gui_1.addSlider(
-    "Scale", { min: .1, max: 2, value: 1, step: .01 }, (value) => {
+    "slider", { min: .1, max: 2, value: 1, step: .01 }, (value) => {
         element.style.transform = `scale(${value})`;
     }
 );
-gui_1.addSlider(
-    "Border-radius", { min: 0, max: 50, value: 0, step: 25 }, (value) => {
+/* gui_1.addSlider(
+    "3-step slider", { min: 0, max: 50, value: 0, step: 25 }, (value) => {
         element.style.borderRadius = `${value}%`;
     }
-);
+); */
 
-gui_1.addSwitch("Opacity switch", true, (state) => {
+gui_1.addSwitch("switch", true, (state) => {
     if (!state) element.style.opacity = 0;
     else element.style.opacity = 1;
+});
+
+gui_1.addList('list', ['red', 'yellow', 'blue'], function(item) {
+    element.style.backgroundColor = item;
 });
 
 function get_random_color() {
@@ -84,7 +88,7 @@ const gui_2 = new perfectGUI({
 });
 
 gui_2.addButton(
-    "Toggle the first GUI",
+    "gui_1.toggleClose()",
     function() {
         gui_1.toggleClose();
     }

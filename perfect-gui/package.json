@@ -29,6 +29,6 @@
     "babel-loader": "^8.0.5",
     "css-loader": "^2.1.1",
     "normalize.css": "^8.0.1",
-    "perfect-gui": "^2.1.2"
+    "perfect-gui": "^2.2.0"
   }
 }
