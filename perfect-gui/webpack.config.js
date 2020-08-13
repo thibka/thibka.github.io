@@ -9,7 +9,7 @@ let config = {
 	mode: 'development',
 	entry: './src/index.js',
 	output: {
-		path: path.resolve(__dirname, './public'),
+		path: path.resolve(__dirname, './build'),
 		filename: './bundle.js'
 	},
 	watch: true,
@@ -63,7 +63,8 @@ let config = {
     },
     devServer: {
         contentBase: path.join(__dirname, 'public'),
-        watchContentBase: true
+		watchContentBase: true,
+		port: 8000
     },
 	plugins: [
 		new HtmlWebpackPlugin({
