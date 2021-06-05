@@ -10,7 +10,9 @@ var transition = document.getElementById('transition');
 var firstLoad = true;
 
 Ajaxio.init({
+    root: '/ajaxio/public/',
     containerSelector: "#ajax",
+    languagesUrl: ['fr', 'it'],
     homeId: 'home',
     onFirstLoad: (pageId) => {
         Ajaxio.changePage(pageId, true);        
@@ -46,3 +48,4 @@ Ajaxio.afterPageChange.add((nextPageId, previousPageId) => {
     }
 });
 
+window.Ajaxio = Ajaxio;

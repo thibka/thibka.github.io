@@ -1,5 +1,5 @@
 <IfModule mod_rewrite.c>
-RewriteEngine On
+RewriteEngine on
 RewriteBase /ajaxio/public
 RewriteRule ^ajaxio/public/index\.html$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
