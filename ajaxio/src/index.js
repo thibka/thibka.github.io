@@ -1,4 +1,3 @@
-import "@babel/polyfill";
 import './styles/main.scss';
 import Ajaxio from 'ajaxio'
 import anime from 'animejs'
