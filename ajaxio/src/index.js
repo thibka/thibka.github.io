@@ -9,7 +9,8 @@ var transition = document.getElementById('transition');
 var firstLoad = true;
 
 Ajaxio.init({
-    root: '/ajaxio/public/',
+    //root: '/ajaxio/public/',
+    root: '/',
     containerSelector: "#ajax",
     languagesUrl: ['fr', 'it'],
     homeId: 'home',
