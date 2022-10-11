@@ -16,6 +16,13 @@ body {
     padding-bottom: 100px;
 }
 
+@media (max-width: 900px) {
+    .wrapper {
+        width: 700px;
+        padding: 0 20px 100px 20px;
+    }
+}
+
 h1, h2 {
     font-family: 'Montserrat', sans-serif;
 }
@@ -28,7 +35,17 @@ h2 {
     margin-top: 80px;
 }
 
-.code {
+.code-button {
+    text-decoration: underline;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.code-block--hidden {
+    display: none;
+}
+
+.code-inline {
     font-family: monospace;
     background-color: black;
     color: #a6e22e;
