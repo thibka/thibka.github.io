@@ -301,7 +301,7 @@
         width: 100%;
         position: relative;
         background: #434343;
-        overflow: hidden;
+        overflow: auto;
         margin-bottom: 3px;
         display: flex;
         flex-wrap: wrap;
