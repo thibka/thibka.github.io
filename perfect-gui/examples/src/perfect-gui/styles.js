@@ -25,6 +25,10 @@
         border-bottom-right-radius: 3px;
         border-bottom-left-radius: 3px;
     }
+
+    .p-gui * {
+        font-size: 11px;
+    }
     
     .p-gui--collapsed {
         height: 0;
@@ -87,7 +91,6 @@
         position: absolute;
         bottom: -15px;
         color: #eee;
-        font-size: 11px;
         text-shadow: 0 -1px 0 #111;
         white-space: nowrap;
         width: 100%;
@@ -102,7 +105,6 @@
     .p-gui__color {
         width: 100%;
         padding: 7px;
-        font-size: 11px;
         color: white;
         border-bottom: 1px solid #00ff89;
         cursor: pointer;
@@ -246,7 +248,6 @@
         width: 100%;
         margin-bottom: 8px;
         padding: 7px;
-        font-size: 11px;
         color: white;
         position: relative;
         min-height: 14px;
@@ -318,7 +319,6 @@
     
     .p-gui__folder-header {
         padding: 5px;
-        font-size: 11px;
         background-color: rgba(0, 0, 0, .5);
         color: white;
         cursor: pointer;
