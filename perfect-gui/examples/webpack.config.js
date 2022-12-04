@@ -6,10 +6,13 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 let config = {
 	mode: 'development',
-	entry: './src/index.js',
+	entry: {
+		main: './src/index.js', 
+		fullpage: './src/fullpage.js',
+	},
 	output: {
 		path: path.resolve(__dirname, './build'),
-		filename: './bundle.js'
+		filename: './[name].bundle.js'
 	},
 	module: {
 		rules: [
@@ -34,7 +37,15 @@ let config = {
 			hash: true,
 			minify: false,
 			filename: './index.html',
-			template: './src/index.html'
+			template: './src/index.html',
+			chunks: ['main']
+		}),
+		new HtmlWebpackPlugin({
+			hash: true,
+			minify: false,
+			filename: './fullpage.html',
+			template: './src/fullpage.html',
+			chunks: ['fullpage']
 		}),
 		new MiniCssExtractPlugin({
 			filename: "[name].css",

@@ -1,4 +1,4 @@
-import GUI from '../../../../src/index';
+import GUI from '../../perfect-gui/index';
 
 export default function color() {
     const element = document.querySelector('#container-color .element');

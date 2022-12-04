@@ -1,4 +1,4 @@
-import GUI from '../../../../src/index';
+import GUI from '../../perfect-gui/index';
 import getRandomColor from '../getRandomColor';
 
 export default function toggleClose() {

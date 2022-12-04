@@ -1,6 +1,6 @@
 // <div id="container-0" class="container" style="height: 800px; border-radius: 0;"></div>
 
-import GUI from '../../../src/index';
+import GUI from '../perfect-gui/index';
 
 export default function() 
 {

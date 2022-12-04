@@ -1,5 +1,5 @@
 import getRandomColor from '../getRandomColor';
-import GUI from '../../../../src/index';
+import GUI from '../../perfect-gui/index';
 
 export default function folder() {
     const element = document.querySelector('#container-folder .element');

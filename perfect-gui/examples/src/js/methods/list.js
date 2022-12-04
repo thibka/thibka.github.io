@@ -1,4 +1,4 @@
-import GUI from '../../../../src/index';
+import GUI from '../../perfect-gui/index';
 
 export default function list() {
     const element = document.querySelector('#container-list .element');

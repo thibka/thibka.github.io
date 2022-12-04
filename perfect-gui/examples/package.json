@@ -20,6 +20,6 @@
     "webpack-dev-server": "^4.10.1"
   },
   "dependencies": {
-    "perfect-gui": "^4.0.4"
+    "perfect-gui": "^4.0.5"
   }
 }

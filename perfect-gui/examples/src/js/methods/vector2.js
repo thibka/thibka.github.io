@@ -1,4 +1,4 @@
-import GUI from '../../../../src/index';
+import GUI from '../../perfect-gui/index';
 
 export default function vector2() {
     const position = {
