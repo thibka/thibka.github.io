@@ -5,14 +5,14 @@ let gui = new GUI({ name: 'test',  });
 let data = { x: 0.5, y: 0.5 };
 let data2 = { x: 0.5, y: 0.5 };
 
-let f = gui.folder({ name: 'folder' });
+let f = gui.folder({ name: 'folder', maxHeight: 100 });
 for (let i = 0; i < 10; i++) {
     f.button('Button ' + i, () => {});
 }
 
 
-let f2 = f.folder({ name: 'subfolder'});
-for (let i = 0; i < 10; i++) {
+let f2 = gui.folder({ name: 'subfolder'});
+for (let i = 0; i < 20; i++) {
     f2.button('Button ' + i, () => {});
 }
 f2.vector2({name: 'vector2', 
