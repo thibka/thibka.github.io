@@ -1,19 +1,20 @@
 //import GUI from 'perfect-gui';
-import GUI from './perfect-gui/index.replica';
+import GUI from './perfect-gui/index';
 
 let gui = new GUI({ name: 'test',  });
 let data = { x: 0.5, y: 0.5 };
 let data2 = { x: 0.5, y: 0.5 };
 
 let f = gui.folder({ name: 'folder' });
-/* for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 10; i++) {
     f.button('Button ' + i, () => {});
-} */
+}
+
 
 let f2 = f.folder({ name: 'subfolder'});
-/* for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 10; i++) {
     f2.button('Button ' + i, () => {});
-} */
+}
 f2.vector2({name: 'vector2', 
     x: { obj: data, prop: 'x', min: -30, max: 30},
     y: { obj: data, prop: 'y', min: -30, max: 30},
