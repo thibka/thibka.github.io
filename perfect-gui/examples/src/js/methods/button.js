@@ -9,7 +9,11 @@ export default function button() {
         draggable: true
     });
 
-    gui.button('Button', () => {
+    gui.button('Button 1', () => {
+        element.style.backgroundColor = getRandomColor();
+    });
+
+    gui.button({name: 'Button 2', color: '#bb3333', hoverColor: '#cc3333'}, () => {
         element.style.backgroundColor = getRandomColor();
     });
 }

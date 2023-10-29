@@ -24,7 +24,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/16x16.png">
     <link rel="shortcut icon" href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/180x180.png">
-<script defer src="./main.bundle.js?0400a86ee9f71cce54a3"></script><link href="main.css?0400a86ee9f71cce54a3" rel="stylesheet"></head>
+<script defer src="./main.bundle.js?c1280e65af8a73361127"></script><link href="main.css?c1280e65af8a73361127" rel="stylesheet"></head>
 
 <body>
 <div class="wrapper">
@@ -138,6 +138,16 @@ gui.color({ name: 'Color', value: '#ff0000' }, color => {
         <td>string</td>
         <td>Optional.</td>
     </tr>
+    <tr>
+        <td>color</td>
+        <td>string</td>
+        <td>Optional.</td>
+    </tr>
+    <tr>
+        <td>hoverColor</td>
+        <td>string</td>
+        <td>Optional. Default is equal to <span class="code-inline">color</span> if defined.</td>
+    </tr>
 </table>
 <div id="container-button" class="container container--small">
     <div class="element left"></div>
@@ -147,9 +157,13 @@ gui.color({ name: 'Color', value: '#ff0000' }, color => {
 
 const gui = new GUI();
 
-gui.button({ name: 'Button' }, changeColor);
+gui.button('Button 1', changeColor);
 // or
-gui.button('Button', changeColor);
+// gui.button({ name: 'Button 1' }, changeColor);
+
+gui.button({ name: 'Button 2', color: '#bb3333', hoverColor: '#cc3333' }, () => {
+    element.style.backgroundColor = getRandomColor();
+});
 </code></pre> 
 </div>
 
@@ -249,7 +263,7 @@ gui.slider({ name: 'Slider with object binding', obj: position, prop: 'x', min: 
     <tr>
         <td>value</td>
         <td>boolean</td>
-        <td>Optional. Default is false.</td>
+        <td>Optional. Default is <span class="code-inline">false</span>.</td>
     </tr>
 </table>
 <div id="container-toggle" class="container container--small">
