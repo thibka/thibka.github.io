@@ -161,9 +161,7 @@ gui.button('Button 1', changeColor);
 // or
 // gui.button({ name: 'Button 1' }, changeColor);
 
-gui.button({ name: 'Button 2', color: '#bb3333', hoverColor: '#cc3333' }, () => {
-    element.style.backgroundColor = getRandomColor();
-});
+gui.button({ name: 'Button 2', color: '#bb3333', hoverColor: '#cc3333' }, changeColor);
 </code></pre> 
 </div>
 
@@ -339,6 +337,16 @@ gui.options({ name: 'List', values: ['red', 'pink', 'yellow', 'blue'] }, selecte
         <td>string</td>
         <td>Image file path.</td>
     </tr>
+    <tr>
+        <td>selected</td>
+        <td>boolean</td>
+        <td>Default state of the item. Default is <span class="code-inline">false</span>.</td>
+    </tr>
+    <tr>
+        <td>selectionBorder</td>
+        <td>boolean</td>
+        <td>Defines if a border is visible around the selected element. Default is <span class="code-inline">true</span>.</td>
+    </tr>
 </table>
 <div id="container-image" class="container container--small">
     <div class="element left"></div>
@@ -348,7 +356,11 @@ gui.options({ name: 'List', values: ['red', 'pink', 'yellow', 'blue'] }, selecte
 
 const gui = new GUI();
 
-gui.image({ name: 'Lorem ipsum', path: 'path/to/image.jpg'}, evt => {
+gui.image({ name: 'Image 1', path: 'path/to/image1.jpg'}, evt => {
+    element.style.backgroundImage = `url( ${ evt.path } )`;
+});
+
+gui.image({ name: 'Image 2', path: 'path/to/image2.jpg', selected: true}, evt => {
     element.style.backgroundImage = `url( ${ evt.path } )`;
 });
 </code></pre> 
