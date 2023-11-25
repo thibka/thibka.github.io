@@ -24,7 +24,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/16x16.png">
     <link rel="shortcut icon" href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/180x180.png">
-<script defer src="./main.bundle.js?1b990bb008b086549856"></script><link href="main.css?1b990bb008b086549856" rel="stylesheet"></head>
+<script defer src="./main.bundle.js?ca872178619e2bc1e9b5"></script><link href="main.css?ca872178619e2bc1e9b5" rel="stylesheet"></head>
 
 <body>
 <div class="wrapper">
@@ -355,14 +355,15 @@ gui.options({ name: 'List', values: ['red', 'pink', 'yellow', 'blue'] }, selecte
 <pre><code class="language-js">import GUI from 'perfect-gui';
 
 const gui = new GUI();
+gui.image({ name: 'Image 1', path: 'path/to/image1.jpg'}, changeBackground);
+gui.image({ name: 'Image 2', path: 'path/to/image2.jpg', selected: true}, changeBackground);
+gui.image({ name: 'Image 3', path: 'path/to/image3.jpg'}, changeBackground);
+gui.image({ name: 'Image 4', path: 'path/to/image4.jpg'}, changeBackground);
+gui.image({ name: 'Image 5', path: 'path/to/image5.jpg'}, changeBackground);
 
-gui.image({ name: 'Image 1', path: 'path/to/image1.jpg'}, evt => {
-    element.style.backgroundImage = `url( ${ evt.path } )`;
-});
-
-gui.image({ name: 'Image 2', path: 'path/to/image2.jpg', selected: true}, evt => {
-    element.style.backgroundImage = `url( ${ evt.path } )`;
-});
+function changeBackground(evt) {
+    element.style.backgroundImage = `url( ${evt.path} )`;
+}
 </code></pre> 
 </div>
 
