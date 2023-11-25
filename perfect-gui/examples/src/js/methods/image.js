@@ -25,4 +25,32 @@ export default function image() {
             element.style.backgroundImage = `url( ${evt.path} )`;
         }
     );
+
+    gui.image({ 
+            name: 'Image 3',
+            path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/DALL·E-2022-11-13-20.11.52---a-blonde-girl-riding-a-whale-in-the-style-of-hopper.jpg',
+        },
+        evt => {
+            element.style.backgroundImage = `url( ${evt.path} )`;
+        }
+    );
+
+    gui.image({ 
+        name: 'Image 4',
+        path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/DALL·E-2023-11-25-16.00.40---An-oil-painting-of-a-short-haired-orange-and-white-alley-cat.jpg',
+    },
+    evt => {
+        element.style.backgroundImage = `url( ${evt.path} )`;
+    });
+
+    gui.image({ 
+        name: 'Image 5',
+        path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/DALL·E-2023-11-25-16.05.33---An-image-in-the-style-of-a-1900s-painter,-depicting-a-blonde-girl-riding-a-whale.jpg',
+    },
+    evt => {
+        element.style.backgroundImage = `url( ${evt.path} )`;
+    });
+    
 }
+
+    
