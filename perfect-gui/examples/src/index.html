@@ -355,14 +355,15 @@ gui.options({ name: 'List', values: ['red', 'pink', 'yellow', 'blue'] }, selecte
 <pre><code class="language-js">import GUI from 'perfect-gui';
 
 const gui = new GUI();
+gui.image({ name: 'Image 1', path: 'path/to/image1.jpg'}, changeBackground);
+gui.image({ name: 'Image 2', path: 'path/to/image2.jpg', selected: true}, changeBackground);
+gui.image({ name: 'Image 3', path: 'path/to/image3.jpg'}, changeBackground);
+gui.image({ name: 'Image 4', path: 'path/to/image4.jpg'}, changeBackground);
+gui.image({ name: 'Image 5', path: 'path/to/image5.jpg'}, changeBackground);
 
-gui.image({ name: 'Image 1', path: 'path/to/image1.jpg'}, evt => {
-    element.style.backgroundImage = `url( ${ evt.path } )`;
-});
-
-gui.image({ name: 'Image 2', path: 'path/to/image2.jpg', selected: true}, evt => {
-    element.style.backgroundImage = `url( ${ evt.path } )`;
-});
+function changeBackground(evt) {
+    element.style.backgroundImage = `url( ${evt.path} )`;
+}
 </code></pre> 
 </div>
 
