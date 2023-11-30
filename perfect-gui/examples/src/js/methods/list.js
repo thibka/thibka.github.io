@@ -8,7 +8,7 @@ export default function list() {
         draggable: true
     });
 
-    gui.list({ name: 'List', values: ['red', 'pink', 'yellow', 'blue'] }, selected_value => {
+    gui.list({ name: 'List', values: ['red', 'pink', 'yellow', 'blue'], value: 1 }, selected_value => {
         element.style.backgroundColor = selected_value;
     } );
 }

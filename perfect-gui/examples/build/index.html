@@ -24,7 +24,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/16x16.png">
     <link rel="shortcut icon" href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/180x180.png">
-<script defer src="./main.bundle.js?3a3f6c55a8286b7b18e9"></script><link href="main.css?3a3f6c55a8286b7b18e9" rel="stylesheet"></head>
+<script defer src="./main.bundle.js?1393903160b3f15307d0"></script><link href="main.css?1393903160b3f15307d0" rel="stylesheet"></head>
 
 <body>
 <div class="wrapper">
@@ -298,6 +298,11 @@ gui.toggle({ name: 'Toggle', value: true }, value => {
         <td>array</td>
         <td>Options to be displayed.</td>
     </tr>
+    <tr>
+        <td>value</td>
+        <td>string | number</td>
+        <td>Optional. Defines the default selected value in the options array. This can either be a string, which must correspond to one of the values within the options array, or a number, representing the index of the selected value in the array of options.</td>
+    </tr>
 </table>
 <div id="container-list" class="container container--small">
     <div class="element left" style="background-color: red;"></div>
@@ -307,7 +312,7 @@ gui.toggle({ name: 'Toggle', value: true }, value => {
 
 const gui = new GUI();
 
-gui.list({ name: 'List', values: ['red', 'pink', 'yellow', 'blue'] }, selected_value => {
+gui.list({ name: 'List', values: ['red', 'pink', 'yellow', 'blue'], value: 1 }, selected_value => {
     element.style.backgroundColor = selected_value;
 });
 
