@@ -11,12 +11,6 @@
     --body-size: 1.5rem;
 }
 
-@media (max-width: 480px) {
-    :root {
-        --h1-size: 2rem;
-    }
-}
-
 * {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -66,10 +60,21 @@ body {
     }
 }
 
-.title {
+.header {
     display: flex;
-    flex-direction: row;
-    margin: 80px 0 0;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 110px;
+}
+
+@media (max-width: 600px) {
+    .header {
+        flex-direction: column;
+    }
+
+    .title {
+        text-align: center;
+    }
 }
 
 .subtitle {
@@ -86,6 +91,8 @@ body {
     border-bottom: 1px solid var(--green);
     margin-left: 20px;
     font-size: var(--body-size);
+    display: inline-block;
+    margin-bottom: 40px;
 }
 
 h1, h2 {
