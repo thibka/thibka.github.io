@@ -11,6 +11,12 @@
     --body-size: 1.5rem;
 }
 
+@media (max-width: 480px) {
+    :root {
+        --h1-size: 2rem;
+    }
+}
+
 * {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -48,7 +54,15 @@ body {
 @media (max-width: 1024px) {
     .main {
         width: 700px;
-        padding: 0 20px 100px 230px;
+        padding: 0 0 100px 160px;
+    }
+}
+
+@media (max-width: 890px) {
+    .main {
+        max-width: 700px;
+        width: 95%;
+        padding: 0 0 100px 0;
     }
 }
 
@@ -129,6 +143,12 @@ pre[class*=language-] {
     padding: 30px; 
     border-radius: 5px;
     font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    pre[class*=language-] {
+        padding: 30px 3vw; 
+    }
 }
 
 .container {
