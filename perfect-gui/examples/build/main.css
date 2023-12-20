@@ -58,7 +58,7 @@ body {
 @media (max-width: 890px) {
     .main {
         max-width: 700px;
-        width: 95%;
+        width: 90%;
         padding: 0 0 100px 0;
     }
 }
@@ -96,6 +96,12 @@ body {
     font-size: var(--body-size);
     display: inline-block;
     margin-bottom: 40px;
+}
+
+@media (max-width: 600px) {
+    .link {
+        margin-bottom: 0;
+    }
 }
 
 h1, h2 {
@@ -157,7 +163,7 @@ pre[class*=language-] {
 
 @media (max-width: 768px) {
     pre[class*=language-] {
-        padding: 30px 3vw; 
+        padding: 20px 3vw; 
     }
 }
 
