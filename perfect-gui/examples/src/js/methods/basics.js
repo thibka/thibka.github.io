@@ -30,7 +30,7 @@ export default function basics() {
         }
     );
 
-    gui.toggle({ name: 'Toggle', state: true }, state => {
+    gui.toggle({ name: 'Toggle', value: true }, state => {
         if ( state ) element.classList.remove('round');
         else element.classList.add('round');
     });
