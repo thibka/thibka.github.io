@@ -8,7 +8,15 @@ export default function list() {
         draggable: true
     });
 
-    gui.list({ name: 'List', values: ['red', 'pink', 'yellow', 'blue'], value: 1 }, selected_value => {
+    // Method 1, using a callback function
+    gui.list({ name: 'List (value & callback)', values: ['red', 'pink', 'yellow', 'blue'], value: 1 }, selected_value => {
         element.style.backgroundColor = selected_value;
-    } );
+    });
+
+    // Method 2, using object binding
+    const values = ['red', 'pink', 'yellow', 'blue'];
+    const color = { value: 2 };
+    gui.list({ name: 'List (object binding)', values, obj: color, prop: 'value' }, () => {
+        element.style.backgroundColor = values[color.value];
+    });
 }
