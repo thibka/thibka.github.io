@@ -35,6 +35,14 @@ export default function image() {
         path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/DALL·E-2023-11-25-16.05.33---An-image-in-the-style-of-a-1900s-painter,-depicting-a-blonde-girl-riding-a-whale.jpg',
     }, changeBackground);
 
+    const imageobj = { selected: false };
+    gui.image({ 
+        name: 'Image 6',
+        path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/DALL·E-2023-11-25-16.05.33---An-image-in-the-style-of-a-1900s-painter,-depicting-a-blonde-girl-riding-a-whale.jpg',
+        obj: imageobj,
+        prop: 'selected'
+    }, changeBackground);
+
     function changeBackground(evt) {
         element.style.backgroundImage = `url( ${evt.path} )`;
     }

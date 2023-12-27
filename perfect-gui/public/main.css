@@ -8,7 +8,7 @@ code[class*=language-],pre[class*=language-]{color:#f8f8f2;background:0 0;text-s
     --white: rgb(246, 246, 232);
     --grey: #ffffff33;
     --green: #06ff89;
-    --sans: 'General Sans', serif;
+    --sans: 'General Sans', sans-serif;
     --h1-size: 2.6rem;
     --h2-size: 2.2rem;
     --body-size: 1.5rem;
