@@ -24,7 +24,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/16x16.png">
     <link rel="shortcut icon" href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/180x180.png">
-<script defer src="./main.bundle.js?ee44cf3fce877737262c"></script><link href="main.css?ee44cf3fce877737262c" rel="stylesheet"></head>
+<script defer src="./main.bundle.js?52ce8c692bef632d0ed8"></script><link href="main.css?52ce8c692bef632d0ed8" rel="stylesheet"></head>
 
 <body>
 <div class="wrapper">
@@ -446,11 +446,11 @@ gui.image({ name: 'Image 4', path: 'path/to/image4.jpg'}, changeBackground);
 gui.image({ name: 'Image 5', path: 'path/to/image5.jpg'}, changeBackground);
 
 // Method 2, using object binding
-const imageobj = { selected: false };
+const state = { selected: false };
 gui.image({ 
     name: 'Image 6',
     path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/DALL·E-2023-11-25-16.05.33---An-image-in-the-style-of-a-1900s-painter,-depicting-a-blonde-girl-riding-a-whale.jpg',
-    obj: imageobj,
+    obj: state,
     prop: 'selected'
 }, changeBackground);
 
@@ -481,6 +481,16 @@ function changeBackground(evt) {
         <td>Hexadecimal color value.<br>
             Optional. Default is <span class="code-inline">#000000</span>.</td>
     </tr>
+    <tr>
+        <td>obj || object</td>
+        <td>object</td>
+        <td>Optional. Target object. Ignored if a <span class="code-inline">value</span> is specified.</td>
+    </tr>
+    <tr>
+        <td>prop || property</td>
+        <td>string</td>
+        <td>Optional. Target object property. Ignored if a <span class="code-inline">value</span> is specified.</td>
+    </tr>
 </table>
 <div id="container-color" class="container container--small">
     <div class="element left"></div>
@@ -490,8 +500,15 @@ function changeBackground(evt) {
 
 const gui = new GUI();
 
-gui.color({ name: 'Color', value: '#06ff89' }, color => {
+// Simple value & callback
+gui.color({ name: 'Color (value & callback)', value: '#06ff89' }, color => {
     element.style.backgroundColor = color;
+});
+
+// Object binding
+const color = { value: '#06ff89' };
+gui.color({ name: 'Color (object binding)', obj: color, prop: 'value' }, () => {
+    element.style.backgroundColor = color.value;
 });
 </code></pre> 
 </div>
