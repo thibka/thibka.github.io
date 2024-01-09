@@ -289,13 +289,13 @@ gui.slider({ name: 'Slider with object binding', obj: position, prop: 'x', min: 
 
 const gui = new GUI();
 
-// Method 1, using a callback function
+// Approach 1: using a callback function
 gui.toggle({ name: 'Toggle (simple callback)', value: true }, value => {
     if ( value ) element.classList.remove('round');
     else element.classList.add('round');
 });
 
-// Method 2, using object binding
+// Approach 2: using object binding
 const isRound = { state: true };
 gui.toggle({ name: 'Toggle (object binding)', obj: isRound, prop: 'value' }, () => {
     if ( isRound.state ) element.classList.remove('round');
@@ -354,12 +354,12 @@ gui.toggle({ name: 'Toggle (object binding)', obj: isRound, prop: 'value' }, () 
 
 const gui = new GUI();
 
-// Method 1, using a callback function
+// Approach 1: using a callback function
 gui.list({ name: 'List', values: ['red', 'pink', 'yellow', 'blue'], value: 1 }, selected_value => {
     element.style.backgroundColor = selected_value;
 });
 
-// Method 2, using object binding
+// Approach 2: using object binding
 const values = ['red', 'pink', 'yellow', 'blue'];
 const color = { value: 2 };
 gui.list({ name: 'List (object binding)', values, obj: color, prop: 'value' }, () => {

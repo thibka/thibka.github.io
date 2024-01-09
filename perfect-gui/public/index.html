@@ -24,7 +24,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/16x16.png">
     <link rel="shortcut icon" href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/180x180.png">
-<script defer src="./main.bundle.js?8bacb4d5948a680c50ca"></script><link href="main.css?8bacb4d5948a680c50ca" rel="stylesheet"></head>
+<script defer src="./main.bundle.js?4924e359c05778143579"></script><link href="main.css?4924e359c05778143579" rel="stylesheet"></head>
 
 <body>
 <div class="wrapper">
@@ -289,13 +289,13 @@ gui.slider({ name: 'Slider with object binding', obj: position, prop: 'x', min: 
 
 const gui = new GUI();
 
-// Method 1, using a callback function
+// Approach 1: using a callback function
 gui.toggle({ name: 'Toggle (simple callback)', value: true }, value => {
     if ( value ) element.classList.remove('round');
     else element.classList.add('round');
 });
 
-// Method 2, using object binding
+// Approach 2: using object binding
 const isRound = { state: true };
 gui.toggle({ name: 'Toggle (object binding)', obj: isRound, prop: 'value' }, () => {
     if ( isRound.state ) element.classList.remove('round');
@@ -354,12 +354,12 @@ gui.toggle({ name: 'Toggle (object binding)', obj: isRound, prop: 'value' }, () 
 
 const gui = new GUI();
 
-// Method 1, using a callback function
+// Approach 1: using a callback function
 gui.list({ name: 'List', values: ['red', 'pink', 'yellow', 'blue'], value: 1 }, selected_value => {
     element.style.backgroundColor = selected_value;
 });
 
-// Method 2, using object binding
+// Approach 2: using object binding
 const values = ['red', 'pink', 'yellow', 'blue'];
 const color = { value: 2 };
 gui.list({ name: 'List (object binding)', values, obj: color, prop: 'value' }, () => {
