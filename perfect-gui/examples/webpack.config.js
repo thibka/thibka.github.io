@@ -11,7 +11,7 @@ let config = {
 		fullpage: './src/fullpage.js',
 	},
 	output: {
-		path: path.resolve(__dirname, './build'),
+		path: path.resolve(__dirname, '../public'),
 		filename: './[name].bundle.js'
 	},
 	module: {
