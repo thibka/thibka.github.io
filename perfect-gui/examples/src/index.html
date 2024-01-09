@@ -366,7 +366,7 @@ gui.list({ name: 'List (object binding)', values, obj: color, prop: 'value' }, (
     element.style.backgroundColor = values[color.value];
 });
 
-// alternatively, you can use the options() method, which is the same as the list() method
+// Alternatively, you can use the options() method, which is equivalent to list()
 gui.options({ name: 'List', values: ['red', 'pink', 'yellow', 'blue'] }, selected_value => {
     element.style.backgroundColor = selected_value;
 });
