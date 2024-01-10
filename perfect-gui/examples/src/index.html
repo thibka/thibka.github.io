@@ -362,14 +362,18 @@ gui.list({ name: 'List', values: ['red', 'pink', 'yellow', 'blue'], value: 1 }, 
 // Approach 2: using object binding
 const values = ['red', 'pink', 'yellow', 'blue'];
 const color = { value: 2 };
-gui.list({ name: 'List (object binding)', values, obj: color, prop: 'value' }, () => {
-    element.style.backgroundColor = values[color.value];
-});
+gui.list({ name: 'List (object binding)', values, obj: color, prop: 'value' }, 
+    ( value, index ) => {
+        element.style.backgroundColor = values[color.value];
+    }
+);
 
 // Alternatively, you can use the options() method, which is equivalent to list()
-gui.options({ name: 'List', values: ['red', 'pink', 'yellow', 'blue'] }, selected_value => {
-    element.style.backgroundColor = selected_value;
-});
+gui.options({ name: 'List', values: ['red', 'pink', 'yellow', 'blue'] }, 
+    selected_value => {
+        element.style.backgroundColor = selected_value;
+    }
+);
 </code></pre> 
 </div>
 
