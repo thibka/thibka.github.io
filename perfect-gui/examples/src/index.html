@@ -343,7 +343,7 @@ gui.toggle({ name: 'Toggle (object binding)', obj: isRound, prop: 'value' }, () 
 <ul>
     <li>with a <span class="code-inline">value</span> parameter and a callback function to create a "simple" list (see the first example below). The current value will then be passed to the callback.</li>
     <li>with an object (<span class="code-inline">obj</span>) and its target property (<span class="code-inline">prop</span>) to bind the list and the property together (see the second example below). 
-        Such a list will automatically update the value of the object property; therefore a callback isn't necessarily needed.
+        Such a list will automatically update the value of the object property;
         Directly updating the property would also update the state of the list.</li>
 </ul>
 <div id="container-list" class="container container--small">
@@ -359,7 +359,7 @@ gui.list({ name: 'List', values: ['red', 'pink', 'yellow', 'blue'], value: 1 }, 
     element.style.backgroundColor = selected_value;
 });
 
-// Approach 2: using object binding
+// Approach 2: using object binding with an array of strings
 const values = ['red', 'pink', 'yellow', 'blue'];
 const color = { value: 2 };
 gui.list({ name: 'List (object binding)', values, obj: color, prop: 'value' }, 
@@ -368,10 +368,19 @@ gui.list({ name: 'List (object binding)', values, obj: color, prop: 'value' },
     }
 );
 
-// Alternatively, you can use the options() method, which is equivalent to list()
-gui.options({ name: 'List', values: ['red', 'pink', 'yellow', 'blue'] }, 
-    selected_value => {
-        element.style.backgroundColor = selected_value;
+// Approach 3: using object binding with an array of objects
+// The "name" property is only used to control what's displayed in the option list
+// The intrinsec value of each item is the "value" property
+const color2 = { value: 0 };
+const objectValues = [
+    { name: 'red',      value: 0 }, 
+    { name: 'pink',     value: 1 }, 
+    { name: 'yellow',   value: 2 }, 
+    { name: 'blue',     value: 3 }
+];
+gui.list({ name: 'Object binding (objects)', values: objectValues, obj: color2, prop: 'value' }, 
+    (obj, index) => {
+        element.style.backgroundColor = obj.name;
     }
 );
 </code></pre> 
