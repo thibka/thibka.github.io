@@ -35,7 +35,7 @@ export default function basics() {
         else element.classList.add('round');
     });
 
-    gui.options({ name: 'List', values: ['red', 'pink', 'yellow', 'blue'] }, option => {
+    gui.list({ name: 'List', values: ['red', 'pink', 'yellow', 'blue'] }, option => {
         element.style.backgroundImage = 'none';
         element.style.backgroundColor = option;
     });
