@@ -5,11 +5,12 @@ let gui = new GUI({ name: 'test',  });
 let data = { x: 0.5, y: 0.5 };
 let data2 = { x: 0.5, y: 0.5 };
 
-let f = gui.folder({ name: 'folder', maxHeight: 100 });
+let f = gui.folder({ name: 'folder' });
 for (let i = 0; i < 10; i++) {
     f.button('Button ' + i, () => {});
 }
 
+f.slider({name: 'Test'}, () => {});
 
 let f2 = gui.folder({ name: 'subfolder'});
 for (let i = 0; i < 20; i++) {
@@ -34,3 +35,5 @@ let f3 = f2.folder({ name: 'subfolder' });
     }, () => {});
     f3.folder({name: 'okok'});
 //}
+
+gui.slider({name: 'Test'}, () => {});
