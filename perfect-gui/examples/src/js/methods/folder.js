@@ -16,7 +16,7 @@ export default function folder() {
         element.style.backgroundColor = color;
     });
 
-    folder_1.slider({ name: 'Slider', value: 1 }, value => {
+    folder_1.slider({ name: 'Slider', value: 1, step: .1 }, value => {
         element.style.transform = `scale(${value})`;
     });
 

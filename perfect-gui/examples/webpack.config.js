@@ -9,6 +9,7 @@ let config = {
 	entry: {
 		main: './src/index.js', 
 		fullpage: './src/fullpage.js',
+		single: './src/single.js',
 	},
 	output: {
 		path: path.resolve(__dirname, '../public'),
@@ -46,6 +47,13 @@ let config = {
 			filename: './fullpage.html',
 			template: './src/fullpage.html',
 			chunks: ['fullpage']
+		}),
+		new HtmlWebpackPlugin({
+			hash: true,
+			minify: false,
+			filename: './single.html',
+			template: './src/single.html',
+			chunks: ['single']
 		}),
 		new MiniCssExtractPlugin({
 			filename: "[name].css",

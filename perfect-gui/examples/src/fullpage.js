@@ -1,7 +1,6 @@
-//import GUI from 'perfect-gui';
 import GUI from './perfect-gui/index';
 
-let gui = new GUI({ name: 'test',  });
+let gui = new GUI({ name: 'test', closed: true, onUpdate: () => console.log('ok') });
 let data = { x: 0.5, y: 0.5 };
 let data2 = { x: 0.5, y: 0.5 };
 
@@ -12,7 +11,7 @@ for (let i = 0; i < 10; i++) {
 
 f.slider({name: 'Test'}, () => {});
 
-let f2 = gui.folder({ name: 'subfolder'});
+let f2 = gui.folder({ name: 'folder'});
 for (let i = 0; i < 20; i++) {
     f2.button('Button ' + i, () => {});
 }
