@@ -52,6 +52,7 @@
             <a class="sidebar__item" href="#other-options">width</a>
             <a class="sidebar__item" href="#other-options">maxHeight</a>
             <a class="sidebar__item" href="#other-options">color</a>
+            <a class="sidebar__item" href="#other-options">opacity</a>
             <a class="sidebar__item" href="#other-options">onUpdate</a>
         <a class="sidebar__title" href="#killing-creating">Killing and creating dynamically</a>
     </div>
@@ -678,6 +679,7 @@ gui_4.button('Button', () => element.style.backgroundColor = getRandomColor() );
 <p>Just like folders, GUI panels can be closed by default by setting the <span class="code-inline">close</span> option to <span class="code-inline">true</span>.</p>
 <p>The <span class="code-inline">maxHeight</span> option can be used to define the maximum height of a panel beyond which scrolling is necessary. Default is the smallest value between the height of the window and the height of the container.</p>
 <p>The <span class="code-inline">color</span> option can be used for both GUI panels and folders to customize their background color.</p>
+<p>The <span class="code-inline">opacity</span> option sets the default transparency of panels. When a panel is hovered over, its opacity returns to 1.</p>
 <p>The <span class="code-inline">onUpdate</span> option can be used to define a callback function, triggered each time the GUI is updated.</p>
 
 <div id="container-4" class="container"></div>
@@ -713,8 +715,9 @@ for (let i = 0; i < 10; i ++) {
 const gui_3 = new GUI({
     container,
     position: 'bottom right',
-    name: 'GUI 3 (custom color)',
-    color: '#226666'
+    name: 'GUI 3 (custom color + opacity)',
+    color: '#ff00ff',
+    opacity: .5
 });
 gui_3.button('lorem', () => {});</code></pre>
 </div>

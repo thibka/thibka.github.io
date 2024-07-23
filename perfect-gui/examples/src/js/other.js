@@ -33,8 +33,9 @@ export default function other() {
     const gui_3 = new GUI({
         container,
         position: 'bottom right',
-        name: 'GUI 3 (custom color)',
-        color: '#226666'
+        name: 'GUI 3 (custom color + opacity)',
+        color: '#ff00ff',
+        opacity: .5
     });
     gui_3.button('lorem', () => {});
 }
