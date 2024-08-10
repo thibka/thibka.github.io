@@ -32,7 +32,7 @@ let f3 = f2.folder({ name: 'subfolder' });
         x: { obj: data2, prop: 'x', min: 0, max: 1},
         y: { obj: data2, prop: 'y', min: 0, max: 1},
     }, () => {});
-    f3.folder({name: 'okok'});
+    const f4 = f3.folder({name: 'okok'});
 //}
 
-gui.slider({name: 'Test'}, () => {});
+f4.slider({name: 'Test'}, () => {});

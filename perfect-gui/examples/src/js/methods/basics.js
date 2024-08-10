@@ -11,9 +11,13 @@ export default function basics() {
     const gui = new GUI({
         name: 'Basics',
         container: '#container-1',
+        onUpdate: () => {
+            console.log('onUpdate (should be last)');
+        }
     });
 
     gui.button('Button', () => {
+        console.log("direct callback button");
         element.style.backgroundColor = getRandomColor();
         element.style.backgroundImage = 'none';
     });
@@ -26,6 +30,7 @@ export default function basics() {
 
     gui.slider({ name: 'Slider 2 (object binding)', obj: position, prop: 'x', min: -30, max: 30, step: .1 },
         () => {
+            console.log("direct callback slider");
             element.style.transform = `translateX(${position.x}px)`;
         }
     );

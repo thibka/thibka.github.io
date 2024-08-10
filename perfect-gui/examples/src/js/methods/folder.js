@@ -6,7 +6,8 @@ export default function folder() {
 
     const gui = new GUI({
         name: 'Folders',
-        container: '#container-folder'
+        container: '#container-folder',
+        onUpdate: () => console.log('ok')
     });
 
     let folder_1 = gui.folder({ name: 'Folder 1' });

@@ -22,6 +22,9 @@ gui.slider({ name: 'Simple', value: .5, min: 0, max: 1 },
 
 gui.slider({ name: 'Object binding', obj: window.position, prop: 'x', min: 0, max: 1, step: .1 },
     () => {
-        //console.log('>:',position.x);
+        console.log('>:',position.x);
     }
 );
+
+gui.folder({ name: 'Folder' });
+gui.folder({ name: 'Folder' });
