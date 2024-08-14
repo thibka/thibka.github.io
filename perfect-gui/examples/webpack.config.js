@@ -10,6 +10,7 @@ let config = {
 		main: './src/index.js', 
 		fullpage: './src/fullpage.js',
 		single: './src/single.js',
+		threejs: './src/threejs.js',
 	},
 	output: {
 		path: path.resolve(__dirname, '../public'),
@@ -54,6 +55,13 @@ let config = {
 			filename: './single.html',
 			template: './src/single.html',
 			chunks: ['single']
+		}),
+		new HtmlWebpackPlugin({
+			hash: true,
+			minify: false,
+			filename: './threejs.html',
+			template: './src/threejs.html',
+			chunks: ['threejs']
 		}),
 		new MiniCssExtractPlugin({
 			filename: "[name].css",

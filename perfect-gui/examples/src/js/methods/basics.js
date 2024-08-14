@@ -10,14 +10,10 @@ export default function basics() {
 
     const gui = new GUI({
         name: 'Basics',
-        container: '#container-1',
-        onUpdate: () => {
-            console.log('onUpdate (should be last)');
-        }
+        container: '#container-1'
     });
 
     gui.button('Button', () => {
-        console.log("direct callback button");
         element.style.backgroundColor = getRandomColor();
         element.style.backgroundImage = 'none';
     });
