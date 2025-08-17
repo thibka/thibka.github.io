@@ -11,6 +11,7 @@ let config = {
 		fullpage: './src/fullpage.js',
 		single: './src/single.js',
 		threejs: './src/threejs.js',
+		demo: './src/demo.js',
 	},
 	output: {
 		path: path.resolve(__dirname, '../public'),
@@ -55,6 +56,13 @@ let config = {
 			filename: './single.html',
 			template: './src/single.html',
 			chunks: ['single']
+		}),
+		new HtmlWebpackPlugin({
+			hash: true,
+			minify: false,
+			filename: './demo.html',
+			template: './src/demo.html',
+			chunks: ['demo']
 		}),
 		new HtmlWebpackPlugin({
 			hash: true,
