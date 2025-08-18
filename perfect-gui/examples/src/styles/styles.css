@@ -6,8 +6,9 @@
     --grey: #ffffff33;
     --green: #06ff89;
     --sans: 'General Sans', sans-serif;
-    --h1-size: 2.6rem;
-    --h2-size: 2.2rem;
+    --h1-size: 2.7rem;
+    --h2-size: 2.3rem;
+    --h3-size: 2rem;
     --body-size: 1.5rem;
 }
 
@@ -115,6 +116,11 @@ h1 {
 h2 {
     margin-top: 110px;
     font-size: var(--h2-size);
+}
+
+h3 {
+    margin-top: 30px;
+    font-size: var(--h3-size);
 }
 
 p, li {

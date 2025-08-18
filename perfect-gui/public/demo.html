@@ -7,10 +7,40 @@
     <title>Document</title>
     <style>
         body {
-            background: black;
+            --bg: #161616; /*#1b1b1b*/
+            border: 1px solid var(--col);
+            background-color: var(--bg);
+            transition: .3s all ease;
+            background-position: center;
+            background-size: cover;
+            overflow: hidden;
+            position: relative;
+            height: 400px;
+            width: 100%;
+            margin: 20px auto 20px auto;
+            border-radius: 5px;
+
+            --dot: #222222;
+            --alt: #333333;
+            --gap: 10px;
+            --r: 1px;
+
+            background-color: var(--bg);
+
+            background-image:
+                /* intersection pattern (5×5 grid) */
+                radial-gradient(circle at var(--r) var(--r), var(--alt) var(--r), transparent calc(var(--r) + 0.5px)),
+
+                /* base dotted grid */
+                radial-gradient(circle at var(--r) var(--r), var(--dot) var(--r), transparent calc(var(--r) + 0.5px));
+                
+                background-size:
+                    calc(var(--gap) * 5) calc(var(--gap) * 5),  /* intersections */
+                    var(--gap) var(--gap);                      /* base grid */
+                background-repeat: repeat;
         }
     </style>
-<script defer src="./demo.bundle.js?b2f4d7c4d0e4b26ad04a"></script></head>
+<script defer src="./demo.bundle.js?c728d8ac552fae335c23"></script></head>
 <body>
     <div id="container-1" class="container">
         <div class="element left"></div>

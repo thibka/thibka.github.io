@@ -24,7 +24,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/16x16.png">
     <link rel="shortcut icon" href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/180x180.png">
-<script defer src="./main.bundle.js?b2f4d7c4d0e4b26ad04a"></script><link href="main.css?b2f4d7c4d0e4b26ad04a" rel="stylesheet"></head>
+<script defer src="./main.bundle.js?c728d8ac552fae335c23"></script><link href="main.css?c728d8ac552fae335c23" rel="stylesheet"></head>
 
 <body>
 <div class="wrapper">
@@ -35,7 +35,18 @@
             width="30" 
             src="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/180x180.png">
         </div>
-        <a class="sidebar__title" href="#basics">Methods</a>
+        <a class="sidebar__title" href="#options">Options</a>
+            <a class="sidebar__item" href="#options-name">name</a>
+            <a class="sidebar__item" href="#options-draggable">draggable</a>
+            <a class="sidebar__item" href="#options-container">container</a>
+            <a class="sidebar__item" href="#options-position">position</a>
+            <a class="sidebar__item" href="#options-closed">closed</a>
+            <a class="sidebar__item" href="#options-width">width</a>
+            <a class="sidebar__item" href="#options-maxHeight">maxHeight</a>
+            <a class="sidebar__item" href="#options-color">color</a>
+            <a class="sidebar__item" href="#options-opacity">opacity</a>
+            <a class="sidebar__item" href="#options-onUpdate">onUpdate</a>
+        <a class="sidebar__title" href="#methods">Methods</a>
             <a class="sidebar__item" href="#button">.button()</a>
             <a class="sidebar__item" href="#slider">.slider()</a>
             <a class="sidebar__item" href="#toggle">.toggle()</a>
@@ -45,15 +56,6 @@
             <a class="sidebar__item" href="#vector2">.vector2()</a>
             <a class="sidebar__item" href="#folders">.folder()</a>
             <a class="sidebar__item" href="#toggleclose">.toggleClose()</a>
-        <a class="sidebar__title" href="#other-options">Options</a>
-            <a class="sidebar__item" href="#other-options">name</a>
-            <a class="sidebar__item" href="#positioning">position</a>
-            <a class="sidebar__item" href="#other-options">close</a>
-            <a class="sidebar__item" href="#other-options">width</a>
-            <a class="sidebar__item" href="#other-options">maxHeight</a>
-            <a class="sidebar__item" href="#other-options">color</a>
-            <a class="sidebar__item" href="#other-options">opacity</a>
-            <a class="sidebar__item" href="#other-options">onUpdate</a>
         <a class="sidebar__title" href="#killing-creating">Killing and creating dynamically</a>
     </div>
     <div class="main">
@@ -127,8 +129,83 @@ gui.color({ name: 'Color', value: '#ff0000' }, color => {
 
 
 
+    
+        <h2 id="options">Options</h2>
 
-<h2 id="button">.button( parameters, callback )</h2>
+        <h3 id="options-name">name <span>(string)</span></h3>
+        <p>Name displayed at the top of the panel.</p>
+        
+        <h3 id="options-draggable">draggable <span>(boolean)</span></h3>
+        <p>Determines whether the panel can be moved manually.<br>Default is <span class="code-inline">false</span>.</p>
+        
+        <h3 id="options-container">container <span>(string|HTMLElement)</span></h3>
+        <p>Parent element of the panel. Can be a string selector or a DOM element.<br>Default is <span class="code-inline">document.body</span>.</p>
+        
+        <h3 id="options-position">position <span>(string)</span></h3>
+        <p>GUI instances can be positioned in any corner of the screen / container.</p>
+        <p>When multiple instances share the same position (like GUI 1 and GUI 2 in the example below), they are stacked next to each other.</p>
+        <div id="container-2" class="container">
+            <div class="element"></div>
+        </div>
+        <div class="code-button" onclick="document.getElementById('code-block-positioning').classList.toggle('code-block--hidden')">See code</div>
+        <div id="code-block-positioning" class="code-block code-block--hidden">
+            <pre><code class="language-js">const gui_1 = new GUI({
+    name: 'GUI 1',
+    width: 200
+});
+
+gui_1.button('Buttons can handle multiple lines of text.', () => {
+    element.style.backgroundColor = getRandomColor();
+});
+
+const gui_2 = new GUI({
+    name: 'GUI 2',
+    width: 200
+});
+
+gui_2.button('Button', () => element.style.backgroundColor = getRandomColor() );
+
+const gui_3 = new GUI({
+    name: 'GUI 3',
+    position: 'top left'
+});
+
+gui_3.button('Button', () => element.style.backgroundColor = getRandomColor() );
+
+const gui_4 = new GUI({
+    name: 'GUI 4',
+    position: 'bottom right'
+});
+
+gui_4.button('Button', () => element.style.backgroundColor = getRandomColor() );</code></pre>
+        </div>
+        
+        <h3 id="options-width">width <span>(number)</span></h3>
+        <p>Determines the width of the panel.<br>Default is <span class="code-inline">290</span>.</p>
+        
+        <h3 id="options-closed">closed <span>(boolean)</span></h3>
+        <p>Just like folders, GUI panels can be closed by default by setting the <span class="code-inline">closed</span> option to <span class="code-inline">true</span>.
+            <br>Default is <span class="code-inline">false</span>.</p>
+        
+        <h3 id="options-maxHeight">maxHeight <span>(number)</span></h3>
+        <p>Determines to define the maximum height of a panel beyond which scrolling is necessary.
+            <br>Default is the smallest value between the height of the window and the height of the container.</p>
+        
+        <h3 id="options-color">color <span>(string)</span></h3>
+        <p>Can be applied to GUI panels and folders to customize the background color.</p>
+        
+        <h3 id="options-opacity">opacity <span>(number)</span></h3>
+        <p>Sets the default transparency of the panel. When hovered, the panel becomes fully opaque (opacity: 1).</p>
+        
+        <h3 id="options-onUpdate">onUpdate <span>(function)</span></h3>
+        <p>Callback function, triggered each time the GUI is updated.</p>
+        
+        
+
+
+        <h2 id="methods">Methods</h2>
+
+<h3 id="button">.button( parameters, callback )</h2>
 <table cellspacing="0">
     <tr>
         <th>Parameter</th>
@@ -536,7 +613,7 @@ gui.color({ name: 'Color (object binding)', obj: color, prop: 'value' }, () => {
 
 
 
-<h2 id="vector2">vector2( parameters, callback );</h2>
+<h2 id="vector2">.vector2( parameters, callback );</h2>
 <table cellspacing="0">
     <tr>
         <th>Parameter</th>
@@ -639,12 +716,12 @@ folder_3.button('Random color', changeColor);</code></pre>
 
 
 
-<h2 id="toggleclose">toggleClose()</h2>
-<div id="container-toggleclose" class="container" style="height: 150px;">
-    <p class="note"></p>
-</div>
-<div id="code-block-toggleclose" class="code-block">
-<pre><code class="language-js">import GUI from 'perfect-gui';
+    <h2 id="toggleclose">toggleClose()</h2>
+    <div id="container-toggleclose" class="container" style="height: 150px;">
+        <p class="note"></p>
+    </div>
+    <div id="code-block-toggleclose" class="code-block">
+    <pre><code class="language-js">import GUI from 'perfect-gui';
         
 const gui_1 = new GUI();
 
@@ -657,105 +734,9 @@ const gui_2 = new GUI();
 gui_2.button('gui_1.toggleClose();', () => {
     gui_1.toggleClose();
 });</code></pre>  
-</div>
+    </div>
 
 
-
-
-<h2 id="positioning">Positioning</h2>
-
-<p>GUI instances can be positioned in any corner of the screen / container.</p>
-<p>When multiple instances share the same position (like GUI 1 and GUI 2 in the example below), they are stacked next to each other.</p>
-
-<div id="container-2" class="container">
-    <div class="element"></div>
-</div>
-
-<div class="code-button" onclick="document.getElementById('code-block-positioning').classList.toggle('code-block--hidden')">See code</div>
-<div id="code-block-positioning" class="code-block code-block--hidden">
-    <pre><code class="language-js">const gui_1 = new GUI({
-    name: 'GUI 1',
-    width: 200
-});
-
-gui_1.button('Buttons can handle multiple lines of text.', () => {
-    element.style.backgroundColor = getRandomColor();
-});
-
-const gui_2 = new GUI({
-    name: 'GUI 2',
-    width: 200
-});
-
-gui_2.button('Button', () => element.style.backgroundColor = getRandomColor() );
-
-const gui_3 = new GUI({
-    name: 'GUI 3',
-    position: 'top left'
-});
-
-gui_3.button('Button', () => element.style.backgroundColor = getRandomColor() );
-
-const gui_4 = new GUI({
-    name: 'GUI 4',
-    position: 'bottom right'
-});
-
-gui_4.button('Button', () => element.style.backgroundColor = getRandomColor() );</code></pre>
-</div>
-
-
-
-    
-<h2 id="other-options">Options</h2>
-
-<p>GUI panels can be dragged around with the <span class="code-inline">draggable</span> option.</p>
-<p>They can also have a custom width, by using the <span class="code-inline">width</span> option.</p>
-<p>Just like folders, GUI panels can be closed by default by setting the <span class="code-inline">close</span> option to <span class="code-inline">true</span>.</p>
-<p>The <span class="code-inline">maxHeight</span> option can be used to define the maximum height of a panel beyond which scrolling is necessary. Default is the smallest value between the height of the window and the height of the container.</p>
-<p>The <span class="code-inline">color</span> option can be used for both GUI panels and folders to customize their background color.</p>
-<p>The <span class="code-inline">opacity</span> option sets the default transparency of panels. When a panel is hovered over, its opacity returns to 1.</p>
-<p>The <span class="code-inline">onUpdate</span> option can be used to define a callback function, triggered each time the GUI is updated.</p>
-
-<div id="container-4" class="container"></div>
-
-<div class="code-button" onclick="document.getElementById('code-block-containers').classList.toggle('code-block--hidden')">See code</div>
-<div id="code-block-containers" class="code-block code-block--hidden">
-<pre><code class="language-js">const gui_1 = new GUI({
-    container,
-    name: 'GUI 1 (drag me!)',
-    width: 450,
-    draggable: true,
-});
-gui_1.button('Custom width using the `width` option', () => {});
-
-const gui_2 = new GUI({
-    container,
-    name: 'GUI 2 (closed, scrollable)',
-    closed: true,
-});
-
-let f1 = gui_2.folder({ name: 'folder', color: '#33329f' });
-for (let i = 0; i < 3; i ++) {
-    f1.button('btn '+ i, () => {});
-}
-let f2 = gui_2.folder({ name: 'folder', color: '#9f3293' });
-for (let i = 0; i < 3; i ++) {
-    f2.button('btn '+ i, () => {});
-}
-for (let i = 0; i < 10; i ++) {
-    gui_2.button('btn '+ i, () => {});
-}
-
-const gui_3 = new GUI({
-    container,
-    position: 'bottom right',
-    name: 'GUI 3 (custom color + opacity)',
-    color: '#ff00ff',
-    opacity: .5
-});
-gui_3.button('lorem', () => {});</code></pre>
-</div>
 
 
 

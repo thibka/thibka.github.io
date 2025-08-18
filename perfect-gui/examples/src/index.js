@@ -38,6 +38,6 @@ basics();
 
 multiple();
 
-other();
+// other();
 
 kill_create();
