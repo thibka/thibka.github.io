@@ -8,6 +8,7 @@
     width: 120px;
     padding: 40px;
     z-index: 1;
+    overflow: auto;
 }
 
 .sidebar__title {

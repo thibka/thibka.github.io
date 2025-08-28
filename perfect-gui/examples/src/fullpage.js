@@ -4,11 +4,18 @@ let gui = new GUI({ name: 'test', closed: true, onUpdate: () => console.log('ok'
 let data = { x: 0.5, y: 0.5 };
 let data2 = { x: 0.5, y: 0.5 };
 
+gui.slider({obj: data, prop: 'x', name: 'foobar'})
+gui.slider({obj: data, prop: 'x', name: 'foobar'})
+gui.slider({obj: data, prop: 'x', name: 'foobar'})
+gui.slider({obj: data, prop: 'x', name: 'foobar'})
+gui.slider({obj: data2, prop: 'x', min: 0, max: 1000, name: 'data2'})
+
 let f = gui.folder({ name: 'folder' });
 for (let i = 0; i < 10; i++) {
     f.button('Button ' + i, () => {});
 }
 
+f.slider({name: 'Test'}, () => {});
 f.slider({name: 'Test'}, () => {});
 
 let f2 = gui.folder({ name: 'folder'});

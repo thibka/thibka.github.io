@@ -122,17 +122,23 @@ h2 {
     padding-bottom: 1rem;
     margin-bottom: 3rem;
     border-bottom: 1px solid var(--green);
-    border-color: var(--grey);
 }
 
 h3 {
-    margin-top: 30px;
+    margin-top: 1.75em;
+    margin-bottom: .7em;
     font-size: var(--h3-size);
+
+    span {
+        opacity: .7;
+    }
 }
 
 p, li {
     line-height: 1.5;
     font-size: var(--body-size);
+    margin-block: 0.6em;
+    opacity: .7;
 }
 
 a {
@@ -147,6 +153,15 @@ a {
     display: inline-block;
     padding: 0 0px 3px 0;
     border-bottom: 1px solid var(--white);
+    opacity: .7;
+}
+
+.code-button:hover {
+    opacity: 1;
+}
+
+.code-block {
+    margin-bottom: 3em;
 }
 
 .code-block--hidden {
@@ -262,6 +277,7 @@ pre[class*=language-] {
     width: 120px;
     padding: 40px;
     z-index: 1;
+    overflow: auto;
 }
 
 .sidebar__title {

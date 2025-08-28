@@ -242,8 +242,6 @@ gui_4.button('Button', () => element.style.backgroundColor = getRandomColor() );
 const gui = new GUI();
 
 gui.button('Button 1', changeColor);
-// or
-// gui.button({ name: 'Button 1' }, changeColor);
 
 gui.button({ name: 'Button 2', color: '#bb3333', hoverColor: '#cc3333' }, changeColor);
 </code></pre> 
@@ -251,7 +249,7 @@ gui.button({ name: 'Button 2', color: '#bb3333', hoverColor: '#cc3333' }, change
 
 
 
-<h2 id="slider">.slider( parameters, callback )</h2>
+<h3 id="slider">.slider( parameters, callback )</h3>
 <table cellspacing="0">
     <tr>
         <th>Parameter</th>
@@ -335,7 +333,7 @@ gui.slider({ name: 'Slider with object binding', obj: position, prop: 'x', min: 
         
         
 
-<h2 id="toggle">.toggle( parameters, callback )</h2>
+<h3 id="toggle">.toggle( parameters, callback )</h3>
 <table cellspacing="0">
     <tr>
         <th>Parameter</th>
@@ -400,7 +398,7 @@ gui.toggle({ name: 'Toggle (object binding)', obj: isRound, prop: 'value' }, () 
 
 
 
-<h2 id="list">.list( parameters, callback )</h2>
+<h3 id="list">.list( parameters, callback )</h3>
 <table cellspacing="0">
     <tr>
         <th>Parameter</th>
@@ -487,7 +485,7 @@ gui.list({ name: 'Object binding (objects)', values: objectValues, obj: color2, 
 
 
 
-<h2 id="image">.image( parameters, callback )</h2>
+<h3 id="image">.image( parameters, callback )</h3>
 <table cellspacing="0">
     <tr>
         <th>Parameter</th>
@@ -555,7 +553,7 @@ imageButton.click();
 
 
 
-<h2 id="color">.color( parameters, callback )</h2>
+<h3 id="color">.color( parameters, callback )</h3>
 <table cellspacing="0">
     <tr>
         <th>Parameter</th>
@@ -613,7 +611,7 @@ gui.color({ name: 'Color (object binding)', obj: color, prop: 'value' }, () => {
 
 
 
-<h2 id="vector2">.vector2( parameters, callback );</h2>
+<h3 id="vector2">.vector2( parameters, callback );</h3>
 <table cellspacing="0">
     <tr>
         <th>Parameter</th>
@@ -666,7 +664,7 @@ gui.vector2({ name: 'Position',
 
 
 
-<h2 id="folders">folder( parameters )</h2>
+<h3 id="folders">.folder( parameters )</h3>
 <table cellspacing="0">
     <tr>
         <th>Parameter</th>
@@ -716,7 +714,7 @@ folder_3.button('Random color', changeColor);</code></pre>
 
 
 
-    <h2 id="toggleclose">toggleClose()</h2>
+    <h3 id="toggleclose">.toggleClose()</h3>
     <div id="container-toggleclose" class="container" style="height: 150px;">
         <p class="note"></p>
     </div>
