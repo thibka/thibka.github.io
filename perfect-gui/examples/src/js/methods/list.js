@@ -9,14 +9,14 @@ export default function list() {
     });
 
     // Approach 1, using a callback function
-    gui.list({ name: 'Value & callback', values: ['red', 'pink', 'yellow', 'blue'], value: 0 }, selected_value => {
+    gui.list({ label: 'Value & callback', values: ['red', 'pink', 'yellow', 'blue'], value: 0 }, selected_value => {
         element.style.backgroundColor = selected_value;
     });
 
     // Approach 2, using object binding with an array of strings
     const values = ['red', 'pink', 'yellow', 'blue'];
     const color = { value: 0 };
-    gui.list({ name: 'Object binding (strings)', values, obj: color, prop: 'value' }, 
+    gui.list({ label: 'Object binding (strings)', values, obj: color, prop: 'value' }, 
         (value, index) => {
             element.style.backgroundColor = value;
         }
@@ -27,12 +27,12 @@ export default function list() {
     // The intrinsec value of each item is the "value" property
     const color2 = { value: '#993333' };
     const objectValues = [
-        {name: 'reddish', value: '#993333'}, 
-        {name: 'pinkish', value: '#aa33aa'}, 
-        {name: 'yellowish', value: '#999933'}, 
-        {name: 'blueish', value: '#333399'}
+        {label: 'reddish', value: '#993333'}, 
+        {label: 'pinkish', value: '#aa33aa'}, 
+        {label: 'yellowish', value: '#999933'}, 
+        {label: 'blueish', value: '#333399'}
     ];
-    gui.list({ name: 'Object binding (objects)', values: objectValues, obj: color2, prop: 'value' }, 
+    gui.list({ label: 'Object binding (objects)', values: objectValues, obj: color2, prop: 'value' }, 
         (obj, index) => {
             element.style.backgroundColor = obj.value;
         }

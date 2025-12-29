@@ -6,19 +6,18 @@ window.position = {
 };
 
 const gui = new GUI({
-    name: 'Single',
+    label: 'Single',
 });
 
-const fa = gui.folder({ name: 'folder' });
-console.log(fa);
+const fa = gui.folder({ label: 'folder' });
 
 fa.button({
-    name: 'Button',
+    label: 'Button',
 },() => {
         console.log('ok');
     })
 fa.vector2({
-    name: 'Position',
+    label: 'Position',
     x: { obj: window.position, prop: 'x', min: -.01, max: .01 },
     y: { obj: window.position, prop: 'y', min: -.01, max: .01 }
 })

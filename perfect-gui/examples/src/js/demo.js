@@ -10,20 +10,20 @@ export default function()
     const gui = new GUI({
         draggable: true,
         container: '#container-0',
-        name: 'Control panel'
+        label: 'Control panel'
     });
 
     gui.button("Randomize color", () => {
         element.style.backgroundColor = get_random_color();
     });
-    gui.slider({name: 'Intensity', min: .1, max: 2, value: .75, step: .01 }, (value) => {
+    gui.slider({label: 'Intensity', min: .1, max: 2, value: .75, step: .01 }, (value) => {
         element.style.transform = `scale(${value})`;
     });
-    gui.slider({name: 'Scale', min: 0, max: 50, value: 25, step: 25 }, (value) => {
+    gui.slider({label: 'Scale', min: 0, max: 50, value: 25, step: 25 }, (value) => {
         element.style.borderRadius = `${value}%`;
     });
 
-    let folder1 = gui.folder({name: 'Texture'});
+    let folder1 = gui.folder({label: 'Texture'});
 
     folder1.image(
         'The officer',
@@ -41,7 +41,7 @@ export default function()
         () => {}
     );
 
-    let folder2 = gui.folder({name: 'Normals', closed: true});
+    let folder2 = gui.folder({label: 'Normals', closed: true});
     folder2.button("Random element color", () => {});
 
     gui.toggle("Rim light", true, (state) => {});
@@ -55,7 +55,7 @@ export default function()
     const gui2 = new GUI({
         draggable: true,
         container: '#container-0',
-        name: 'Position panel'
+        label: 'Position panel'
     });
     gui2.vector2('Position', {
         x: {min: -10, max: 10, object: position, prop: 'x'},

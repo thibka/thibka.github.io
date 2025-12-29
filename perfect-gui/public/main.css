@@ -21,7 +21,8 @@ code[class*=language-],pre[class*=language-]{color:#f8f8f2;background:0 0;text-s
     font-size: 1.5rem;
 }
 
-html, body {
+html,
+body {
     height: 100%;
     overscroll-behavior: none;
 }
@@ -105,7 +106,8 @@ body {
     }
 }
 
-h1, h2 {
+h1,
+h2 {
     font-family: var(--sans), sans-serif;
     font-weight: 600;
 }
@@ -134,7 +136,8 @@ h3 {
     }
 }
 
-p, li {
+p,
+li {
     line-height: 1.5;
     font-size: var(--body-size);
     margin-block: 0.6em;
@@ -162,10 +165,35 @@ a {
 
 .code-block {
     margin-bottom: 3em;
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: 0.6s grid-template-rows ease;
+
+    >div {
+        overflow: hidden;
+    }
+
+    &.hidden {
+        grid-template-rows: 0fr;
+    }
 }
 
-.code-block--hidden {
-    display: none;
+div:has(pre) {
+    border-radius: 5px;
+}
+
+pre[class*=language-] {
+    padding-inline: 30px;
+    padding-block: 30px;
+    border-radius: 5px;
+    font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    pre[class*=language-] {
+        padding-inline: 20px;
+        padding-block: 3vw;
+    }
 }
 
 .code-inline {
@@ -176,24 +204,9 @@ a {
     border-radius: 3px;
 }
 
-div:has(pre) {
-    border-radius: 5px;
-}
-
-pre[class*=language-] {
-    padding: 30px; 
-    border-radius: 5px;
-    font-size: 1.5rem;
-}
-
-@media (max-width: 768px) {
-    pre[class*=language-] {
-        padding: 20px 3vw; 
-    }
-}
-
 .container {
-    --bg: #161616; /*#1b1b1b*/
+    --bg: #161616;
+    /*#1b1b1b*/
     border: 1px solid var(--col);
     background-color: var(--bg);
     transition: .3s all ease;
@@ -219,11 +232,13 @@ pre[class*=language-] {
 
         /* base dotted grid */
         radial-gradient(circle at var(--r) var(--r), var(--dot) var(--r), transparent calc(var(--r) + 0.5px));
-        
-        background-size:
-            calc(var(--gap) * 5) calc(var(--gap) * 5),  /* intersections */
-            var(--gap) var(--gap);                      /* base grid */
-        background-repeat: repeat;
+
+    background-size:
+        calc(var(--gap) * 5) calc(var(--gap) * 5),
+        /* intersections */
+        var(--gap) var(--gap);
+    /* base grid */
+    background-repeat: repeat;
 }
 
 .container--small {
@@ -265,8 +280,6 @@ pre[class*=language-] {
     color: var(--black);
     font-size: 1rem;
 }
-
-
 .sidebar {
     position: fixed;
     top: 0;

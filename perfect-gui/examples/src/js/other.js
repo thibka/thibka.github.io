@@ -6,7 +6,7 @@ const container = '#container-4';
 export default function other() {
     const gui_1 = new GUI({
         container,
-        name: 'GUI 1 (drag me!)',
+        label: 'GUI 1 (drag me!)',
         width: 450,
         draggable: true,
     });
@@ -14,15 +14,15 @@ export default function other() {
 
     const gui_2 = new GUI({
         container,
-        name: 'GUI 2 (closed, scrollable)',
+        label: 'GUI 2 (closed, scrollable)',
         closed: true,
     });
 
-    let f1 = gui_2.folder({ name: 'folder', color: '#33329f' });
+    let f1 = gui_2.folder({ label: 'folder', color: '#33329f' });
     for (let i = 0; i < 3; i ++) {
         f1.button('btn '+ i, () => {});
     }
-    let f2 = gui_2.folder({ name: 'folder', color: '#9f3293' });
+    let f2 = gui_2.folder({ label: 'folder', color: '#9f3293' });
     for (let i = 0; i < 3; i ++) {
         f2.button('btn '+ i, () => {});
     }
@@ -33,7 +33,7 @@ export default function other() {
     const gui_3 = new GUI({
         container,
         position: 'bottom right',
-        name: 'GUI 3 (custom color + opacity)',
+        label: 'GUI 3 (custom color + opacity)',
         color: '#ff00ff',
         opacity: .5
     });

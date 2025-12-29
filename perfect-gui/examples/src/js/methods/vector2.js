@@ -12,7 +12,7 @@ export default function vector2() {
         container: '#container-vector2',
     });
 
-    gui.vector2({ name: 'Position',
+    gui.vector2({ label: 'Position',
         x: { obj: position, prop: 'x', min: -50, max: 50 },
         y: { obj: position, prop: 'y', min: -50, max: 50 },
     }, (x, y) => {

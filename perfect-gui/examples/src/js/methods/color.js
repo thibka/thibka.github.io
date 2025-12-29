@@ -7,12 +7,12 @@ export default function color() {
         container: '#container-color'
     });
 
-    gui.color({ name: 'Color (value & callback)', value: '#06ff89' }, color => {
+    gui.color({ label: 'Color (value & callback)', value: '#06ff89' }, color => {
         element.style.backgroundColor = color;
     });
 
     const color = { value: '#06ff89' };
-    gui.color({ name: 'Color (object binding)', obj: color, prop: 'value' }, () => {
+    gui.color({ label: 'Color (object binding)', obj: color, prop: 'value' }, () => {
         element.style.backgroundColor = color.value;
     });
 }

@@ -9,11 +9,11 @@ export default function vectors() {
     const element = document.querySelector('#container-vectors .element');
 
     const gui = new GUI({
-        name: 'Vectors',
+        label: 'Vectors',
         container: '#container-vectors',
     });
 
-    gui.vector2({ name: 'Position', data: {
+    gui.vector2({ label: 'Position', data: {
         x: { object: position, prop: 'x', min: -50, max: 50 },
         y: { object: position, prop: 'y', min: -50, max: 50 },
     }});

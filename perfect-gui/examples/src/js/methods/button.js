@@ -13,7 +13,7 @@ export default function button() {
         element.style.backgroundColor = getRandomColor();
     });
 
-    gui.button({name: 'Button 2', color: '#bb3333', hoverColor: '#cc3333'}, () => {
+    gui.button({label: 'Button 2', color: '#bb3333', hoverColor: '#cc3333'}, () => {
         element.style.backgroundColor = getRandomColor();
     });
 }

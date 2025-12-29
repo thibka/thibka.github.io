@@ -8,13 +8,13 @@ export default function other() {
 
     let gui_1 = new GUI({
         container,
-        name: 'GUI 1',
+        label: 'GUI 1',
     });
 
     gui_1.button('Create GUI panel', () => {
         guis[guis.length] = new GUI({
             container,
-            name: 'Created GUI',
+            label: 'Created GUI',
             position: 'bottom left',
             width: 150,
             color: 'red'
