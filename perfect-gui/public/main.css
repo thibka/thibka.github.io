@@ -287,10 +287,11 @@ pre[class*=language-] {
     border-right: 1px solid var(--grey);
     height: 100%;
     background-color: #1b1b1b;
-    width: 120px;
+    width: 200px;
     padding: 40px;
     z-index: 1;
     overflow: auto;
+    box-sizing: border-box;
 }
 
 .sidebar__title {
@@ -311,11 +312,9 @@ pre[class*=language-] {
 
 .sidebar__item:hover {
     opacity: 1;
-} 
-
-.sidebar__item:first-of-type {
-    
 }
+
+.sidebar__item:first-of-type {}
 
 .sidebar__item:last-of-type {
     margin-bottom: 4rem;
@@ -353,4 +352,28 @@ th, td {
 th:last-of-type,
 td:last-of-type {
     border-right: none;
+}
+.custom-scrollbar::-webkit-scrollbar,
+.custom-scrollbar *::-webkit-scrollbar {
+    width: 12px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track,
+.custom-scrollbar *::-webkit-scrollbar-track {
+    background: var(--black);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb,
+.custom-scrollbar *::-webkit-scrollbar-thumb {
+    background: var(--grey);
+    border-radius: 50px;
+    box-sizing: border-box;
+    border: 3px solid var(--black);
+}
+
+/* Firefox */
+@-moz-document url-prefix() {
+    .custom-scrollbar {
+        scrollbar-color: var(--grey) var(--black);
+    }
 }
