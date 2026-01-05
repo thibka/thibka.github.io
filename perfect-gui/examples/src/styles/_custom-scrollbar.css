@@ -1,0 +1,24 @@
+.custom-scrollbar::-webkit-scrollbar,
+.custom-scrollbar *::-webkit-scrollbar {
+    width: 12px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track,
+.custom-scrollbar *::-webkit-scrollbar-track {
+    background: var(--black);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb,
+.custom-scrollbar *::-webkit-scrollbar-thumb {
+    background: var(--grey);
+    border-radius: 50px;
+    box-sizing: border-box;
+    border: 3px solid var(--black);
+}
+
+/* Firefox */
+@-moz-document url-prefix() {
+    .custom-scrollbar {
+        scrollbar-color: var(--grey) var(--black);
+    }
+}

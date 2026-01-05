@@ -2,6 +2,7 @@ import './styles/prism.css';
 import './styles/styles.css';
 import './styles/_sidebar.css';
 import './styles/_table.css';
+import './styles/_custom-scrollbar.css';
 //import demo from './js/demo';
 import './js/prism';
 import basics from './js/methods/basics';
