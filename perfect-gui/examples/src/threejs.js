@@ -64,8 +64,8 @@ animate();
 
 const gui = new GUI();
 
-gui.threeMaterial({ name: 'material', obj: material, closed: true });
-gui.threeMaterial({ name: 'material2', obj: material2 });
-gui.threeMaterial({ name: 'material3', obj: material3 });
+gui.threeMaterial({ label: 'material', obj: material, closed: true });
+gui.threeMaterial({ label: 'material2', obj: material2 });
+gui.threeMaterial({ label: 'material3', obj: material3 });
 scene.background = new THREE.Color('black')
-gui.threeColor({name: 'background', obj: scene.background})
+gui.threeColor({label: 'background', obj: scene.background})

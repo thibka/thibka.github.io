@@ -2,8 +2,10 @@ import GUI from '../../perfect-gui/index';
 import getRandomColor from '../getRandomColor';
 
 export default function basics() {
-    const position = {
+    const params = {
         x: 0,
+        y: 0,
+        scale: 1,
     };
 
     const element = document.querySelector('#container-1 .element');
@@ -18,16 +20,16 @@ export default function basics() {
         element.style.backgroundImage = 'none';
     });
 
-    gui.slider({ label: 'Slider (simple callback)', value: 1 }, 
+    gui.slider({ label: 'Slider 1 (callback)', value: 1 }, 
         value => {
             element.style.opacity = value;
         }
     );
 
-    gui.slider({ label: 'Slider 2 (object binding)', obj: position, prop: 'x', min: -30, max: 30, step: .1 },
+    gui.slider({ label: 'Slider 2 (binding)', obj: params, prop: 'scale', min: .5, max: 2, step: .01 },
         () => {
-            console.log("direct callback slider");
-            element.style.transform = `translateX(${position.x}px)`;
+            console.log('direct callback slider');
+            element.style.scale = `${params.scale}`;
         }
     );
 
@@ -65,5 +67,13 @@ export default function basics() {
     gui.color({ label: 'Color', value: '#06ff89'}, color => {
         element.style.backgroundImage = 'none';
         element.style.backgroundColor = color;
+    });
+
+    const folder = gui.folder({ label: 'Folder', closed: true });
+    folder.vector2({ label: 'Position',
+        x: { obj: params, prop: 'x', min: -50, max: 50 },
+        y: { obj: params, prop: 'y', min: -50, max: 50 },
+    }, (x, y) => {
+        element.style.translate = `${x}px ${-y}px`;
     });
 }

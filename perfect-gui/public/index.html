@@ -29,7 +29,7 @@
         href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/16x16.png">
     <link rel="shortcut icon"
         href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/180x180.png">
-<script defer src="./main.bundle.js?c1dcb54c351f12a1417d"></script><link href="main.css?c1dcb54c351f12a1417d" rel="stylesheet"></head>
+<script defer src="./main.bundle.js?f3c1a11257348695debe"></script><link href="main.css?f3c1a11257348695debe" rel="stylesheet"></head>
 
 <body>
     <div class="wrapper">
@@ -93,12 +93,17 @@ const gui = new GUI({ label: 'Basics' });
 
 gui.button('Button', changeColor);
 
-gui.slider({ label: 'Slider (simple callback)', value: 1 }, 
-    value => element.style.opacity = value 
-);
-
+// Simple callback
 gui.slider({ 
-    label: 'Slider 2 (object binding)', 
+    label: 'Slider 1', 
+    value: 1 
+}, value => {
+    element.style.opacity = value 
+});
+
+// Object binding
+gui.slider({ 
+    label: 'Slider 2 (binding)', 
     obj: position, 
     prop: 'x', 
     min: -30, 
@@ -131,6 +136,14 @@ gui.image({ label: 'Image 3', path: 'path/to/image-3.jpg' }, e => {
 
 gui.color({ label: 'Color', value: '#ff0000' }, color => {
     element.style.backgroundColor = color;
+});
+
+const folder = gui.folder({ label: 'Folder', closed: true });
+folder.vector2({ label: 'Position',
+    x: { obj: position, prop: 'x', min: -50, max: 50 },
+    y: { obj: position, prop: 'y', min: -50, max: 50 },
+}, (x, y) => {
+    element.style.transform = `translate(${x}px, ${-y}px)`;
 });
 </code></pre>
                 </div>
