@@ -19,6 +19,7 @@ import toggleClose from './js/methods/toggleClose';
 import multiple from './js/multiple';
 import other from './js/other';
 import kill_create from './js/kill_create';
+import sidebar from './js/sidebar';
 
 let subtitle = ['probably not', 'maybe not so', 'almost', 'nearly'];
 subtitle = subtitle[Math.floor(Math.random() * subtitle.length)];
@@ -42,3 +43,4 @@ basics();
 // other();
 
 kill_create();
+sidebar();
