@@ -1,6 +1,4 @@
 import GUI from '../../perfect-gui/index';
-import getRandomColor from '../getRandomColor';
-
 export default function slider() {
     const element = document.querySelector('#container-slider .element');
     const position = {
@@ -12,13 +10,13 @@ export default function slider() {
         draggable: true
     });
 
-    gui.slider({ name: 'Simple slider (value & callback)', value: 1 }, 
+    gui.slider({ label: 'Slider 1 (callback)', value: 1 }, 
         value => {
             element.style.opacity = value;
         }
     );
 
-    gui.slider({ name: 'Slider with object binding', obj: position, prop: 'x', min: -30, max: 30 },
+    gui.slider({ label: 'Slider 2 (object binding)', obj: position, prop: 'x', min: -30, max: 30 },
         () => {
             element.style.transform = `translateX(${position.x}px)`;
         }
