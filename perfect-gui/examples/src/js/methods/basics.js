@@ -1,79 +1,118 @@
 import GUI from '../../perfect-gui/index';
-import getRandomColor from '../getRandomColor';
+import * as THREE from 'three';
 
 export default function basics() {
-    const params = {
-        x: 0,
-        y: 0,
-        scale: 1,
-    };
+    // ------------------------------------------------
+    // 1. Setup Three.js Scene
+    // ------------------------------------------------
+    const container = document.querySelector('#container-1');
+    const width = container.clientWidth - 290;
+    const height = container.clientHeight;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 100);
+    camera.position.z = 5;
 
-    const element = document.querySelector('#container-1 .element');
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
 
+    // Object
+    const geometry = new THREE.TorusKnotGeometry(1, 0.35, 160, 32);
+    const material = new THREE.MeshStandardMaterial({ 
+        color: '#ffffff', 
+        wireframe: false,
+        roughness: 0.1,
+        metalness: 0.3
+    });
+
+    const textureLoader = new THREE.TextureLoader();
+    textureLoader.load('https://threejs.org/examples/textures/2294472375_24a3b8ef46_o.jpg', (texture) => {
+        texture.mapping = THREE.EquirectangularReflectionMapping;
+        texture.colorSpace = THREE.SRGBColorSpace;
+        scene.environment = texture;
+    });
+
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(0, 0, 0);
+    scene.add(mesh);
+
+    // Light
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.05);
+    scene.add(ambientLight);
+    const pointLight = new THREE.PointLight(0xffffff, 10);
+    pointLight.position.set(0, 0, 4);
+    scene.add(pointLight);
+
+    // Animation Loop
+    function animate(time) {
+        mesh.rotation.x = time * 0.0005;
+        mesh.rotation.y = time * 0.0005;
+        mesh.rotation.z = time * 0.0005;
+        renderer.render(scene, camera);
+    }
+    renderer.setAnimationLoop(animate);
+
+    // Resize handling
+    window.addEventListener('resize', () => {
+        const width = container.clientWidth - 290;
+        const height = container.clientHeight;
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+    });
+
+    // ------------------------------------------------
+    // 2. Setup GUI
+    // ------------------------------------------------
     const gui = new GUI({
-        label: 'Basics',
+        label: 'Three.js mesh',
         container: '#container-1'
     });
 
-    gui.button('Button', () => {
-        element.style.backgroundColor = getRandomColor();
-        element.style.backgroundImage = 'none';
+    gui.button({ label: 'Randomize color' }, () => {
+        const col = `#${Math.floor(Math.random() * 16777215).toString(16)}`;        
+        material.color.set(col);
     });
 
-    gui.slider({ label: 'Slider 1 (callback)', value: 1 }, 
-        value => {
-            element.style.opacity = value;
-        }
-    );
-
-    gui.slider({ label: 'Slider 2 (binding)', obj: params, prop: 'scale', min: .5, max: 2, step: .01 },
-        () => {
-            console.log('direct callback slider');
-            element.style.scale = `${params.scale}`;
-        }
-    );
-
-    gui.toggle({ label: 'Toggle', value: true }, state => {
-        if ( state ) element.classList.remove('round');
-        else element.classList.add('round');
+    gui.color({ label: 'Color', value: '#ffffff' }, color => {
+        material.color.set(color);
     });
 
-    gui.list({ label: 'List', values: ['red', 'pink', 'yellow', 'blue'] }, option => {
-        element.style.backgroundImage = 'none';
-        element.style.backgroundColor = option;
+    gui.list({ label: 'Preset', values: ['-', 'red', 'pink', 'yellow', 'blue'], value: '-' }, value => {
+        if (value != '-') {
+            material.color.set(value);
+        }
     });
 
-    gui.image({ label: 'Image 1',
-        path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/DALL·E-2022-11-13-20.11.16---portrait-of-a-squirrel-in-an-officier-suit,-style-of-a-Rembrandt-painting.jpg'},
-        evt => {
-            element.style.backgroundImage = `url(${evt.path})`;
-        }
-    );
+    //gui.slider({ label: 'Roughness', obj: material, prop: 'roughness', min: 0, max: 1, step: 0.01 });
+    gui.slider({ label: 'Metalness', obj: material, prop: 'metalness', min: 0, max: 1, step: 0.01 });
 
-    gui.image({ label: 'Image 2',
-        path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/DALL·E-2022-11-13-20.11.52---a-blonde-girl-riding-a-whale-in-the-style-of-hopper.jpg'},
-        evt => {
-            element.style.backgroundImage = `url(${evt.path})`;
-        }
-        );
+    gui.toggle({ label: 'Wireframe', value: false }, state => {
+        material.wireframe = state;
+    });
+
+    gui.image({ label: 'HDR1', path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/hdr1.jpg', selected: true }, changeEnvMap);
+    gui.image({ label: 'HDR2', path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/hdr2.jpg' }, changeEnvMap);
+    gui.image({ label: 'HDR3', path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/hdr3.jpg' }, changeEnvMap);
+    
+    const folder = gui.folder({ label: 'Point light', closed: true });
+    folder.vector2({ label: 'X / Y position',
+        x: { obj: pointLight.position, prop: 'x', min: -5, max: 5 },
+        y: { obj: pointLight.position, prop: 'y', min: -5, max: 5 },
+    }, () => {
+        pointLight.position.x = pointLight.position.x;
+        pointLight.position.y = pointLight.position.y;
+    });
+
+    function changeEnvMap(img) {
+        console.log(img);
         
-    gui.image({ label: 'Image 3',
-        path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/DALL·E-2022-11-13-20.13.55---1-blonde-haired-girl-with-her-orange-cat,-watching-the-whales-in-Tadoussac,-Canada.-In-the-style-of-an-oil-painting..jpg'},
-        evt => {
-            element.style.backgroundImage = `url(${evt.path})`;
-        }
-    );
-
-    gui.color({ label: 'Color', value: '#06ff89'}, color => {
-        element.style.backgroundImage = 'none';
-        element.style.backgroundColor = color;
-    });
-
-    const folder = gui.folder({ label: 'Folder', closed: true });
-    folder.vector2({ label: 'Position',
-        x: { obj: params, prop: 'x', min: -50, max: 50 },
-        y: { obj: params, prop: 'y', min: -50, max: 50 },
-    }, (x, y) => {
-        element.style.translate = `${x}px ${-y}px`;
-    });
+        const textureLoader = new THREE.TextureLoader();
+        textureLoader.load(img.path, (texture) => {
+            texture.mapping = THREE.EquirectangularReflectionMapping;
+            texture.colorSpace = THREE.SRGBColorSpace;
+            mesh.material.envMap = texture;
+        });
+    }
 }

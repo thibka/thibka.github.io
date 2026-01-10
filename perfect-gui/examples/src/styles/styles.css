@@ -4,7 +4,7 @@
     --black: rgb(17, 17, 17);
     --white: rgb(246, 246, 232);
     --grey: #ffffff33;
-    --green: #06ff89;
+    --accent: #ffffff;
     --sans: 'General Sans', sans-serif;
     --h1-size: 3rem;
     --h2-size: 2.5rem;
@@ -67,6 +67,7 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-top: 110px;
+    margin-bottom: 65px;
 }
 
 @media (max-width: 600px) {
@@ -90,7 +91,7 @@ body {
 
 .link {
     padding: 10px;
-    border-bottom: 1px solid var(--green);
+    border-bottom: 1px solid var(--accent);
     margin-left: 20px;
     font-size: var(--body-size);
     display: inline-block;
@@ -120,7 +121,7 @@ h2 {
     font-size: var(--h2-size);
     padding-bottom: 1rem;
     margin-bottom: 3rem;
-    border-bottom: 1px solid var(--green);
+    border-bottom: 1px solid var(--accent);
 }
 
 h3 {
@@ -238,6 +239,10 @@ pre[class*=language-] {
     background-repeat: repeat;
 }
 
+#container-1 {
+    height: 470px;
+}
+
 .container--small {
     height: 200px;
 }
@@ -251,7 +256,7 @@ pre[class*=language-] {
     right: 0;
     bottom: 0;
     margin: auto;
-    background-color: var(--green);
+    background-color: var(--accent);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
