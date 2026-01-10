@@ -6,19 +6,31 @@ export default function basics() {
     // 1. Setup Three.js Scene
     // ------------------------------------------------
     const container = document.querySelector('#container-1');
-    const width = container.clientWidth - 290;
-    const height = container.clientHeight;
+    let canvasWidth, canvasHeight;
+
+    function getCanvasSize() {
+        if (window.innerWidth < 540) {
+            return { width: container.clientWidth, height: 300 };
+        } else if (window.innerWidth < 640) {
+            return { width: container.clientWidth - 100, height: container.clientHeight };
+        } else {
+            return { width: container.clientWidth - 290, height: container.clientHeight };
+        }
+    }
+
+    ({ width: canvasWidth, height: canvasHeight } = getCanvasSize());
+
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 100);
+    const camera = new THREE.PerspectiveCamera(50, canvasWidth / canvasHeight, 0.1, 100);
     camera.position.z = 5;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(width, height);
+    renderer.setSize(canvasWidth, canvasHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
     // Object
-    const geometry = new THREE.TorusKnotGeometry(1, 0.35, 160, 32);
+    const geometry = new THREE.TorusKnotGeometry(1, 0.2, 160, 32);
     const material = new THREE.MeshStandardMaterial({ 
         color: '#ffffff', 
         wireframe: false,
@@ -30,7 +42,7 @@ export default function basics() {
     textureLoader.load('https://threejs.org/examples/textures/2294472375_24a3b8ef46_o.jpg', (texture) => {
         texture.mapping = THREE.EquirectangularReflectionMapping;
         texture.colorSpace = THREE.SRGBColorSpace;
-        scene.environment = texture;
+        material.envMap = texture;
     });
 
     const mesh = new THREE.Mesh(geometry, material);
@@ -38,9 +50,7 @@ export default function basics() {
     scene.add(mesh);
 
     // Light
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.05);
-    scene.add(ambientLight);
-    const pointLight = new THREE.PointLight(0xffffff, 10);
+    const pointLight = new THREE.PointLight(0xffffff, 20);
     pointLight.position.set(0, 0, 4);
     scene.add(pointLight);
 
@@ -55,11 +65,10 @@ export default function basics() {
 
     // Resize handling
     window.addEventListener('resize', () => {
-        const width = container.clientWidth - 290;
-        const height = container.clientHeight;
-        camera.aspect = width / height;
+        ({ width: canvasWidth, height: canvasHeight } = getCanvasSize());
+        camera.aspect = canvasWidth / canvasHeight;
         camera.updateProjectionMatrix();
-        renderer.setSize(width, height);
+        renderer.setSize(canvasWidth, canvasHeight);
     });
 
     // ------------------------------------------------
@@ -106,8 +115,6 @@ export default function basics() {
     });
 
     function changeEnvMap(img) {
-        console.log(img);
-        
         const textureLoader = new THREE.TextureLoader();
         textureLoader.load(img.path, (texture) => {
             texture.mapping = THREE.EquirectangularReflectionMapping;

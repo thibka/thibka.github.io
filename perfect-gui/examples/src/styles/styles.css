@@ -241,6 +241,14 @@ pre[class*=language-] {
 
 #container-1 {
     height: 470px;
+    display: flex;
+    align-items: flex-end;
+}
+
+@media (max-width: 768px) {
+    #container-1 {
+        height: 500px;
+    }
 }
 
 .container--small {
