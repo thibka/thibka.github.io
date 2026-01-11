@@ -31,8 +31,8 @@ export default function basics() {
 
     // Object
     const geometry = new THREE.TorusKnotGeometry(1, 0.2, 160, 32);
-    const material = new THREE.MeshStandardMaterial({ 
-        color: '#ffffff', 
+    const material = new THREE.MeshStandardMaterial({
+        color: '#ffffff',
         wireframe: false,
         roughness: 0.1,
         metalness: 0.3
@@ -65,10 +65,11 @@ export default function basics() {
 
     // Resize handling
     window.addEventListener('resize', resize);
-    setTimeout(resize, 100);
+    const resizeObserver = new ResizeObserver(() => resize());
+    resizeObserver.observe(container);
 
     function resize() {
-({ width: canvasWidth, height: canvasHeight } = getCanvasSize());
+        ({ width: canvasWidth, height: canvasHeight } = getCanvasSize());
         camera.aspect = canvasWidth / canvasHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(canvasWidth, canvasHeight);
@@ -83,7 +84,7 @@ export default function basics() {
     });
 
     gui.button({ label: 'Randomize color' }, () => {
-        const col = `#${Math.floor(Math.random() * 16777215).toString(16)}`;        
+        const col = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
         material.color.set(col);
     });
 
@@ -107,9 +108,10 @@ export default function basics() {
     gui.image({ label: 'HDR1', path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/hdr1.jpg', selected: true }, changeEnvMap);
     gui.image({ label: 'HDR2', path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/hdr2.jpg' }, changeEnvMap);
     gui.image({ label: 'HDR3', path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/hdr3.jpg' }, changeEnvMap);
-    
+
     const folder = gui.folder({ label: 'Point light', closed: true });
-    folder.vector2({ label: 'X / Y position',
+    folder.vector2({
+        label: 'X / Y position',
         x: { obj: pointLight.position, prop: 'x', min: -5, max: 5 },
         y: { obj: pointLight.position, prop: 'y', min: -5, max: 5 },
     }, () => {
