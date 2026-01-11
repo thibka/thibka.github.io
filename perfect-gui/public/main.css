@@ -89,6 +89,10 @@ body {
     margin-bottom: 40px;
 }
 
+.link:first-child {
+    margin-left: 0;
+}
+
 @media (max-width: 600px) {
     .link {
         margin-bottom: 0;
