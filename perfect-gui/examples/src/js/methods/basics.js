@@ -64,12 +64,15 @@ export default function basics() {
     renderer.setAnimationLoop(animate);
 
     // Resize handling
-    window.addEventListener('resize', () => {
-        ({ width: canvasWidth, height: canvasHeight } = getCanvasSize());
+    window.addEventListener('resize', resize);
+    setTimeout(resize, 100);
+
+    function resize() {
+({ width: canvasWidth, height: canvasHeight } = getCanvasSize());
         camera.aspect = canvasWidth / canvasHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(canvasWidth, canvasHeight);
-    });
+    }
 
     // ------------------------------------------------
     // 2. Setup GUI
