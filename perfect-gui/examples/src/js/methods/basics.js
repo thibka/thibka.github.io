@@ -9,7 +9,7 @@ export default function basics() {
     let canvasWidth, canvasHeight;
 
     function getCanvasSize() {
-        if (window.innerWidth < 540) {
+        if (window.innerWidth < 600) {
             return { width: container.clientWidth, height: 300 };
         } else if (window.innerWidth < 640) {
             return { width: container.clientWidth - 100, height: container.clientHeight };

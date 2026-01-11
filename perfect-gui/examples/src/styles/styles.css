@@ -62,19 +62,7 @@ body {
     }
 }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 110px;
-    margin-bottom: 65px;
-}
-
 @media (max-width: 600px) {
-    .header {
-        flex-direction: column;
-    }
-
     .title {
         text-align: center;
     }
@@ -247,7 +235,7 @@ pre[class*=language-] {
 
 @media (max-width: 768px) {
     #container-1 {
-        height: 500px;
+        height: 600px;
     }
 }
 
