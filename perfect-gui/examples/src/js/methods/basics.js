@@ -34,8 +34,8 @@ export default function basics() {
     const material = new THREE.MeshStandardMaterial({ 
         color: '#ffffff', 
         wireframe: false,
-        roughness: 0.1,
-        metalness: 0.3
+        roughness: 0.0,
+        metalness: 0.7
     });
 
     const textureLoader = new THREE.TextureLoader();
