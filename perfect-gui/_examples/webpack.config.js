@@ -14,7 +14,7 @@ let config = {
 		demo: './src/demo.js',
 	},
 	output: {
-		path: path.resolve(__dirname, '../public'),
+		path: path.resolve(__dirname, '../'),
 		filename: './[name].bundle.js'
 	},
 	module: {

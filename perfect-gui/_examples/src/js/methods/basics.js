@@ -79,7 +79,7 @@ export default function basics() {
     // 2. Setup GUI
     // ------------------------------------------------
     const gui = new GUI({
-        label: 'Three.js mesh',
+        label: 'Basics',
         container: '#container-1'
     });
 
@@ -98,8 +98,7 @@ export default function basics() {
         }
     });
 
-    //gui.slider({ label: 'Roughness', obj: material, prop: 'roughness', min: 0, max: 1, step: 0.01 });
-    gui.slider({ label: 'Metalness', obj: material, prop: 'metalness', min: 0, max: 1, step: 0.01 });
+    gui.slider({ label: 'Metalness', obj: material, prop: 'metalness' });
 
     gui.toggle({ label: 'Wireframe', value: false }, state => {
         material.wireframe = state;
@@ -110,13 +109,11 @@ export default function basics() {
     gui.image({ label: 'HDR3', path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/hdr3.jpg' }, changeEnvMap);
 
     const folder = gui.folder({ label: 'Point light', closed: true });
+
     folder.vector2({
         label: 'X / Y position',
         x: { obj: pointLight.position, prop: 'x', min: -5, max: 5 },
         y: { obj: pointLight.position, prop: 'y', min: -5, max: 5 },
-    }, () => {
-        pointLight.position.x = pointLight.position.x;
-        pointLight.position.y = pointLight.position.y;
     });
 
     function changeEnvMap(img) {

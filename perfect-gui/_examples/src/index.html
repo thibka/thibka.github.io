@@ -9,7 +9,7 @@
 
     <meta name="author" content="Thibaut Foussard">
     <meta name="description" content="Nice and simple GUI for JavaScript">
-    <link rel="canonical" href="https://thibka.github.io/perfect-gui/public/">
+    <link rel="canonical" href="https://thibka.github.io/perfect-gui/">
 
     <meta property="og:image"
         content="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/social.png">
@@ -17,7 +17,7 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="628">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://thibka.github.io/perfect-gui/public/">
+    <meta property="og:url" content="https://thibka.github.io/perfect-gui/">
     <meta property="og:title" content="Perfect GUI">
     <meta property="og:description" content="Nice and simple GUI for JavaScript">
 
@@ -29,7 +29,7 @@
         href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/16x16.png">
     <link rel="shortcut icon"
         href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/180x180.png">
-<script defer src="./main.bundle.js?94a7a516bff369c623fd"></script><link href="main.css?94a7a516bff369c623fd" rel="stylesheet"></head>
+</head>
 
 <body>
     <div class="wrapper">
@@ -85,63 +85,43 @@
             </div>
             <div id="code-block-basics" class="code-block hidden">
                 <div>
-                    <pre><code class="language-js">const position = { x: 0 };
-
-const gui = new GUI({ label: 'Basics' });
-
-gui.button('Button', changeColor);
-
-// Simple callback
-gui.slider({ 
-    label: 'Slider 1', 
-    value: 1 
-}, value => {
-    element.style.opacity = value 
+                    <pre><code class="language-js">const gui = new GUI({
+    label: 'Basics',
+    container: '#container-1'
 });
 
-// Object binding
-gui.slider({ 
-    label: 'Slider 2 (binding)', 
-    obj: position, 
-    prop: 'x', 
-    min: -30, 
-    max: 30, 
-    step: .1 
-}, () => {
-    element.style.transform = `translateX(${position.x}px)`;
+gui.button({ label: 'Randomize color' }, randomizeColor);
+
+gui.color({ label: 'Color', value: '#ffffff' }, 
+    color => {
+        material.color.set(color);
+    }
+);
+
+gui.list({ label: 'Preset', values: ['-', 'red', 'pink', 'yellow', 'blue'], value: '-' }, 
+    value => {
+        if (value != '-') {
+            material.color.set(value);
+        }
+    }
+);
+
+gui.slider({ label: 'Metalness', obj: material, prop: 'metalness' });
+
+gui.toggle({ label: 'Wireframe', value: false }, value => {
+    material.wireframe = value;
 });
 
-gui.toggle({ label: 'Switch', value: true }, state => {
-    if (state) element.classList.remove('round');
-    else element.classList.add('round');
-});
+gui.image({ label: 'HDR1', path: 'path/to/img1.jpg', selected: true }, changeEnvMap);
+gui.image({ label: 'HDR2', path: 'path/to/img2.jpg' }, changeEnvMap);
+gui.image({ label: 'HDR3', path: 'path/to/img3.jpg' }, changeEnvMap);
 
-gui.list({ label: 'List', options: ['red', 'pink', 'yellow', 'blue'] }, option => {
-    element.style.backgroundColor = option;
-});
+const folder = gui.folder({ label: 'Point light', closed: true });
 
-gui.image({ label: 'Image 1', path: 'path/to/image-1.jpg' }, e => {
-    element.style.backgroundImage = `url(${e.path})`;
-});
-
-gui.image({ label: 'Image 2', path: 'path/to/image-2.jpg' }, e => {
-    element.style.backgroundImage = `url(${e.path})`;
-});
-
-gui.image({ label: 'Image 3', path: 'path/to/image-3.jpg' }, e => {
-    element.style.backgroundImage = `url(${e.path})`;
-});
-
-gui.color({ label: 'Color', value: '#ff0000' }, color => {
-    element.style.backgroundColor = color;
-});
-
-const folder = gui.folder({ label: 'Folder', closed: true });
-folder.vector2({ label: 'Position',
-    x: { obj: position, prop: 'x', min: -50, max: 50 },
-    y: { obj: position, prop: 'y', min: -50, max: 50 },
-}, (x, y) => {
-    element.style.transform = `translate(${x}px, ${-y}px)`;
+folder.vector2({
+    label: 'X / Y position',
+    x: { obj: pointLight.position, prop: 'x', min: -5, max: 5 },
+    y: { obj: pointLight.position, prop: 'y', min: -5, max: 5 },
 });
 </code></pre>
                 </div>
