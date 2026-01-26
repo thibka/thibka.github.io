@@ -59,7 +59,7 @@ export default function basics() {
                 uniform float uTime;
                 uniform float uX;
                 uniform float uY;
-                
+                varying float vDistanceFromCursor;
 
                 // Classic Perlin 3D Noise 
                 // by Stefan Gustavson
@@ -144,9 +144,17 @@ export default function basics() {
                 `#include <begin_vertex>`,
                 `#include <begin_vertex>
                 vec3 worldNormal = normalize(vec3(modelMatrix * vec4(objectNormal, 0.0)));
-                float noise = cnoise(transformed * uX + transformed * .5 * uY + uTime * .001) * 2.;
-                float noise2 = cnoise(vec3(noise * 2.) * pow(abs(uX), .5) * .1);
-                transformed += (worldNormal * abs(uY) * .2 * noise) + (worldNormal * noise2);
+                vec3 worldPos = (modelMatrix * vec4(position, 1.0)).xyz;
+                float strength = distance(vec3(0.), vec3(uX, uY, 0.)) * .5;
+                strength = pow(strength, .1);
+                vDistanceFromCursor = distance(vec3(worldPos.x, worldPos.y, 0.), vec3(-uX, -uY, 0.));
+                vDistanceFromCursor = pow(vDistanceFromCursor, 2.);
+                float noise = cnoise(transformed * .5 + uTime * .001) * strength;
+                transformed = mix(
+                    transformed,
+                    transformed + (worldNormal * .15 * noise),
+                    vDistanceFromCursor
+                );
                 `);
 
 
@@ -155,6 +163,9 @@ export default function basics() {
                 `void main() {`,
                 `
                 uniform float uTime;
+                uniform float uX;
+                uniform float uY;
+                varying float vDistanceFromCursor;
 
                 void main() {`);
                     
@@ -168,7 +179,13 @@ export default function basics() {
                 #ifdef USE_TRANSMISSION
                     diffuseColor.a *= material.transmissionAlpha;
                 #endif
-                gl_FragColor = vec4( outgoingLight, diffuseColor.a );
+                gl_FragColor = vec4( 
+                    mix(
+                        outgoingLight,
+                        outgoingLight + vec3(.1 * uX, .05 * uY, 0.),
+                        vDistanceFromCursor * max(abs(uX), abs(uY))
+                    ),
+                    diffuseColor.a );
             `);
         }
     });
@@ -191,8 +208,8 @@ export default function basics() {
 
     // Animation Loop
     function animate(time) {
-        mesh.rotation.x = time * 0.0005;
-        mesh.rotation.y = time * 0.0005;
+        //mesh.rotation.x = time * 0.0005;
+        //mesh.rotation.y = time * 0.0005;
         mesh.rotation.z = time * 0.0005;
         renderer.render(scene, camera);
         customUniforms.uTime.value = time;
@@ -249,10 +266,10 @@ export default function basics() {
     gui.image({ label: 'HDR2', path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/hdr2.jpg' }, changeEnvMap);
     gui.image({ label: 'HDR3', path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/hdr3.jpg' }, changeEnvMap);
 
-    const folder = gui.folder({ label: 'Point light', closed: true });
+    const folder = gui.folder({ label: 'Displacement', closed: true });
 
     folder.vector2({
-        label: 'Displacement',
+        label: 'X / Y',
         x: { obj: customUniforms.uX, prop: 'value', min: -1, max: 1 },
         y: { obj: customUniforms.uY, prop: 'value', min: -1, max: 1 },
     });
