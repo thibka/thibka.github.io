@@ -243,6 +243,12 @@ pre[class*=language-] {
     }
 }
 
+@media (max-width: 600px) {
+    #container-1 .p-gui {
+        max-height: 350px !important;
+    }
+}
+
 .container--small {
     height: 200px;
 }
