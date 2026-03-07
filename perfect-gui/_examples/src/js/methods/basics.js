@@ -12,16 +12,27 @@ export default function basics() {
         if (window.innerWidth < 600) {
             return { width: container.clientWidth, height: 300 };
         } else if (window.innerWidth < 640) {
-            return { width: container.clientWidth - 100, height: container.clientHeight };
+            return {
+                width: container.clientWidth - 100,
+                height: container.clientHeight,
+            };
         } else {
-            return { width: container.clientWidth - 290, height: container.clientHeight };
+            return {
+                width: container.clientWidth - 290,
+                height: container.clientHeight,
+            };
         }
     }
 
     ({ width: canvasWidth, height: canvasHeight } = getCanvasSize());
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, canvasWidth / canvasHeight, 0.1, 100);
+    const camera = new THREE.PerspectiveCamera(
+        50,
+        canvasWidth / canvasHeight,
+        0.1,
+        100,
+    );
     camera.position.z = 5;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -34,14 +45,14 @@ export default function basics() {
     const customUniforms = {
         uTime: { value: 0 },
         uX: { value: 0 },
-        uY: { value: 0 }
+        uY: { value: 0 },
     };
     const material = new THREE.MeshStandardMaterial({
         color: '#ffffff',
         wireframe: false,
         roughness: 0.0,
         metalness: 0.7,
-        onBeforeCompile: shader => {
+        onBeforeCompile: (shader) => {
             // Logging
             /* console.log(shader.fragmentShader);
             console.log(shader.vertexShader);
@@ -51,7 +62,7 @@ export default function basics() {
             shader.uniforms.uTime = customUniforms.uTime;
             shader.uniforms.uX = customUniforms.uX;
             shader.uniforms.uY = customUniforms.uY;
-        
+
             // ou bien
             shader.vertexShader = shader.vertexShader.replace(
                 `void main() {`,
@@ -137,7 +148,8 @@ export default function basics() {
                 }
 
 
-                void main() {`);
+                void main() {`,
+            );
 
             // Vertex - Main
             shader.vertexShader = shader.vertexShader.replace(
@@ -155,8 +167,8 @@ export default function basics() {
                     transformed + (worldNormal * .15 * noise),
                     vDistanceFromCursor
                 );
-                `);
-
+                `,
+            );
 
             // Fragment - Déclarations
             shader.fragmentShader = shader.fragmentShader.replace(
@@ -167,8 +179,9 @@ export default function basics() {
                 uniform float uY;
                 varying float vDistanceFromCursor;
 
-                void main() {`);
-                    
+                void main() {`,
+            );
+
             // Fragment - Main
             shader.fragmentShader = shader.fragmentShader.replace(
                 `#include <opaque_fragment>`,
@@ -186,16 +199,20 @@ export default function basics() {
                         vDistanceFromCursor * max(abs(uX), abs(uY))
                     ),
                     diffuseColor.a );
-            `);
-        }
+            `,
+            );
+        },
     });
 
     const textureLoader = new THREE.TextureLoader();
-    textureLoader.load('https://threejs.org/examples/textures/2294472375_24a3b8ef46_o.jpg', (texture) => {
-        texture.mapping = THREE.EquirectangularReflectionMapping;
-        texture.colorSpace = THREE.SRGBColorSpace;
-        material.envMap = texture;
-    });
+    textureLoader.load(
+        'https://threejs.org/examples/textures/2294472375_24a3b8ef46_o.jpg',
+        (texture) => {
+            texture.mapping = THREE.EquirectangularReflectionMapping;
+            texture.colorSpace = THREE.SRGBColorSpace;
+            material.envMap = texture;
+        },
+    );
 
     const mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(0, 0, 0);
@@ -233,7 +250,8 @@ export default function basics() {
     // ------------------------------------------------
     const gui = new GUI({
         label: 'Basics',
-        container: '#container-1'
+        container: '#container-1',
+        draggable: true,
     });
 
     gui.button({ label: 'Randomize color' }, () => {
@@ -241,19 +259,26 @@ export default function basics() {
         material.color.set(col);
     });
 
-    gui.color({ label: 'Color', value: '#ffffff' }, color => {
+    gui.color({ label: 'Color', value: '#ffffff' }, (color) => {
         material.color.set(color);
     });
 
-    gui.list({ label: 'Preset', values: ['-', 'red', 'pink', 'yellow', 'blue'], value: '-' }, value => {
-        if (value != '-') {
-            material.color.set(value);
-        }
-    });
+    gui.list(
+        {
+            label: 'Preset',
+            values: ['-', 'red', 'pink', 'yellow', 'blue'],
+            value: '-',
+        },
+        (value) => {
+            if (value != '-') {
+                material.color.set(value);
+            }
+        },
+    );
 
     gui.slider({ label: 'Metalness', obj: material, prop: 'metalness' });
 
-    gui.toggle({ label: 'Wireframe', value: false }, state => {
+    gui.toggle({ label: 'Wireframe', value: false }, (state) => {
         material.wireframe = state;
         if (state) {
             material.roughness = 1;
@@ -262,9 +287,28 @@ export default function basics() {
         }
     });
 
-    gui.image({ label: 'HDR1', path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/hdr1.jpg', selected: true }, changeEnvMap);
-    gui.image({ label: 'HDR2', path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/hdr2.jpg' }, changeEnvMap);
-    gui.image({ label: 'HDR3', path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/hdr3.jpg' }, changeEnvMap);
+    gui.image(
+        {
+            label: 'HDR1',
+            path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/hdr1.jpg',
+            selected: true,
+        },
+        changeEnvMap,
+    );
+    gui.image(
+        {
+            label: 'HDR2',
+            path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/hdr2.jpg',
+        },
+        changeEnvMap,
+    );
+    gui.image(
+        {
+            label: 'HDR3',
+            path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/hdr3.jpg',
+        },
+        changeEnvMap,
+    );
 
     const folder = gui.folder({ label: 'Displacement', closed: true });
 

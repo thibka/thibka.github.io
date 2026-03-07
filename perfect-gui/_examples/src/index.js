@@ -26,18 +26,32 @@ let subtitle = ['probably not', 'maybe not so', 'almost', 'nearly'];
 subtitle = subtitle[Math.floor(Math.random() * subtitle.length)];
 document.getElementById('subtitle-random').textContent = subtitle;
 
+/* const logoSpan = document.querySelector('.sidebar__logo span');
+if (logoSpan) {
+    const newSpan = logoSpan.cloneNode(true);
+    logoSpan.parentNode.replaceChild(newSpan, logoSpan);
+    newSpan.style.cursor = 'pointer';
+    newSpan.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        history.pushState(
+            null,
+            null,
+            window.location.pathname + window.location.search,
+        );
+    });
+}
+ */
 //demo();
 basics();
-    button();
-    slider();
-    toggle();
-    list();
-    image();
-    color();
-    vector2();
-    folder();
-    toggleClose();
-
+button();
+slider();
+toggle();
+list();
+image();
+color();
+vector2();
+folder();
+toggleClose();
 
 // multiple();
 
