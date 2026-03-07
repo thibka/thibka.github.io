@@ -1,7 +1,6 @@
 {
   "name": "perfect-gui_example",
   "description": "",
-  "main": "webpack.config.js",
   "scripts": {
     "start": "vite --port 8000",
     "build": "vite build"
