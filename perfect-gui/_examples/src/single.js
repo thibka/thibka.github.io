@@ -1,23 +1,32 @@
 import GUI from './perfect-gui/index';
 
-window.position = {
-    x: 0,
+const position = {
+    x: -5,
     y: 0,
 };
 
 const gui = new GUI({
     label: 'Single',
+    draggable: true,
 });
 
-const fa = gui.folder({ label: 'folder' });
-
-fa.button({
-    label: 'Button',
-},() => {
-        console.log('ok');
-    })
-fa.vector2({
+gui.vector2(position, 'x', 'y', {
     label: 'Position',
-    x: { obj: window.position, prop: 'x', min: -.01, max: .01 },
-    y: { obj: window.position, prop: 'y', min: -.01, max: .01 }
-})
+    min: -10,
+    max: 10,
+}).onChange((x, y) => {
+    console.log(x, y);
+});
+
+const gui2 = new GUI({
+    label: 'Single',
+    draggable: true,
+});
+
+gui2.vector2(position, 'x', 'y', {
+    label: 'Position',
+    min: -10,
+    max: 10,
+}).onChange((x, y) => {
+    console.log(x, y);
+});

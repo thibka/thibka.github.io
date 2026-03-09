@@ -1,12 +1,11 @@
 import GUI from '../../perfect-gui/index';
-import getRandomColor from '../getRandomColor';
 
 export default function toggleClose() {
     const gui_1 = new GUI({
         container: '#container-toggleclose',
     });
 
-    gui_1.button('gui_2.toggleClose();', () => {
+    gui_1.button({ label: 'gui_2.toggleClose();' }).onClick(() => {
         gui_2.toggleClose();
     });
 
@@ -14,7 +13,7 @@ export default function toggleClose() {
         container: '#container-toggleclose',
     });
 
-    gui_2.button('gui_1.toggleClose();', () => {
+    gui_2.button({ label: 'gui_1.toggleClose();' }).onClick(() => {
         gui_1.toggleClose();
     });
 }

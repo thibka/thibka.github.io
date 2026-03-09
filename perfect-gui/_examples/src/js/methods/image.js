@@ -6,38 +6,36 @@ export default function image() {
 
     const gui = new GUI({
         container: '#container-image',
-        draggable: true
+        draggable: true,
     });
 
-    gui.image({ 
+    gui.image({
         label: 'Image 1',
-        path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/DALL·E-2022-11-13-20.11.16---portrait-of-a-squirrel-in-an-officier-suit,-style-of-a-Rembrandt-painting.jpg'
-    }, changeBackground);
+        path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/DALL·E-2022-11-13-20.11.16---portrait-of-a-squirrel-in-an-officier-suit,-style-of-a-Rembrandt-painting.jpg',
+    }).onClick(changeBackground);
 
-    gui.image({ 
+    gui.image({
         label: 'Image 2',
         path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/DALL·E-2022-11-13-20.13.55---1-blonde-haired-girl-with-her-orange-cat,-watching-the-whales-in-Tadoussac,-Canada.-In-the-style-of-an-oil-painting..jpg',
-        selected: true
-    }, changeBackground);
+        selected: true,
+    }).onClick(changeBackground);
 
-    gui.image({ 
+    gui.image({
         label: 'Image 3',
         path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/DALL·E-2022-11-13-20.11.52---a-blonde-girl-riding-a-whale-in-the-style-of-hopper.jpg',
-    }, changeBackground);
+    }).onClick(changeBackground);
 
-    gui.image({ 
+    gui.image({
         label: 'Image 4',
         path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/DALL·E-2023-11-25-16.00.40---An-oil-painting-of-a-short-haired-orange-and-white-alley-cat.jpg',
-    }, changeBackground);
+    }).onClick(changeBackground);
 
-    gui.image({ 
+    gui.image({
         label: 'Image 5',
         path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/DALL·E-2023-11-25-16.05.33---An-image-in-the-style-of-a-1900s-painter,-depicting-a-blonde-girl-riding-a-whale.jpg',
-    }, changeBackground);
+    }).onClick(changeBackground);
 
     function changeBackground(evt) {
         element.style.backgroundImage = `url( ${evt.path} )`;
     }
 }
-
-    

@@ -3,8 +3,8 @@ import GUI from '../perfect-gui/index';
 export default function vectors() {
     const position = {
         x: 0,
-        y: 0
-    }
+        y: 0,
+    };
 
     const element = document.querySelector('#container-vectors .element');
 
@@ -13,15 +13,16 @@ export default function vectors() {
         container: '#container-vectors',
     });
 
-    gui.vector2({ label: 'Position', data: {
-        x: { object: position, prop: 'x', min: -50, max: 50 },
-        y: { object: position, prop: 'y', min: -50, max: 50 },
-    }});
+    gui.vector2(position, 'x', 'y', {
+        label: 'Position',
+        min: -50,
+        max: 50,
+    });
 
     function loop() {
         element.style.transform = `translate(${position.x}px, ${-position.y}px)`;
         requestAnimationFrame(loop);
     }
-    
+
     loop();
 }

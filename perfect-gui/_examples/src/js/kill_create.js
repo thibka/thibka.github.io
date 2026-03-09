@@ -11,21 +11,21 @@ export default function other() {
         label: 'GUI 1',
     });
 
-    gui_1.button('Create GUI panel', () => {
+    gui_1.button({ label: 'Create GUI panel' }).onClick(() => {
         guis[guis.length] = new GUI({
             container,
             label: 'Created GUI',
             position: 'bottom left',
             width: 150,
-            color: 'red'
+            color: 'red',
         });
     });
 
-    gui_1.button('Kill GUI panel', () => {
+    gui_1.button({ label: 'Kill GUI panel' }).onClick(() => {
         const index = guis.length - 1;
-        if ( index >= 0 ) {
+        if (index >= 0) {
             // Removes html elements
-            guis[index].wrapper.remove(); 
+            guis[index].kill();
 
             // Frees up memory
             guis[index] = null;

@@ -10,7 +10,9 @@ export default function other() {
         width: 450,
         draggable: true,
     });
-    gui_1.button('Custom width using the `width` option', () => {});
+    gui_1
+        .button({ label: 'Custom width using the `width` option' })
+        .onClick(() => {});
 
     const gui_2 = new GUI({
         container,
@@ -19,15 +21,15 @@ export default function other() {
     });
 
     let f1 = gui_2.folder({ label: 'folder', color: '#33329f' });
-    for (let i = 0; i < 3; i ++) {
-        f1.button('btn '+ i, () => {});
+    for (let i = 0; i < 3; i++) {
+        f1.button({ label: 'btn ' + i }).onClick(() => {});
     }
     let f2 = gui_2.folder({ label: 'folder', color: '#9f3293' });
-    for (let i = 0; i < 3; i ++) {
-        f2.button('btn '+ i, () => {});
+    for (let i = 0; i < 3; i++) {
+        f2.button({ label: 'btn ' + i }).onClick(() => {});
     }
-    for (let i = 0; i < 10; i ++) {
-        gui_2.button('btn '+ i, () => {});
+    for (let i = 0; i < 10; i++) {
+        gui_2.button({ label: 'btn ' + i }).onClick(() => {});
     }
 
     const gui_3 = new GUI({
@@ -35,7 +37,7 @@ export default function other() {
         position: 'bottom right',
         label: 'GUI 3 (custom color + opacity)',
         color: '#ff00ff',
-        opacity: .5
+        opacity: 0.5,
     });
-    gui_3.button('lorem', () => {});
+    gui_3.button({ label: 'lorem' }).onClick(() => {});
 }

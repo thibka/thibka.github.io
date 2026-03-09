@@ -6,14 +6,18 @@ export default function button() {
 
     const gui = new GUI({
         container: '#container-button',
-        draggable: true
+        draggable: true,
     });
 
-    gui.button('Button 1', () => {
+    gui.button({ label: 'Button 1' }).onClick(() => {
         element.style.backgroundColor = getRandomColor();
     });
 
-    gui.button({label: 'Button 2', color: '#bb3333', hoverColor: '#cc3333'}, () => {
+    gui.button({
+        label: 'Button 2',
+        color: '#bb3333',
+        hoverColor: '#cc3333',
+    }).onClick(() => {
         element.style.backgroundColor = getRandomColor();
     });
 }

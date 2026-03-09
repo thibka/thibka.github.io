@@ -7,18 +7,18 @@ export default function slider() {
 
     const gui = new GUI({
         container: '#container-slider',
-        draggable: true
+        draggable: true,
     });
 
-    gui.slider({ label: 'Slider 1 (callback)', value: 1 }, 
-        value => {
-            element.style.opacity = value;
-        }
-    );
+    gui.slider({ label: 'Slider 1', value: 1 }).onChange((value) => {
+        element.style.opacity = value;
+    });
 
-    gui.slider({ label: 'Slider 2 (object binding)', obj: position, prop: 'x', min: -30, max: 30 },
-        () => {
-            element.style.transform = `translateX(${position.x}px)`;
-        }
-    );
+    gui.slider(position, 'x', {
+        label: 'Slider 2 (object binding)',
+        min: -30,
+        max: 30,
+    }).onChange(() => {
+        element.style.transform = `translateX(${position.x}px)`;
+    });
 }

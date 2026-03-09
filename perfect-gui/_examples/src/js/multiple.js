@@ -7,34 +7,44 @@ export default function multiple() {
     const gui_1 = new GUI({
         label: 'GUI 1',
         width: 200,
-        container: '#container-2'
+        container: '#container-2',
     });
-    
-    gui_1.button('By the way, buttons can handle multiple lines of text.', () => {
-        element.style.backgroundColor = getRandomColor();
-    });
+
+    gui_1
+        .button({
+            label: 'By the way, buttons can handle multiple lines of text.',
+        })
+        .onClick(() => {
+            element.style.backgroundColor = getRandomColor();
+        });
 
     const gui_2 = new GUI({
         label: 'GUI 2',
         width: 200,
-        container: '#container-2'
+        container: '#container-2',
     });
-    
-    gui_2.button('Button', () => element.style.backgroundColor = getRandomColor() );
-    
+
+    gui_2
+        .button({ label: 'Button' })
+        .onClick(() => (element.style.backgroundColor = getRandomColor()));
+
     const gui_3 = new GUI({
         label: 'GUI 3',
         position: 'top left',
-        container: '#container-2'
+        container: '#container-2',
     });
-    
-    gui_3.button('Button', () => element.style.backgroundColor = getRandomColor() );
-    
+
+    gui_3
+        .button({ label: 'Button' })
+        .onClick(() => (element.style.backgroundColor = getRandomColor()));
+
     const gui_4 = new GUI({
         label: 'GUI 4',
         position: 'right bottom',
-        container: '#container-2'
+        container: '#container-2',
     });
-    
-    gui_4.button('Button', () => element.style.backgroundColor = getRandomColor() );
+
+    gui_4
+        .button({ label: 'Button' })
+        .onClick(() => (element.style.backgroundColor = getRandomColor()));
 }

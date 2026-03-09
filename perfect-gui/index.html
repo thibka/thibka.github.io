@@ -30,7 +30,7 @@
     <link rel="shortcut icon"
         href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/180x180.png">
   <script type="module" crossorigin src="./main.bundle.js"></script>
-  <link rel="modulepreload" crossorigin href="./assets/index-CRG-sbuE.js">
+  <link rel="modulepreload" crossorigin href="./assets/index-BuIDkl_x.js">
   <link rel="modulepreload" crossorigin href="./assets/three.module-DkzxXd4i.js">
   <link rel="stylesheet" crossorigin href="./main.css">
 </head>
@@ -64,7 +64,7 @@
             <a class="sidebar__item" href="#vector2">.vector2()</a>
             <a class="sidebar__item" href="#folders">.folder()</a>
             <a class="sidebar__item" href="#toggleclose">.toggleClose()</a>
-            <a class="sidebar__title" href="#killing-creating">Killing and creating dynamically</a>
+            <a class="sidebar__item" href="#kill">.kill()</a>
         </div>
         <div class="main">
             <div class="header">
@@ -95,7 +95,7 @@
     draggable: true
 });
 
-gui.button({ label: 'Randomize color' }, randomizeColor);
+gui.button({ label: 'Randomize color' }).onClick(randomizeColor);
 
 gui.color({ label: 'Color', value: '#ffffff' }, 
     color => {
@@ -111,9 +111,9 @@ gui.list({ label: 'Preset', values: ['-', 'red', 'pink', 'yellow', 'blue'], valu
     }
 );
 
-gui.slider({ label: 'Metalness', obj: material, prop: 'metalness' });
+gui.slider(material, 'metalness', { label: 'Metalness' });
 
-gui.toggle({ label: 'Wireframe', value: false }, value => {
+gui.toggle({ label: 'Wireframe', value: false }).onChange(value => {
     material.wireframe = value;
 });
 
@@ -181,7 +181,7 @@ folder.vector2({
     width: 200
 });
 
-gui_1.button('Buttons can handle multiple lines of text.', () => {
+gui_1.button({ label: 'Buttons can handle multiple lines of text.' }).onClick(() => {
     element.style.backgroundColor = getRandomColor();
 });
 
@@ -190,21 +190,21 @@ const gui_2 = new GUI({
     width: 200
 });
 
-gui_2.button('Button', () => element.style.backgroundColor = getRandomColor() );
+gui_2.button({ label: 'Button' }).onClick(() => element.style.backgroundColor = getRandomColor() );
 
 const gui_3 = new GUI({
     label: 'GUI 3',
     position: 'top left'
 });
 
-gui_3.button('Button', () => element.style.backgroundColor = getRandomColor() );
+gui_3.button({ label: 'Button' }).onClick(() => element.style.backgroundColor = getRandomColor() );
 
 const gui_4 = new GUI({
     label: 'GUI 4',
     position: 'bottom right'
 });
 
-gui_4.button('Button', () => element.style.backgroundColor = getRandomColor() );</code></pre>
+gui_4.button({ label: 'Button' }).onClick(() => element.style.backgroundColor = getRandomColor() );</code></pre>
             </div> -->
 
             <h3 id="options-width">width <span>(number)</span></h3>
@@ -254,7 +254,8 @@ gui_4.button('Button', () => element.style.backgroundColor = getRandomColor() );
 
             <h2 id="methods">Methods</h2>
 
-            <h3 id="button">.button( parameters, callback )</h2>
+            <h3 id="button">.button( parameters )</h3>
+                <p>The <span class="code-inline">.button()</span> method accepts an options object. It returns the button instance, allowing you to chain the <span class="code-inline">.onClick(callback)</span> method to handle click events.</p>
                 <table cellspacing="0">
                     <tr>
                         <th>Parameter</th>
@@ -291,15 +292,30 @@ gui_4.button('Button', () => element.style.backgroundColor = getRandomColor() );
 
 const gui = new GUI();
 
-gui.button('Button 1', changeColor);
+gui.button({ label: 'Button 1' }).onClick(changeColor);
 
-gui.button({ label: 'Button 2', color: '#bb3333', hoverColor: '#cc3333' }, changeColor);
+gui.button({ label: 'Button 2', color: '#bb3333', hoverColor: '#cc3333' }).onClick(changeColor);
 </code></pre>
                 </div>
 
 
 
-                <h3 id="slider">.slider( parameters, callback )</h3>
+                <h3 id="slider">.slider()</h3>
+                <p>This method can be used in 2 different modes. In both cases, it returns the component instance, allowing you to chain the <span class="code-inline">.onChange(callback)</span> method to handle events.</p>
+
+                <h4>1. Simple Mode</h4>
+                <p>Pass an options object to create a simple slider. The current value can be retrieved by chaining <span class="code-inline">.onChange(callback)</span>.</p>
+                <div class="code-block" style="margin-bottom: 2rem;">
+                    <pre><code class="language-js">gui.slider( options ).onChange( callback )</code></pre>
+                </div>
+
+                <h4>2. Binding Mode</h4>
+                <p>Pass an object, its target property name, and an optional options object to bind the slider and the property value together. Such a slider will automatically update the value of the object property. Directly updating the property would also update the slider.</p>
+                <div class="code-block" style="margin-bottom: 2rem;">
+                    <pre><code class="language-js">gui.slider( object, property, options ).onChange( callback )</code></pre>
+                </div>
+
+                <h4>Options</h4>
                 <table cellspacing="0">
                     <tr>
                         <th>Parameter</th>
@@ -309,13 +325,13 @@ gui.button({ label: 'Button 2', color: '#bb3333', hoverColor: '#cc3333' }, chang
                     <tr>
                         <td>label</td>
                         <td>string</td>
-                        <td>Defaults to the <span class="code-inline">prop</span> parameter if one is provided.</td>
+                        <td>Defaults to the property name if one is provided.</td>
                     </tr>
                     <tr>
                         <td>value</td>
                         <td>number</td>
-                        <td>Defaults to the average value between <span class="code-inline">min</span> and <span
-                                class="code-inline">max</span> properties.</td>
+                        <td>Only used in <strong>Simple Mode</strong>. Defaults to the average value between <span class="code-inline">min</span> and <span
+                                class="code-inline">max</span>.</td>
                     </tr>
                     <tr>
                         <td>min</td>
@@ -335,36 +351,12 @@ gui.button({ label: 'Button 2', color: '#bb3333', hoverColor: '#cc3333' }, chang
                                 class="code-inline">min</span> and <span class="code-inline">max</span>.</td>
                     </tr>
                     <tr>
-                        <td>obj</td>
-                        <td>object</td>
-                        <td>Target object. Ignored if a <span class="code-inline">value</span> is specified.</td>
-                    </tr>
-                    <tr>
-                        <td>prop</td>
-                        <td>string</td>
-                        <td>Target object property. Ignored if a <span class="code-inline">value</span> is specified.
-                        </td>
-                    </tr>
-                    <tr>
                         <td>tooltip</td>
                         <td>string|boolean</td>
                         <td>Descriptive text showing up on hover. If set to <span class="code-inline">true</span>, its
                             value will be the same as the <span class="code-inline">label</span>.</td>
                     </tr>
                 </table>
-                <p>This method can be used in 2 ways:
-                <ul>
-                    <li>with a <span class="code-inline">value</span> parameter and a callback function to create a
-                        "simple" slider (see the first example below). The current value will then be passed to the
-                        callback.</li>
-                    <li>with an object (<span class="code-inline">obj</span>) and its target property (<span
-                            class="code-inline">prop</span>) to bind the slider and the property value together (see the
-                        second example below).
-                        Such a slider will automatically update the value of the object property; therefore a callback
-                        isn't necessarily needed.
-                        Directly updating the property would also update the slider.</li>
-                </ul>
-                </p>
                 <div id="container-slider" class="container container--small">
                     <div class="element left"></div>
                 </div>
@@ -375,14 +367,14 @@ const position = { x: 0 };
 const gui = new GUI();
 
 // Simple slider with value & callback
-gui.slider({ label: 'Simple slider (value & callback)', value: 1 }, 
+gui.slider({ label: 'Slider 1', value: 1 }).onChange(
     value => {
         element.style.opacity = value;
     }
 );
 
 // Object binding
-gui.slider({ label: 'Slider with object binding', obj: position, prop: 'x', min: -30, max: 30 },
+gui.slider(position, 'x', { label: 'Slider 2 (object binding)', min: -30, max: 30 }).onChange(
     () => {
         element.style.transform = `translateX(${position.x}px)`;
     }
@@ -392,7 +384,22 @@ gui.slider({ label: 'Slider with object binding', obj: position, prop: 'x', min:
 
 
 
-                <h3 id="toggle">.toggle( parameters, callback )</h3>
+                <h3 id="toggle">.toggle()</h3>
+                <p>This method can be used in 2 different modes. In both cases, it returns the component instance, allowing you to chain the <span class="code-inline">.onChange(callback)</span> method to handle events.</p>
+
+                <h4>1. Simple Mode</h4>
+                <p>Pass an options object to create a simple toggle button. The current value can be retrieved by chaining <span class="code-inline">.onChange(callback)</span>.</p>
+                <div class="code-block" style="margin-bottom: 2rem;">
+                    <pre><code class="language-js">gui.toggle( options ).onChange( callback )</code></pre>
+                </div>
+
+                <h4>2. Binding Mode</h4>
+                <p>Pass an object, its target property name, and an optional options object to bind the toggle and the property together. Such a toggle will automatically update the value of the object property. Directly updating the property would also update the state of the toggle.</p>
+                <div class="code-block" style="margin-bottom: 2rem;">
+                    <pre><code class="language-js">gui.toggle( object, property, options ).onChange( callback )</code></pre>
+                </div>
+
+                <h4>Options</h4>
                 <table cellspacing="0">
                     <tr>
                         <th>Parameter</th>
@@ -407,19 +414,7 @@ gui.slider({ label: 'Slider with object binding', obj: position, prop: 'x', min:
                     <tr>
                         <td>value</td>
                         <td>boolean</td>
-                        <td>Optional. Default is <span class="code-inline">false</span>.</td>
-                    </tr>
-                    <tr>
-                        <td>obj</td>
-                        <td>object</td>
-                        <td>Optional. Target object. Ignored if a <span class="code-inline">value</span> is specified.
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>prop</td>
-                        <td>string</td>
-                        <td>Optional. Target object property. Ignored if a <span class="code-inline">value</span> is
-                            specified.</td>
+                        <td>Only used in <strong>Simple Mode</strong>. Optional. Default is <span class="code-inline">false</span>.</td>
                     </tr>
                     <tr>
                         <td>tooltip</td>
@@ -428,18 +423,6 @@ gui.slider({ label: 'Slider with object binding', obj: position, prop: 'x', min:
                             value will be the same as the <span class="code-inline">label</span>.</td>
                     </tr>
                 </table>
-                <p>This method can be used in 2 ways:
-                <ul>
-                    <li>with a <span class="code-inline">value</span> parameter and a callback function to create a
-                        "simple" toggle button (see the first example below). The current value will then be passed to
-                        the callback.</li>
-                    <li>with an object (<span class="code-inline">obje</span>) and its target property (<span
-                            class="code-inline">prop</span>) to bind the toggle and the property together (see the
-                        second example below).
-                        Such a toggle will automatically update the value of the object property; therefore a callback
-                        isn't necessarily needed.
-                        Directly updating the property would also update the state of the toggle.</li>
-                </ul>
                 <div id="container-toggle" class="container container--small">
                     <div class="element left"></div>
                 </div>
@@ -449,14 +432,14 @@ gui.slider({ label: 'Slider with object binding', obj: position, prop: 'x', min:
 const gui = new GUI();
 
 // Approach 1: using a callback function
-gui.toggle({ label: 'Toggle (simple callback)', value: true }, value => {
+gui.toggle({ label: 'Toggle', value: true }).onChange(value => {
     if ( value ) element.classList.remove('round');
     else element.classList.add('round');
 });
 
 // Approach 2: using object binding
 const isRound = { state: true };
-gui.toggle({ label: 'Toggle (object binding)', obj: isRound, prop: 'value' }, () => {
+gui.toggle(isRound, 'state', { label: 'Toggle (object binding)' }).onChange(() => {
     if ( isRound.state ) element.classList.remove('round');
     else element.classList.add('round');
 });</code></pre>
@@ -465,7 +448,22 @@ gui.toggle({ label: 'Toggle (object binding)', obj: isRound, prop: 'value' }, ()
 
 
 
-                <h3 id="list">.list( parameters, callback )</h3>
+                <h3 id="list">.list()</h3>
+                <p>This method can be used in 2 different modes. In both cases, it returns the component instance, allowing you to chain the <span class="code-inline">.onChange(callback)</span> method to handle events.</p>
+
+                <h4>1. Simple Mode</h4>
+                <p>Pass an options object to create a simple list. The current value can be retrieved by chaining <span class="code-inline">.onChange(callback)</span>.</p>
+                <div class="code-block" style="margin-bottom: 2rem;">
+                    <pre><code class="language-js">gui.list( options ).onChange( callback )</code></pre>
+                </div>
+
+                <h4>2. Binding Mode</h4>
+                <p>Pass an object, its target property name, and an optional options object to bind the list and the property together. Such a list will automatically update the value of the object property. Directly updating the property would also update the state of the list.</p>
+                <div class="code-block" style="margin-bottom: 2rem;">
+                    <pre><code class="language-js">gui.list( object, property, options ).onChange( callback )</code></pre>
+                </div>
+
+                <h4>Options</h4>
                 <table cellspacing="0">
                     <tr>
                         <th>Parameter</th>
@@ -485,23 +483,9 @@ gui.toggle({ label: 'Toggle (object binding)', obj: isRound, prop: 'value' }, ()
                     <tr>
                         <td>value</td>
                         <td>string | number</td>
-                        <td>Optional. Defines the default selected value in the options array. This can either be a
+                        <td>Only used in <strong>Simple Mode</strong>. Defines the default selected value in the options array. This can either be a
                             string, which must correspond to one of the values within the options array, or a number,
                             representing the index of the selected value in the array of options.</td>
-                    </tr>
-                    <tr>
-                        <td>obj</td>
-                        <td>object</td>
-                        <td>Optional. Target object. Ignored if a <span class="code-inline">value</span> is specified.
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>prop</td>
-                        <td>string</td>
-                        <td>Optional. Target object property. This can either be a string, which must correspond to one
-                            of the values within the options array, or a number, representing the index of the selected
-                            value in the array of options. Ignored if a <span class="code-inline">value</span> is
-                            specified.</td>
                     </tr>
                     <tr>
                         <td>tooltip</td>
@@ -510,17 +494,6 @@ gui.toggle({ label: 'Toggle (object binding)', obj: isRound, prop: 'value' }, ()
                             value will be the same as the <span class="code-inline">label</span>.</td>
                     </tr>
                 </table>
-                <p>This method can be used in 2 ways:
-                <ul>
-                    <li>with a <span class="code-inline">value</span> parameter and a callback function to create a
-                        "simple" list (see the first example below). The current value will then be passed to the
-                        callback.</li>
-                    <li>with an object (<span class="code-inline">obj</span>) and its target property (<span
-                            class="code-inline">prop</span>) to bind the list and the property together (see the second
-                        example below).
-                        Such a list will automatically update the value of the object property;
-                        Directly updating the property would also update the state of the list.</li>
-                </ul>
                 <div id="container-list" class="container container--small">
                     <div class="element left" style="background-color: red;"></div>
                 </div>
@@ -529,41 +502,50 @@ gui.toggle({ label: 'Toggle (object binding)', obj: isRound, prop: 'value' }, ()
 
 const gui = new GUI();
 
-// Approach 1: using a callback function
-gui.list({ label: 'List', values: ['red', 'pink', 'yellow', 'blue'], value: 1 }, selected_value => {
-    element.style.backgroundColor = selected_value;
+// Approach 1: Simple mode
+gui.list({
+    label: 'Simple mode',
+    values: ['red', 'pink', 'yellow', 'blue'],
+    value: 1
+}).onChange((value) => {
+    element.style.backgroundColor = value;
 });
 
-// Approach 2: using object binding with an array of strings
+// Approach 2: binding mode (strings)
 const values = ['red', 'pink', 'yellow', 'blue'];
-const color = { value: 2 };
-gui.list({ label: 'List (object binding)', values, obj: color, prop: 'value' }, 
-    ( value, index ) => {
-        element.style.backgroundColor = values[color.value];
-    }
-);
+const color = { value: 'yellow' };
 
-// Approach 3: using object binding with an array of objects
+gui.list(color, 'value', {
+    label: 'Binding mode (strings)',
+    values
+}).onChange((value, index) => {
+    element.style.backgroundColor = value;
+});
+
+// Approach 3: binding mode (objects)
 // The "label" property is only used to control what's displayed in the option list
-// The intrinsec value of each item is the "value" property
+// The intrinsic value of each item is the "value" property
 const color2 = { value: '#993333' };
 const objectValues = [
-    {label: 'reddish', value: '#993333'}, 
-    {label: 'pinkish', value: '#aa33aa'}, 
-    {label: 'yellowish', value: '#999933'}, 
-    {label: 'blueish', value: '#333399'}
+    { label: 'reddish', value: '#993333' },
+    { label: 'pinkish', value: '#aa33aa' },
+    { label: 'yellowish', value: '#999933' },
+    { label: 'blueish', value: '#333399' }
 ];
-gui.list({ label: 'Object binding (objects)', values: objectValues, obj: color2, prop: 'value' }, 
-    (obj, index) => {
-        element.style.backgroundColor = obj.value;
-    }
-);
+
+gui.list(color2, 'value', {
+    label: 'Binding mode (objects)',
+    values: objectValues
+}).onChange((obj, index) => {
+    element.style.backgroundColor = obj.value;
+});
 </code></pre>
                 </div>
 
 
 
-                <h3 id="image">.image( parameters, callback )</h3>
+                <h3 id="image">.image( parameters )</h3>
+                <p>The <span class="code-inline">.image()</span> method acts similar to a button but uses an image instead of text. It returns the component instance, allowing you to chain the <span class="code-inline">.onClick(callback)</span> method to handle click events.</p>
                 <table cellspacing="0">
                     <tr>
                         <th>Parameter</th>
@@ -619,25 +601,33 @@ gui.list({ label: 'Object binding (objects)', values: objectValues, obj: color2,
 
 const gui = new GUI();
 
-gui.image({ label: 'Image 1', path: 'path/to/image1.jpg'}, changeBackground);
-gui.image({ label: 'Image 2', path: 'path/to/image2.jpg', selected: true}, changeBackground);
-gui.image({ label: 'Image 3', path: 'path/to/image3.jpg'}, changeBackground);
-gui.image({ label: 'Image 4', path: 'path/to/image4.jpg'}, changeBackground);
-gui.image({ label: 'Image 5', path: 'path/to/image5.jpg'}, changeBackground);
+gui.image({ label: 'Image 1', path: 'path/to/image1.jpg'}).onClick(changeBackground);
+gui.image({ label: 'Image 2', path: 'path/to/image2.jpg', selected: true}).onClick(changeBackground);
+gui.image({ label: 'Image 3', path: 'path/to/image3.jpg'}).onClick(changeBackground);
+gui.image({ label: 'Image 4', path: 'path/to/image4.jpg'}).onClick(changeBackground);
+gui.image({ label: 'Image 5', path: 'path/to/image5.jpg'}).onClick(changeBackground);
 
 function changeBackground(evt) {
     element.style.backgroundImage = `url( ${evt.path} )`;
 }</code></pre>
                 </div>
-                <p>To select a button programmatically, you can use the <span class="code-inline">click()</span> method
-                    on the element like this:</p>
-                <pre><code class="language-js">const imageButton = gui.image(...);
-imageButton.click();
-</code></pre>
 
+                <h3 id="color">.color()</h3>
+                <p>This method can be used in 2 different modes. In both cases, it returns the component instance, allowing you to chain the <span class="code-inline">.onChange(callback)</span> method to handle events.</p>
 
+                <h4>1. Simple Mode</h4>
+                <p>Pass an options object to create a simple color picker. The current value can be retrieved by chaining <span class="code-inline">.onChange(callback)</span>.</p>
+                <div class="code-block" style="margin-bottom: 2rem;">
+                    <pre><code class="language-js">gui.color( options ).onChange( callback )</code></pre>
+                </div>
 
-                <h3 id="color">.color( parameters, callback )</h3>
+                <h4>2. Binding Mode</h4>
+                <p>Pass an object, its target property name, and an optional options object to bind the color picker and the property together. Such a color picker will automatically update the value of the object property. Directly updating the property would also update the state of the color picker.</p>
+                <div class="code-block" style="margin-bottom: 2rem;">
+                    <pre><code class="language-js">gui.color( object, property, options ).onChange( callback )</code></pre>
+                </div>
+
+                <h4>Options</h4>
                 <table cellspacing="0">
                     <tr>
                         <th>Parameter</th>
@@ -653,19 +643,7 @@ imageButton.click();
                         <td>value</td>
                         <td>string</td>
                         <td>Hexadecimal color value.<br>
-                            Optional. Default is <span class="code-inline">#000000</span>.</td>
-                    </tr>
-                    <tr>
-                        <td>obj</td>
-                        <td>object</td>
-                        <td>Optional. Target object. Ignored if a <span class="code-inline">value</span> is specified.
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>prop</td>
-                        <td>string</td>
-                        <td>Optional. Target object property. Ignored if a <span class="code-inline">value</span> is
-                            specified.</td>
+                            Only used in <strong>Simple Mode</strong>. Optional. Default is <span class="code-inline">#000000</span>.</td>
                     </tr>
                     <tr>
                         <td>tooltip</td>
@@ -682,14 +660,14 @@ imageButton.click();
 
 const gui = new GUI();
 
-// Simple value & callback
-gui.color({ label: 'Color (value & callback)', value: '#06ff89' }, color => {
+// Approach 1: simple mode
+gui.color({ label: 'Color (simple mode)', value: '#06ff89' }).onChange(color => {
     element.style.backgroundColor = color;
 });
 
-// Object binding
+// Approach 2: binding mode
 const color = { value: '#06ff89' };
-gui.color({ label: 'Color (object binding)', obj: color, prop: 'value' }, () => {
+gui.color(color, 'value', { label: 'Color (binding mode)' }).onChange(() => {
     element.style.backgroundColor = color.value;
 });
 </code></pre>
@@ -698,7 +676,12 @@ gui.color({ label: 'Color (object binding)', obj: color, prop: 'value' }, () => 
 
 
 
-                <h3 id="vector2">.vector2( parameters, callback );</h3>
+                <h3 id="vector2">.vector2( object, xProp, yProp, options )</h3>
+                <p>The <span class="code-inline">vector2()</span> component uses an object binding mode. It returns the component instance, allowing you to chain the <span class="code-inline">.onChange(callback)</span> method to handle events.</p>
+                <div class="code-block" style="margin-bottom: 2rem;">
+                    <pre><code class="language-js">gui.vector2( object, propertyX, propertyY, options ).onChange( callback )</code></pre>
+                </div>
+                <h4>Options</h4>
                 <table cellspacing="0">
                     <tr>
                         <th>Parameter</th>
@@ -711,20 +694,19 @@ gui.color({ label: 'Color (object binding)', obj: color, prop: 'value' }, () => 
                         <td>Optional.</td>
                     </tr>
                     <tr>
-                        <td>x</td>
-                        <td>object</td>
-                        <td>An object containing the x-axis properties<br>
-                            <span class="code-inline">{ obj&lt;object>, prop&lt;string>, min&lt;number>, max&lt;number>
-                                }</span>
-                        </td>
+                        <td>min</td>
+                        <td>number</td>
+                        <td>Optional. Minimum value for both axes.</td>
                     </tr>
                     <tr>
-                        <td>y</td>
-                        <td>object</td>
-                        <td>An object containing the y-axis properties<br>
-                            <span class="code-inline">{ obj&lt;object>, prop&lt;string>, min&lt;number>, max&lt;number>
-                                }</span>
-                        </td>
+                        <td>max</td>
+                        <td>number</td>
+                        <td>Optional. Maximum value for both axes.</td>
+                    </tr>
+                    <tr>
+                        <td>step</td>
+                        <td>number</td>
+                        <td>Optional. Increment by which to change the values.</td>
                     </tr>
                     <tr>
                         <td>tooltip</td>
@@ -733,9 +715,7 @@ gui.color({ label: 'Color (object binding)', obj: color, prop: 'value' }, () => 
                             value will be the same as the <span class="code-inline">label</span>.</td>
                     </tr>
                 </table>
-                <p>A vector2() component will automatically update the value of the target object property, therefore a
-                    callback isn't necessarily needed. Directly updating the object property will also update the
-                    vector2() component.</p>
+                <p>A <span class="code-inline">vector2()</span> component will automatically update the values of the target object properties, therefore a callback isn't necessarily needed to bind data. Directly updating the object properties will also update the <span class="code-inline">vector2()</span> component.</p>
                 <div id="container-vector2" class="container" style="height: 340px;">
                     <div class="element left"></div>
                     <p class="note"></p>
@@ -746,10 +726,7 @@ gui.color({ label: 'Color (object binding)', obj: color, prop: 'value' }, () => 
 const position = { x: 0, y: 0 };
 const gui = new GUI();
 
-gui.vector2({ label: 'Position',
-    x: { obj: position, prop: 'x', min: -50, max: 50 },
-    y: { obj: position, prop: 'y', min: -50, max: 50 },
-}, (x, y) => {
+gui.vector2(position, 'x', 'y', { label: 'Position', min: -50, max: 50 }).onChange((x, y) => {
     element.style.transform = `translate(${x}px, ${-y}px)`;
 });</code></pre>
                 </div>
@@ -795,14 +772,14 @@ gui.vector2({ label: 'Position',
 const gui = new GUI();
 
 let folder_1 = gui.folder({ label: 'Folder 1' });
-folder_1.button('Random color', changeColor);
-folder_1.slider({ label: 'Size', value: 1 }, changeScale);
+folder_1.button({ label: 'Random color' }).onClick(changeColor);
+folder_1.slider({ label: 'Size', value: 1 }).onChange(changeScale);
 
 let folder_2 = gui.folder({ label: 'Folder 2', color: '#993333' });
-folder_2.button('Random color', changeColor);
+folder_2.button({ label: 'Random color' }).onClick(changeColor);
 
 let folder_3 = gui.folder({ label: 'Folder 3', closed: true });
-folder_3.button('Random color', changeColor);</code></pre>
+folder_3.button({ label: 'Random color' }).onClick(changeColor);</code></pre>
                 </div>
 
 
@@ -817,13 +794,13 @@ folder_3.button('Random color', changeColor);</code></pre>
         
 const gui_1 = new GUI();
 
-gui_1.button('gui_2.toggleClose();', () => {
+gui_1.button({ label: 'gui_2.toggleClose();' }).onClick(() => {
     gui_2.toggleClose();
 });
 
 const gui_2 = new GUI();
 
-gui_2.button('gui_1.toggleClose();', () => {
+gui_2.button({ label: 'gui_1.toggleClose();' }).onClick(() => {
     gui_1.toggleClose();
 });</code></pre>
                 </div>
@@ -833,16 +810,14 @@ gui_2.button('gui_1.toggleClose();', () => {
 
 
 
-                <h2 id="killing-creating">Killing and creating dynamically</h2>
-
-                <p>There is no .kill() method at the moment, so instances have to be killed "manually".</p>
+                <h3 id="kill">.kill()</h3>
 
                 <div id="container-5" class="container"></div>
 
                 <div class="code-button"
                     onclick="document.getElementById('code-block-killing').classList.toggle('hidden')">See
                     code</div>
-                <div id="code-block-killing" class="code-block hidden">
+                <div id="code-block-killing" class="code-block">
                     <div>
                         <pre><code class="language-js">const guis = [];
 
@@ -850,7 +825,7 @@ let gui_1 = new GUI({
     label: 'GUI 1',
 });
 
-gui_1.button('Create GUI panel', () => {
+gui_1.button({ label: 'Create GUI panel' }).onClick(() => {
     guis[guis.length] = new GUI({
         label: 'Created GUI',
         position: 'bottom left',
@@ -859,11 +834,11 @@ gui_1.button('Create GUI panel', () => {
     });
 });
 
-gui_1.button('Kill GUI panel', () => {
+gui_1.button({ label: 'Kill GUI panel' }).onClick(() => {
     const index = guis.length - 1;
     if ( index >= 0 ) {
         // Removes html elements
-        guis[index].wrapper.remove(); 
+        guis[index].kill(); 
 
         // Frees up memory
         guis[index] = null;

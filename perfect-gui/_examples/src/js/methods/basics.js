@@ -254,31 +254,28 @@ export default function basics() {
         draggable: true,
     });
 
-    gui.button({ label: 'Randomize color' }, () => {
+    gui.button({ label: 'Randomize color' }).onClick(() => {
         const col = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
         material.color.set(col);
     });
 
-    gui.color({ label: 'Color', value: '#ffffff' }, (color) => {
+    gui.color({ label: 'Color', value: '#ffffff' }).onChange((color) => {
         material.color.set(color);
     });
 
-    gui.list(
-        {
-            label: 'Preset',
-            values: ['-', 'red', 'pink', 'yellow', 'blue'],
-            value: '-',
-        },
-        (value) => {
-            if (value != '-') {
-                material.color.set(value);
-            }
-        },
-    );
+    gui.list({
+        label: 'Preset',
+        values: ['-', 'red', 'pink', 'yellow', 'blue'],
+        value: '-',
+    }).onChange((value) => {
+        if (value != '-') {
+            material.color.set(value);
+        }
+    });
 
-    gui.slider({ label: 'Metalness', obj: material, prop: 'metalness' });
+    gui.slider(material, 'metalness', { label: 'Metalness' });
 
-    gui.toggle({ label: 'Wireframe', value: false }, (state) => {
+    gui.toggle({ label: 'Wireframe', value: false }).onChange((state) => {
         material.wireframe = state;
         if (state) {
             material.roughness = 1;
@@ -287,36 +284,36 @@ export default function basics() {
         }
     });
 
-    gui.image(
-        {
-            label: 'HDR1',
-            path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/hdr1.jpg',
-            selected: true,
-        },
-        changeEnvMap,
-    );
-    gui.image(
-        {
-            label: 'HDR2',
-            path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/hdr2.jpg',
-        },
-        changeEnvMap,
-    );
-    gui.image(
-        {
-            label: 'HDR3',
-            path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/hdr3.jpg',
-        },
-        changeEnvMap,
-    );
+    gui.image({
+        label: 'HDR1',
+        path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/hdr1.jpg',
+        selected: true,
+    }).onClick(changeEnvMap);
+    gui.image({
+        label: 'HDR2',
+        path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/hdr2.jpg',
+    }).onClick(changeEnvMap);
+    gui.image({
+        label: 'HDR3',
+        path: 'https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/img/hdr3.jpg',
+    }).onClick(changeEnvMap);
 
     const folder = gui.folder({ label: 'Displacement', closed: true });
 
-    folder.vector2({
-        label: 'X / Y',
-        x: { obj: customUniforms.uX, prop: 'value', min: -1, max: 1 },
-        y: { obj: customUniforms.uY, prop: 'value', min: -1, max: 1 },
-    });
+    const dummyOffset = {
+        x: customUniforms.uX.value,
+        y: customUniforms.uY.value,
+    };
+    folder
+        .vector2(dummyOffset, 'x', 'y', {
+            label: 'X / Y',
+            min: -1,
+            max: 1,
+        })
+        .onChange((x, y) => {
+            customUniforms.uX.value = x;
+            customUniforms.uY.value = y;
+        });
 
     function changeEnvMap(img) {
         const textureLoader = new THREE.TextureLoader();
