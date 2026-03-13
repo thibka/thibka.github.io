@@ -30,7 +30,7 @@
     <link rel="shortcut icon"
         href="https://raw.githubusercontent.com/thibka/thibka.github.io/master/perfect-gui/_data/fav/180x180.png">
   <script type="module" crossorigin src="./main.bundle.js"></script>
-  <link rel="modulepreload" crossorigin href="./assets/index-BuIDkl_x.js">
+  <link rel="modulepreload" crossorigin href="./assets/index-BbB_QHEm.js">
   <link rel="modulepreload" crossorigin href="./assets/three.module-DkzxXd4i.js">
   <link rel="stylesheet" crossorigin href="./main.css">
 </head>
@@ -63,6 +63,7 @@
             <a class="sidebar__item" href="#color">.color()</a>
             <a class="sidebar__item" href="#vector2">.vector2()</a>
             <a class="sidebar__item" href="#folders">.folder()</a>
+            <a class="sidebar__item" href="#tabs">.tabs()</a>
             <a class="sidebar__item" href="#toggleclose">.toggleClose()</a>
             <a class="sidebar__item" href="#kill">.kill()</a>
         </div>
@@ -782,6 +783,78 @@ let folder_3 = gui.folder({ label: 'Folder 3', closed: true });
 folder_3.button({ label: 'Random color' }).onClick(changeColor);</code></pre>
                 </div>
 
+
+
+                <h3 id="tabs">.tabs( parameters )</h3>
+                <table cellspacing="0">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>tabs</td>
+                        <td>array</td>
+                        <td>Required. Array of tab labels.</td>
+                    </tr>
+                    <tr>
+                        <td>active</td>
+                        <td>number</td>
+                        <td>Optional. Index of the initially active tab. Default is <span class="code-inline">0</span>.</td>
+                    </tr>
+                </table>
+                <br>
+                <table cellspacing="0">
+                    <tr>
+                        <th>Method</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>.getTab(index)</td>
+                        <td>Returns the GUI instance for the tab at the specified index.</td>
+                    </tr>
+                    <tr>
+                        <td>.getActiveTab()</td>
+                        <td>Returns the index of the currently active tab.</td>
+                    </tr>
+                    <tr>
+                        <td>.getTabElement(index)</td>
+                        <td>Returns the DOM element for the tab at the specified index.</td>
+                    </tr>
+                    <tr>
+                        <td>.setActiveTab(index)</td>
+                        <td>Sets the active tab to the specified index.</td>
+                    </tr>
+                </table>
+                <div id="container-tabs" class="container" style="height: 200px;">
+                </div>
+                <div id="code-block-tabs" class="code-block" style="margin-bottom: 0;">
+                    <pre><code class="language-js">import GUI from 'perfect-gui';
+
+const gui = new GUI({label: 'Tabs' });
+
+const tabs = gui.tabs({
+    tabs: ['Controls', 'Settings'],
+    active: 1
+});
+
+const tab1 = tabs.getTab(0);
+tab1.button({ label: 'Action Button' });
+tab1.slider({ label: 'Value', value: 0.5, min: 0, max: 1 });
+
+const tab2 = tabs.getTab(1);
+tab2.toggle({ label: 'Enable Feature', value: true });
+tab2.color({ label: 'Color', value: '#ff0000' });</code></pre>
+                </div>
+
+                <div id="code-block-tabs-methods" class="code-block">
+                    <pre><code class="language-js">// Tab methods
+console.log('Active tab:', tabs.getActiveTab());
+console.log('Tab 0 element:', tabs.getTabElement(0));
+
+// Programmatically switch tabs
+tabs.setActiveTab(0);</code></pre>
+                </div>
 
 
 

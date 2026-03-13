@@ -15,6 +15,7 @@ import image from './js/methods/image';
 import color from './js/methods/color';
 import vector2 from './js/methods/vector2';
 import folder from './js/methods/folder';
+import tabs from './js/methods/tabs';
 import toggleClose from './js/methods/toggleClose';
 
 import multiple from './js/multiple';
@@ -36,6 +37,7 @@ image();
 color();
 vector2();
 folder();
+tabs();
 toggleClose();
 
 // multiple();
