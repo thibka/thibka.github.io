@@ -10,15 +10,11 @@ export default function slider() {
         draggable: true,
     });
 
-    gui.slider({ label: 'Slider 1', value: 1 }).onChange((value) => {
-        element.style.opacity = value;
-    });
-
     gui.slider(position, 'x', {
-        label: 'Slider 2 (object binding)',
+        label: 'Slider',
         min: -30,
         max: 30,
-    }).onChange(() => {
-        element.style.transform = `translateX(${position.x}px)`;
+    }).onChange((value) => {
+        element.style.transform = `translateX(${value}px)`;
     });
 }

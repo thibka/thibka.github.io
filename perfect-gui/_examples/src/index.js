@@ -18,8 +18,8 @@ import folder from './js/methods/folder';
 import tabs from './js/methods/tabs';
 import toggleClose from './js/methods/toggleClose';
 
-import multiple from './js/multiple';
-import other from './js/other';
+/* import multiple from './js/multiple';
+import other from './js/other'; */
 import kill_create from './js/kill_create';
 import sidebar from './js/sidebar';
 

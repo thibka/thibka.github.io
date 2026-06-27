@@ -9,28 +9,30 @@ export default function folder() {
         container: '#container-folder',
     });
 
-    let folder_1 = gui.folder({ label: 'Folder 1' });
+    const settings = { value: 1 };
 
-    folder_1.button({ label: 'Button' }).onClick(() => {
+    const f1 = gui.folder({ label: 'Folder 1' });
+
+    f1.button({ label: 'Button' }).onClick(() => {
         let color = getRandomColor();
         element.style.backgroundColor = color;
     });
 
-    folder_1
-        .slider({ label: 'Slider', value: 1, step: 0.1 })
-        .onChange((value) => {
+    f1.slider(settings, 'value', { label: 'Slider', step: 0.1 }).onChange(
+        (value) => {
             element.style.transform = `scale(${value})`;
-        });
+        },
+    );
 
-    let folder_2 = gui.folder({ label: 'Folder 2', color: '#993333' });
+    const f2 = gui.folder({ label: 'Folder 2', color: '#993333' });
 
-    folder_2.button({ label: 'Button' }).onClick(() => {
+    f2.button({ label: 'Button' }).onClick(() => {
         element.style.backgroundColor = getRandomColor();
     });
 
-    let folder_3 = gui.folder({ label: 'Folder 3', closed: true });
+    const f3 = gui.folder({ label: 'Folder 3', closed: true });
 
-    folder_3.button({ label: 'Button' }).onClick(() => {
+    f3.button({ label: 'Button' }).onClick(() => {
         element.style.backgroundColor = getRandomColor();
     });
 }

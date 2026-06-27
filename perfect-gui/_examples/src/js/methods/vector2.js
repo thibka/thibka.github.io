@@ -1,7 +1,7 @@
 import GUI from '../../perfect-gui/index';
 
 export default function vector2() {
-    const position = {
+    const settings = {
         x: 0,
         y: 0,
     };
@@ -12,7 +12,7 @@ export default function vector2() {
         container: '#container-vector2',
     });
 
-    gui.vector2(position, 'x', 'y', {
+    gui.vector2(settings, 'x', 'y', {
         label: 'Position',
         min: -50,
         max: 50,
