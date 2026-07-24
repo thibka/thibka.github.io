@@ -15,6 +15,7 @@ const guiVersion = (
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/perfect-gui/dist/',
   plugins: [
     react(),
     babel({ presets: [reactCompilerPreset()] })
