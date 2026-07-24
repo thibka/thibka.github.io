@@ -1,0 +1,314 @@
+import { useEffect, useRef } from 'react';
+import * as THREE from 'three';
+import GUI from 'perfect-gui';
+
+const HDR_IMAGES = ['/img/hdr1.jpg', '/img/hdr2.jpg', '/img/hdr3.jpg'];
+
+const ENV_MAP_URL = 'https://threejs.org/examples/textures/2294472375_24a3b8ef46_o.jpg';
+
+/**
+ * The "Basics" demo from the perfect-gui examples (_examples/src/js/methods/basics.js):
+ * a three.js torus knot driven by a real perfect-gui panel — button, color, list,
+ * slider, toggle, HDR image picker, and a folder holding a vector2 pad that feeds
+ * the material's displacement uniforms.
+ */
+export default function GuiDemoPanel() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    // ------------------------------------------------
+    // 1. Three.js scene
+    // ------------------------------------------------
+    function getCanvasSize() {
+      if (window.innerWidth < 600) {
+        return { width: container!.clientWidth, height: 300 };
+      }
+      if (window.innerWidth < 640) {
+        return {
+          width: container!.clientWidth - 100,
+          height: container!.clientHeight,
+        };
+      }
+      return {
+        width: container!.clientWidth - 290,
+        height: container!.clientHeight,
+      };
+    }
+
+    let { width: canvasWidth, height: canvasHeight } = getCanvasSize();
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, canvasWidth / canvasHeight, 0.1, 100);
+    camera.position.z = 5;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(canvasWidth, canvasHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
+
+    const geometry = new THREE.TorusKnotGeometry(1, 0.2, 300, 50);
+    const customUniforms = {
+      uTime: { value: 0 },
+      uX: { value: 0 },
+      uY: { value: 0 },
+    };
+
+    const material = new THREE.MeshStandardMaterial({
+      color: '#ffffff',
+      wireframe: false,
+      roughness: 0.0,
+      metalness: 0.7,
+    });
+
+    material.onBeforeCompile = (shader) => {
+      shader.uniforms.uTime = customUniforms.uTime;
+      shader.uniforms.uX = customUniforms.uX;
+      shader.uniforms.uY = customUniforms.uY;
+
+      // Vertex - declarations (Classic Perlin 3D Noise by Stefan Gustavson)
+      shader.vertexShader = shader.vertexShader.replace(
+        `void main() {`,
+        `
+                uniform float uTime;
+                uniform float uX;
+                uniform float uY;
+                varying float vDistanceFromCursor;
+
+                vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
+                vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
+                vec3 fade(vec3 t) {return t*t*t*(t*(t*6.0-15.0)+10.0);}
+
+                float cnoise(vec3 P){
+                    vec3 Pi0 = floor(P);
+                    vec3 Pi1 = Pi0 + vec3(1.0);
+                    Pi0 = mod(Pi0, 289.0);
+                    Pi1 = mod(Pi1, 289.0);
+                    vec3 Pf0 = fract(P);
+                    vec3 Pf1 = Pf0 - vec3(1.0);
+                    vec4 ix = vec4(Pi0.x, Pi1.x, Pi0.x, Pi1.x);
+                    vec4 iy = vec4(Pi0.yy, Pi1.yy);
+                    vec4 iz0 = Pi0.zzzz;
+                    vec4 iz1 = Pi1.zzzz;
+
+                    vec4 ixy = permute(permute(ix) + iy);
+                    vec4 ixy0 = permute(ixy + iz0);
+                    vec4 ixy1 = permute(ixy + iz1);
+
+                    vec4 gx0 = ixy0 / 7.0;
+                    vec4 gy0 = fract(floor(gx0) / 7.0) - 0.5;
+                    gx0 = fract(gx0);
+                    vec4 gz0 = vec4(0.5) - abs(gx0) - abs(gy0);
+                    vec4 sz0 = step(gz0, vec4(0.0));
+                    gx0 -= sz0 * (step(0.0, gx0) - 0.5);
+                    gy0 -= sz0 * (step(0.0, gy0) - 0.5);
+
+                    vec4 gx1 = ixy1 / 7.0;
+                    vec4 gy1 = fract(floor(gx1) / 7.0) - 0.5;
+                    gx1 = fract(gx1);
+                    vec4 gz1 = vec4(0.5) - abs(gx1) - abs(gy1);
+                    vec4 sz1 = step(gz1, vec4(0.0));
+                    gx1 -= sz1 * (step(0.0, gx1) - 0.5);
+                    gy1 -= sz1 * (step(0.0, gy1) - 0.5);
+
+                    vec3 g000 = vec3(gx0.x,gy0.x,gz0.x);
+                    vec3 g100 = vec3(gx0.y,gy0.y,gz0.y);
+                    vec3 g010 = vec3(gx0.z,gy0.z,gz0.z);
+                    vec3 g110 = vec3(gx0.w,gy0.w,gz0.w);
+                    vec3 g001 = vec3(gx1.x,gy1.x,gz1.x);
+                    vec3 g101 = vec3(gx1.y,gy1.y,gz1.y);
+                    vec3 g011 = vec3(gx1.z,gy1.z,gz1.z);
+                    vec3 g111 = vec3(gx1.w,gy1.w,gz1.w);
+
+                    vec4 norm0 = taylorInvSqrt(vec4(dot(g000, g000), dot(g010, g010), dot(g100, g100), dot(g110, g110)));
+                    g000 *= norm0.x;
+                    g010 *= norm0.y;
+                    g100 *= norm0.z;
+                    g110 *= norm0.w;
+                    vec4 norm1 = taylorInvSqrt(vec4(dot(g001, g001), dot(g011, g011), dot(g101, g101), dot(g111, g111)));
+                    g001 *= norm1.x;
+                    g011 *= norm1.y;
+                    g101 *= norm1.z;
+                    g111 *= norm1.w;
+
+                    float n000 = dot(g000, Pf0);
+                    float n100 = dot(g100, vec3(Pf1.x, Pf0.yz));
+                    float n010 = dot(g010, vec3(Pf0.x, Pf1.y, Pf0.z));
+                    float n110 = dot(g110, vec3(Pf1.xy, Pf0.z));
+                    float n001 = dot(g001, vec3(Pf0.xy, Pf1.z));
+                    float n101 = dot(g101, vec3(Pf1.x, Pf0.y, Pf1.z));
+                    float n011 = dot(g011, vec3(Pf0.x, Pf1.yz));
+                    float n111 = dot(g111, Pf1);
+
+                    vec3 fade_xyz = fade(Pf0);
+                    vec4 n_z = mix(vec4(n000, n100, n010, n110), vec4(n001, n101, n011, n111), fade_xyz.z);
+                    vec2 n_yz = mix(n_z.xy, n_z.zw, fade_xyz.y);
+                    float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x);
+                    return 2.2 * n_xyz;
+                }
+
+                void main() {`,
+      );
+
+      // Vertex - main
+      shader.vertexShader = shader.vertexShader.replace(
+        `#include <begin_vertex>`,
+        `#include <begin_vertex>
+                vec3 worldNormal = normalize(vec3(modelMatrix * vec4(objectNormal, 0.0)));
+                vec3 worldPos = (modelMatrix * vec4(position, 1.0)).xyz;
+                float strength = distance(vec3(0.), vec3(uX, uY, 0.)) * .5;
+                strength = pow(strength, .1);
+                vDistanceFromCursor = distance(vec3(worldPos.x, worldPos.y, 0.), vec3(-uX, -uY, 0.));
+                vDistanceFromCursor = pow(vDistanceFromCursor, 2.);
+                float noise = cnoise(transformed * .5 + uTime * .001) * strength;
+                transformed = mix(
+                    transformed,
+                    transformed + (worldNormal * .15 * noise),
+                    vDistanceFromCursor
+                );
+                `,
+      );
+
+      // Fragment - declarations
+      shader.fragmentShader = shader.fragmentShader.replace(
+        `void main() {`,
+        `
+                uniform float uTime;
+                uniform float uX;
+                uniform float uY;
+                varying float vDistanceFromCursor;
+
+                void main() {`,
+      );
+
+      // Fragment - main
+      shader.fragmentShader = shader.fragmentShader.replace(
+        `#include <opaque_fragment>`,
+        `
+                #ifdef OPAQUE
+                    diffuseColor.a = 1.0;
+                #endif
+                #ifdef USE_TRANSMISSION
+                    diffuseColor.a *= material.transmissionAlpha;
+                #endif
+                gl_FragColor = vec4(
+                    mix(
+                        outgoingLight,
+                        outgoingLight + vec3(.1 * uX, .05 * uY, 0.),
+                        vDistanceFromCursor * max(abs(uX), abs(uY))
+                    ),
+                    diffuseColor.a );
+            `,
+      );
+    };
+
+    const textureLoader = new THREE.TextureLoader();
+    textureLoader.load(ENV_MAP_URL, (texture) => {
+      texture.mapping = THREE.EquirectangularReflectionMapping;
+      texture.colorSpace = THREE.SRGBColorSpace;
+      material.envMap = texture;
+    });
+
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(0, 0, 0);
+    scene.add(mesh);
+
+    const pointLight = new THREE.PointLight(0xffffff, 20);
+    pointLight.position.set(0, 0, 4);
+    scene.add(pointLight);
+
+    renderer.setAnimationLoop((time) => {
+      mesh.rotation.z = time * 0.0005;
+      renderer.render(scene, camera);
+      customUniforms.uTime.value = time;
+    });
+
+    function resize() {
+      ({ width: canvasWidth, height: canvasHeight } = getCanvasSize());
+      camera.aspect = canvasWidth / canvasHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(canvasWidth, canvasHeight);
+    }
+
+    window.addEventListener('resize', resize);
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(container);
+
+    // ------------------------------------------------
+    // 2. GUI
+    // ------------------------------------------------
+    const settings = {
+      color: '#ffffff',
+      preset: '-',
+      wireframe: false,
+      x: customUniforms.uX.value,
+      y: customUniforms.uY.value,
+    };
+
+    const gui = new GUI({
+      label: 'Basics',
+      container,
+      draggable: true,
+    });
+
+    gui.button({ label: 'Randomize color' }).onClick(() => {
+      material.color.set(`#${Math.floor(Math.random() * 16777215).toString(16)}`);
+    });
+
+    gui.color(settings, 'color').onChange((color) => {
+      material.color.set(color);
+    });
+
+    gui
+      .list(settings, 'preset', ['-', 'red', 'pink', 'yellow', 'blue'], {
+        label: 'Preset',
+      })
+      .onChange((value) => {
+        if (value !== '-') material.color.set(value as THREE.ColorRepresentation);
+      });
+
+    gui.slider(material, 'metalness', { label: 'Metalness' });
+
+    gui.toggle(settings, 'wireframe', { label: 'Wireframe' }).onChange((state) => {
+      material.wireframe = state;
+      material.roughness = state ? 1 : 0;
+    });
+
+    function changeEnvMap(img: { path: string }) {
+      new THREE.TextureLoader().load(img.path, (texture) => {
+        texture.mapping = THREE.EquirectangularReflectionMapping;
+        texture.colorSpace = THREE.SRGBColorSpace;
+        material.envMap = texture;
+      });
+    }
+
+    HDR_IMAGES.forEach((path, i) => {
+      gui.image(path, { label: `HDR${i + 1}`, selected: i === 0 }).onClick(changeEnvMap);
+    });
+
+    const folder = gui.folder({ label: 'Displacement', closed: true });
+
+    folder.vector2(settings, 'x', 'y', { label: 'X / Y', min: -1, max: 1 }).onChange((x, y) => {
+      customUniforms.uX.value = x;
+      customUniforms.uY.value = y;
+    });
+
+    // ------------------------------------------------
+    // 3. Teardown
+    // ------------------------------------------------
+    return () => {
+      window.removeEventListener('resize', resize);
+      resizeObserver.disconnect();
+      renderer.setAnimationLoop(null);
+      gui.kill();
+      renderer.domElement.remove();
+      renderer.dispose();
+      geometry.dispose();
+      material.dispose();
+    };
+  }, []);
+
+  return <div ref={containerRef} className="demo-stage" />;
+}

@@ -1,0 +1,594 @@
+/* ── Design tokens ──────────────────────────────────────────────── */
+
+:root {
+  --bg: #0a0c0f;
+  --surface: #0d1014;
+  --surface-2: #12161b;
+  --surface-3: #171c22;
+
+  --line-soft: #14181e;
+  --line: #1a1e24;
+  --line-2: #242a32;
+  --line-3: #262c35;
+  --line-4: #2a303a;
+
+  --text: #e6e9ec;
+  --text-2: #dfe3e8;
+  --text-3: #c7ccd3;
+  --muted: #9aa2ae;
+  --muted-2: #8b93a1;
+  --dim: #5b6472;
+  --dim-2: #4a5563;
+
+  --accent: #06ff89;
+  --code-str: #d8fb3c;
+  --code-num: #d8fb3c;
+
+  --sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  --sidebar-w: 260px;
+}
+
+/* ── Base ───────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
+  color: #fff;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: color-mix(in srgb, var(--accent) 70%, #fff);
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+}
+
+code {
+  font-family: var(--mono);
+  color: var(--text-3);
+  background: var(--surface-3);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── Layout ─────────────────────────────────────────────────────── */
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+}
+
+.section {
+  max-width: 1080px;
+  padding-inline: 64px;
+  scroll-margin-top: 24px;
+  margin-inline: auto;
+}
+
+.section--divided {
+  border-top: 1px solid var(--line-soft);
+}
+
+.section__label {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.section__title {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
+}
+
+.section__lede {
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 600px;
+  margin-bottom: 36px;
+}
+
+/* ── Sidebar ────────────────────────────────────────────────────── */
+
+.sidebar {
+  width: var(--sidebar-w);
+  flex: 0 0 var(--sidebar-w);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  border-right: 1px solid var(--line);
+  padding: 28px 20px;
+  background: var(--bg);
+  transition: transform 0.25s ease;
+}
+
+.sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 4px 22px;
+}
+
+.sidebar__mark {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+.sidebar__wordmark {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.sidebar__group {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--dim);
+  padding: 16px 8px 8px;
+}
+
+.sidebar__group:first-child {
+  padding-top: 14px;
+}
+
+.sidebar__link {
+  font-size: 13.5px;
+  color: var(--text-3);
+  padding: 6px 8px;
+  border-radius: 5px;
+}
+
+.sidebar__link:hover {
+  color: var(--text);
+  background: var(--surface-3);
+}
+
+.sidebar__footer {
+  display: flex;
+  gap: 14px;
+  padding: 24px 8px 4px;
+  border-top: 1px solid var(--line);
+  margin-top: 20px;
+}
+
+.sidebar__footer a {
+  font-size: 12.5px;
+  color: var(--muted-2);
+  font-family: var(--mono);
+}
+
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 60;
+  width: 38px;
+  height: 38px;
+  background: var(--surface-2);
+  border: 1px solid var(--line-3);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.nav-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100000;
+}
+
+/* ── Hero ───────────────────────────────────────────────────────── */
+
+.hero {
+  padding-block: 88px 96px;
+}
+
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin-bottom: 22px;
+}
+
+.hero__badge-sep {
+  color: var(--dim-2);
+}
+
+.hero__badge-note {
+  color: var(--muted-2);
+}
+
+.hero__title {
+  font-size: 52px;
+  line-height: 1.08;
+  margin-bottom: 18px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.hero__title em {
+  color: var(--accent);
+  font-style: normal;
+}
+
+.hero__lede {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 520px;
+  margin-bottom: 32px;
+}
+
+.hero__actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 64px;
+  flex-wrap: wrap;
+}
+
+.hero__install {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  background: var(--surface-2);
+  border: 1px solid var(--line-2);
+  padding: 11px 18px;
+  border-radius: 8px;
+  color: var(--text-3);
+}
+
+.btn-primary {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 600;
+  padding: 11px 20px;
+  border-radius: 8px;
+}
+
+.btn-primary:hover {
+  color: var(--bg);
+  filter: brightness(1.08);
+}
+
+/* Host for the three.js canvas + the perfect-gui panel, which positions itself
+   in this element's top-right corner. The GUI ships its own styles. */
+.demo-stage {
+  position: relative;
+  overflow: hidden;
+  height: 400px;
+  width: 100%;
+  background: radial-gradient(ellipse at center, #10151b 0%, var(--bg) 70%);
+  border: 1px solid var(--surface-3);
+  border-radius: 14px;
+}
+
+/* Code block hosting a live demo panel over its right side. */
+.code-demo {
+  position: relative;
+  display: grid;
+}
+
+.code--demo {
+  padding-right: 330px;
+}
+
+.code-demo__stage {
+  position: absolute;
+  inset: 8px;
+  pointer-events: none;
+}
+
+.code-demo__stage > * {
+  pointer-events: auto;
+}
+
+/* ── Options grid ───────────────────────────────────────────────── */
+
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.option {
+  background: var(--surface);
+  padding: 18px 20px;
+}
+
+.option__head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.option__name {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.option__type {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--dim);
+}
+
+.option__desc {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--muted-2);
+}
+
+/* ── Method sections ────────────────────────────────────────────── */
+
+.method__signature {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
+  font-family: var(--mono);
+}
+
+.method__desc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 620px;
+  margin-bottom: 24px;
+}
+
+/* ── Param table ────────────────────────────────────────────────── */
+
+.param-table {
+  display: grid;
+  grid-template-columns: minmax(130px, max-content) 100px 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  overflow-x: auto;
+  margin-bottom: 28px;
+  font-size: 13px;
+}
+
+.param-table__head {
+  background: var(--surface-3);
+  padding: 9px 14px;
+  color: var(--dim);
+  font-family: var(--mono);
+  font-size: 11.5px;
+}
+
+.param-table__cell {
+  background: var(--surface);
+  padding: 9px 14px;
+  color: var(--muted-2);
+}
+
+.param-table__cell--name {
+  font-family: var(--mono);
+  color: var(--text-2);
+}
+
+/* ── Code blocks ────────────────────────────────────────────────── */
+
+.code {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 20px 22px;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-3);
+  overflow-x: auto;
+  margin: 0;
+}
+
+.code code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+.token.keyword {
+  color: var(--dim);
+}
+
+.token.string,
+.token.template-string {
+  color: var(--code-str);
+}
+
+.token.number,
+.token.boolean {
+  color: var(--code-num);
+}
+
+.token.function,
+.token.class-name {
+  color: var(--accent);
+}
+
+.token.comment {
+  color: var(--dim-2);
+}
+
+.token.constant,
+.token.property,
+.token.literal-property {
+  color: var(--text-2);
+}
+
+.token.operator,
+.token.punctuation {
+  color: var(--muted);
+}
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+
+@media (max-width: 1200px) {
+  :root {
+    --sidebar-w: 200px;
+  }
+}
+
+@media (max-width: 1000px) {
+  :root {
+    --sidebar-w: 180px;
+  }
+
+  .section {
+    padding-inline: 30px;
+  }
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100001;
+    box-shadow: 20px 0 40px rgba(0, 0, 0, 0.45);
+    transform: translateX(-100%);
+    padding-top: 90px;
+  }
+
+  .sidebar[data-open='true'] {
+    transform: translateX(0);
+  }
+
+  .nav-toggle {
+    display: flex;
+    z-index: 100002;
+  }
+
+  .section {
+    padding-inline: 24px;
+  }
+
+  .hero {
+    padding-block: 80px 56px;
+  }
+
+  .hero__title {
+    font-size: 34px;
+  }
+
+  .hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .param-table {
+    grid-template-columns: minmax(96px, max-content) 76px 1fr;
+    font-size: 12px;
+  }
+
+  /* Not enough room next to the code — the demo stacks below it. */
+  .code--demo {
+    padding-right: 22px;
+  }
+}
+
+@media (max-width: 680px) {
+  .code-demo__stage {
+    position: relative;
+    height: var(--demo-h);
+    pointer-events: auto;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    inset: 5px;
+  }
+}
+
+@media (min-width: 901px) {
+  .nav-backdrop {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}
