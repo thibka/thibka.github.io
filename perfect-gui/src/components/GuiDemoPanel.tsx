@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import GUI from 'perfect-gui';
 
-const HDR_IMAGES = ['/img/hdr1.jpg', '/img/hdr2.jpg', '/img/hdr3.jpg'];
+const HDR_IMAGES = ['./img/hdr1.jpg', './img/hdr2.jpg', './img/hdr3.jpg'];
 
 const ENV_MAP_URL = 'https://threejs.org/examples/textures/2294472375_24a3b8ef46_o.jpg';
 

@@ -9,7 +9,7 @@ import GUI from '../../../../perfect-gui/src/index';
  */
 export type DemoSetup = (container: HTMLElement) => () => void;
 
-const HDR_IMAGES = ['/img/hdr1.jpg', '/img/hdr2.jpg', '/img/hdr3.jpg'];
+const HDR_IMAGES = ['./img/hdr1.jpg', './img/hdr2.jpg', './img/hdr3.jpg'];
 
 const SPEED_OPTIONS = [
   { label: 'Slow', value: 0.5 },
