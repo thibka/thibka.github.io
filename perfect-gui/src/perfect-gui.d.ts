@@ -107,6 +107,8 @@ declare module 'perfect-gui' {
   export default class GUI {
     constructor(options?: GUIOptions);
 
+    domElement: HTMLElement | null;
+
     button(options?: ButtonOptions): Clickable<() => void>;
     image(
       path: string,

@@ -327,6 +327,14 @@ code {
   border-radius: 14px;
 }
 
+/* Below 500px the GUI panel covers the full width, so the webgl canvas
+   behind it isn't visible anyway — hide it outright to save GPU/battery. */
+@media (max-width: 499px) {
+  .demo-stage canvas {
+    display: none;
+  }
+}
+
 /* Code block hosting a live demo panel over its right side. */
 .code-demo {
   position: relative;
