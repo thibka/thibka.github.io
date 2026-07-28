@@ -20,6 +20,8 @@ import {
   colorSnippet,
   vector2Params,
   vector2Snippet,
+  angleParams,
+  angleSnippet,
   folderParams,
   folderSnippet,
   tabsParams,
@@ -36,6 +38,7 @@ import {
   imageDemo,
   colorDemo,
   vector2Demo,
+  angleDemo,
   folderDemo,
   tabsDemo,
   toggleCloseDemo,
@@ -183,6 +186,16 @@ export default function App() {
         >
           <ParamTable params={vector2Params} />
           <CodeBlock code={vector2Snippet} demo={vector2Demo} demoHeight={330} />
+        </MethodSection>
+
+        <MethodSection
+          id="method-angle"
+          signature=".angle( object, property, options )"
+          description="Binds an angle slider to a numeric property. Updating the slider changes the property, and assigning a new value to the property updates the slider."
+          style={{ paddingBlock: '8px' }}
+        >
+          <ParamTable params={angleParams} />
+          <CodeBlock code={angleSnippet} demo={angleDemo} />
         </MethodSection>
 
         <MethodSection

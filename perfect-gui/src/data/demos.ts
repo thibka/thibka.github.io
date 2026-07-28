@@ -91,6 +91,17 @@ export const vector2Demo: DemoSetup = (container) => {
   return () => gui.kill();
 };
 
+export const angleDemo: DemoSetup = (container) => {
+  const settings = { angle: 0 };
+  const gui = new GUI({ container });
+
+  gui.angle(settings, 'angle', { label: 'Angle', step: 10 }).onChange((value) => {
+      console.log(`Angle: ${value}deg`);
+  });
+
+  return () => gui.kill();
+};
+
 export const folderDemo: DemoSetup = (container) => {
   const settings = { value: 1 };
   const gui = new GUI({ container, label: 'Folders' });

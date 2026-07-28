@@ -23,6 +23,7 @@ const groups: NavGroup[] = [
       { href: '#method-image', label: '.image()' },
       { href: '#method-color', label: '.color()' },
       { href: '#method-vector2', label: '.vector2()' },
+      { href: '#method-angle', label: '.angle()' },
       { href: '#method-folder', label: '.folder()' },
       { href: '#method-tabs', label: '.tabs()' },
       { href: '#method-toggleclose', label: '.toggleClose()' },

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import GUI from 'perfect-gui';
+import GUI from '../../../../perfect-gui/src/index';
 
 const HDR_IMAGES = ['./img/hdr1.jpg', './img/hdr2.jpg', './img/hdr3.jpg'];
 
@@ -11,7 +11,7 @@ const MOBILE_BREAKPOINT = 500;
 /**
  * The "Basics" demo from the perfect-gui examples (_examples/src/js/methods/basics.js):
  * a three.js torus knot driven by a real perfect-gui panel — button, color, list,
- * slider, toggle, HDR image picker, and a folder holding a vector2 pad that feeds
+ * slider, toggle, angle, HDR image picker, and a folder holding a vector2 pad that feeds
  * the material's displacement uniforms.
  *
  * On a narrow viewport (< MOBILE_BREAKPOINT at mount) the torus knot is never visible
@@ -36,6 +36,7 @@ export default function GuiDemoPanel() {
     let material: THREE.MeshStandardMaterial | null = null;
     let renderer: THREE.WebGLRenderer | null = null;
     let geometry: THREE.TorusKnotGeometry | null = null;
+    let pointLight: THREE.PointLight | null = null;
     let resizeObserver: ResizeObserver | null = null;
     let handleResize: (() => void) | null = null;
 
@@ -232,7 +233,7 @@ export default function GuiDemoPanel() {
       mesh.position.set(0, 0, 0);
       scene.add(mesh);
 
-      const pointLight = new THREE.PointLight(0xffffff, 20);
+      pointLight = new THREE.PointLight(0xffffff, 20);
       pointLight.position.set(0, 0, 4);
       scene.add(pointLight);
 
@@ -266,6 +267,7 @@ export default function GuiDemoPanel() {
       metalness: 0.7,
       x: customUniforms.uX.value,
       y: customUniforms.uY.value,
+      angle: 0,
     };
 
     const gui = new GUI({
@@ -307,6 +309,12 @@ export default function GuiDemoPanel() {
         material.wireframe = state;
         material.roughness = state ? 1 : 0;
       }
+    });
+
+    gui.angle(settings, 'angle', { label: 'Light angle' }).onChange((value) => {
+      if (!pointLight) return;
+      const rad = (value * Math.PI) / 180;
+      pointLight.position.set(Math.sin(rad) * 4, 0, Math.cos(rad) * 4);
     });
 
     function changeEnvMap(img: { path: string }) {

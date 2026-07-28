@@ -137,6 +137,24 @@ gui.vector2(settings, 'x', 'y', {
     console.log(\`Position: \${x}px, \${y}px\`);
 });`;
 
+export const angleParams: MethodParam[] = [
+  { name: 'label', type: 'string', desc: 'Displayed label. Defaults to the property name.' },
+  { name: 'unit', type: 'string', desc: '"deg" or "rad". Default is "deg".' },
+  { name: 'min', type: 'number', desc: 'Minimum value. Default is 0.' },
+  { name: 'max', type: 'number', desc: 'Maximum value. Default is a full turn above min.' },
+  { name: 'step', type: 'number', desc: 'Increment applied when dragging. Default is 1deg.' },
+  { name: 'tooltip', type: 'string|bool', desc: 'Shown on hover. `true` reuses the label.' },
+];
+
+export const angleSnippet = `const settings = { angle: 0 };
+
+gui.angle(settings, 'angle', {
+    label: 'Angle',
+    step: 10,
+}).onChange((value) => {
+    console.log(\`Angle: \${value}deg\`);
+});`;
+
 export const folderParams: MethodParam[] = [
   { name: 'label', type: 'string', desc: 'Label displayed in the folder header.' },
   { name: 'closed', type: 'boolean', desc: 'Folder is collapsed by default. Default is false.' },
