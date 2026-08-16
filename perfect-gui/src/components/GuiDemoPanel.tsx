@@ -9,10 +9,10 @@ const ENV_MAP_URL = 'https://threejs.org/examples/textures/2294472375_24a3b8ef46
 const MOBILE_BREAKPOINT = 500;
 
 /**
- * The "Basics" demo from the perfect-gui examples (_examples/src/js/methods/basics.js):
- * a three.js torus knot driven by a real perfect-gui panel — button, color, list,
- * slider, toggle, angle, HDR image picker, and a folder holding a vector2 pad that feeds
- * the material's displacement uniforms.
+ * Interactive perfect-gui demo: a three.js torus knot driven by a panel split into tabs
+ * via gui.tabs() — Object (button, color, list, slider, toggle, angle, HDR images, plus an
+ * open Displacement folder with a vector2 pad) and Camera (FOV, position X, rotation Z,
+ * and a reset button to showcase the second tab).
  *
  * On a narrow viewport (< MOBILE_BREAKPOINT at mount) the torus knot is never visible
  * behind the full-width GUI panel, so the whole three.js scene is skipped — no renderer,
@@ -37,6 +37,7 @@ export default function GuiDemoPanel() {
     let renderer: THREE.WebGLRenderer | null = null;
     let geometry: THREE.TorusKnotGeometry | null = null;
     let pointLight: THREE.PointLight | null = null;
+    let camera: THREE.PerspectiveCamera | null = null;
     let resizeObserver: ResizeObserver | null = null;
     let handleResize: (() => void) | null = null;
 
@@ -64,7 +65,7 @@ export default function GuiDemoPanel() {
       let isCanvasHidden = window.innerWidth < MOBILE_BREAKPOINT;
 
       const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(50, canvasWidth / canvasHeight, 0.1, 100);
+      camera = new THREE.PerspectiveCamera(50, canvasWidth / canvasHeight, 0.1, 100);
       camera.position.z = 5;
 
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -240,15 +241,15 @@ export default function GuiDemoPanel() {
       renderer.setAnimationLoop((time) => {
         if (isCanvasHidden) return;
         mesh.rotation.z = time * 0.0005;
-        renderer!.render(scene, camera);
+        renderer!.render(scene, camera!);
         customUniforms.uTime.value = time;
       });
 
       handleResize = function resize() {
         isCanvasHidden = window.innerWidth < MOBILE_BREAKPOINT;
         ({ width: canvasWidth, height: canvasHeight } = getCanvasSize());
-        camera.aspect = canvasWidth / canvasHeight;
-        camera.updateProjectionMatrix();
+        camera!.aspect = canvasWidth / canvasHeight;
+        camera!.updateProjectionMatrix();
         renderer!.setSize(canvasWidth, canvasHeight);
       };
 
@@ -268,10 +269,13 @@ export default function GuiDemoPanel() {
       x: customUniforms.uX.value,
       y: customUniforms.uY.value,
       angle: 0,
+      fov: 50,
+      cameraX: 0,
+      cameraRotation: 0,
     };
 
     const gui = new GUI({
-      label: 'Basics',
+      label: 'Torus knot',
       container,
       draggable: !isMobile,
       autoRepositioning: !isMobile,
@@ -283,16 +287,32 @@ export default function GuiDemoPanel() {
       gui.domElement.style.transform = 'translate(-50%, -50%)';
     }
 
-    gui.button({ label: 'Randomize color' }).onClick(() => {
+    const tabs = gui.tabs({ tabs: ['Object', 'Camera'] });
+    const objectTab = tabs.getTab?.(0);
+    const cameraTab = tabs.getTab?.(1);
+    if (!objectTab || !cameraTab) {
+      return () => {
+        if (handleResize) window.removeEventListener('resize', handleResize);
+        resizeObserver?.disconnect();
+        renderer?.setAnimationLoop(null);
+        gui.kill();
+        renderer?.domElement.remove();
+        renderer?.dispose();
+        geometry?.dispose();
+        material?.dispose();
+      };
+    }
+
+    objectTab.button({ label: 'Randomize color' }).onClick(() => {
       const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
       material?.color.set(color);
     });
 
-    gui.color(settings, 'color').onChange((color) => {
+    objectTab.color(settings, 'color', { label: 'Color' }).onChange((color) => {
       material?.color.set(color);
     });
 
-    gui
+    objectTab
       .list(settings, 'preset', ['-', 'red', 'pink', 'yellow', 'blue'], {
         label: 'Preset',
       })
@@ -300,18 +320,18 @@ export default function GuiDemoPanel() {
         if (value !== '-') material?.color.set(value as THREE.ColorRepresentation);
       });
 
-    gui.slider(settings, 'metalness', { label: 'Metalness' }).onChange((value) => {
+    objectTab.slider(settings, 'metalness', { label: 'Metalness' }).onChange((value) => {
       if (material) material.metalness = value;
     });
 
-    gui.toggle(settings, 'wireframe', { label: 'Wireframe' }).onChange((state) => {
+    objectTab.toggle(settings, 'wireframe', { label: 'Wireframe' }).onChange((state) => {
       if (material) {
         material.wireframe = state;
         material.roughness = state ? 1 : 0;
       }
     });
 
-    gui.angle(settings, 'angle', { label: 'Light angle' }).onChange((value) => {
+    objectTab.angle(settings, 'angle', { label: 'Light angle' }).onChange((value) => {
       if (!pointLight) return;
       const rad = (value * Math.PI) / 180;
       pointLight.position.set(Math.sin(rad) * 4, 0, Math.cos(rad) * 4);
@@ -327,14 +347,48 @@ export default function GuiDemoPanel() {
     }
 
     HDR_IMAGES.forEach((path, i) => {
-      gui.image(path, { label: `HDR${i + 1}`, selected: i === 0 }).onClick(changeEnvMap);
+      objectTab
+        .image(path, { label: `HDR${i + 1}`, selected: i === 0, height: 60 })
+        .onClick(changeEnvMap);
     });
 
-    const folder = gui.folder({ label: 'Displacement', closed: true });
+    const folder = objectTab.folder({ label: 'Displacement', closed: false });
 
     folder.vector2(settings, 'x', 'y', { label: 'X / Y', min: -1, max: 1 }).onChange((x, y) => {
       customUniforms.uX.value = x;
       customUniforms.uY.value = y;
+    });
+
+    cameraTab.slider(settings, 'fov', { label: 'FOV', min: 20, max: 100, step: 1 }).onChange((value) => {
+      if (!camera) return;
+      camera.fov = value;
+      camera.updateProjectionMatrix();
+    });
+
+    cameraTab
+      .slider(settings, 'cameraX', { label: 'Position X', min: -3, max: 3, step: 0.1 })
+      .onChange((value) => {
+        if (!camera) return;
+        camera.position.x = value;
+        camera.lookAt(0, 0, 0);
+      });
+
+    cameraTab
+      .angle(settings, 'cameraRotation', { label: 'Rotation Z' })
+      .onChange((value) => {
+        if (camera) camera.rotation.z = (value * Math.PI) / 180;
+      });
+
+    cameraTab.button({ label: 'Reset camera' }).onClick(() => {
+      settings.fov = 50;
+      settings.cameraX = 0;
+      settings.cameraRotation = 0;
+      if (!camera) return;
+      camera.fov = 50;
+      camera.updateProjectionMatrix();
+      camera.position.x = 0;
+      camera.lookAt(0, 0, 0);
+      camera.rotation.z = 0;
     });
 
     // ------------------------------------------------
