@@ -20,7 +20,7 @@ export default function Hero() {
       <h1 className="hero__title">
         A nice, simple
         <br />
-        and <em>({subtitle}) perfect</em> GUI.
+        and <em>({subtitle})</em> perfect GUI.
       </h1>
 
       <p className="hero__lede">
