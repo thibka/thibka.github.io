@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <title>perfect-gui — screenshot rig</title>
+    <style>
+      :root {
+        --bg: #0a0c0f;
+        --text: #e6e9ec;
+        --muted: #9aa2ae;
+        --line: #1a1e24;
+        --sans: 'IBM Plex Sans', system-ui, sans-serif;
+        --mono: 'IBM Plex Mono', ui-monospace, monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /*
+       * Host for the two GUI instances. Both panels use `position: 'top left'` /
+       * `position: 'top right'`, which the library anchors relative to this
+       * container (see index.ts: a non-body container switches the panel to
+       * `position: absolute` instead of viewport-fixed).
+       */
+      #stage {
+        position: relative;
+        overflow: hidden;
+        width: 900px;
+        max-width: calc(100vw - 32px);
+        height: 640px;
+        background:
+          radial-gradient(ellipse at center, rgba(10, 12, 15, 0) 0%, rgba(10, 12, 15, 0.9) 75%),
+          repeating-linear-gradient(to right, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 40px),
+          repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 40px),
+          var(--bg);
+        border: 1px solid #171c22;
+        border-radius: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="stage"></div>
+    <script type="module" src="/src/screenshot.ts"></script>
+  </body>
+</html>
