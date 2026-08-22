@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url'
 const guiVersion = (
   JSON.parse(
     readFileSync(
-      fileURLToPath(new URL('./node_modules/perfect-gui/package.json', import.meta.url)),
+      fileURLToPath(new URL('../../perfect-gui/package.json', import.meta.url)),
       'utf-8',
     ),
   ) as { version: string }
