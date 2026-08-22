@@ -4,10 +4,17 @@ import GUI from '../../../perfect-gui/src/index';
  * Screenshot rig — not part of the docs UI. Instantiates two panels that between
  * them exercise every control type and a representative spread of options, so a
  * single crop of #stage gives an up-to-date hero image for the package README.
+ *
+ * Each panel is mounted into its own #slot-* div sized to the panel's own
+ * `width`, so the library's built-in corner offset resolves to 0 on every
+ * side — screenshot.html then centers each panel inside its slot via a CSS
+ * override (see the `.gui-slot > .p-gui` rule), since the library always
+ * positions a panel flush to its container's top edge.
  */
 
-const stage = document.getElementById('stage');
-if (!stage) throw new Error('#stage not found');
+const slotMain = document.getElementById('slot-main');
+const slotCamera = document.getElementById('slot-camera');
+if (!slotMain || !slotCamera) throw new Error('gui slots not found');
 
 const HDR_IMAGES = ['./img/hdr1.jpg', './img/hdr2.jpg', './img/hdr3.jpg'];
 
@@ -30,10 +37,9 @@ const settings = {
 
 const main = new GUI({
   label: 'Perfect GUI',
-  container: stage,
-  position: 'top left',
+  container: slotMain,
   width: 300,
-  draggable: true,
+  draggable: false,
   autoRepositioning: true,
   closed: false,
 });
@@ -90,10 +96,9 @@ const camera = {
 
 const tabsPanel = new GUI({
   label: 'Camera',
-  container: stage,
-  position: 'top right',
+  container: slotCamera,
   width: 280,
-  draggable: true,
+  draggable: false,
   autoRepositioning: true,
 });
 

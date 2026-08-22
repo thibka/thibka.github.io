@@ -38,30 +38,130 @@
         -webkit-font-smoothing: antialiased;
       }
 
-      /*
-       * Host for the two GUI instances. Both panels use `position: 'top left'` /
-       * `position: 'top right'`, which the library anchors relative to this
-       * container (see index.ts: a non-body container switches the panel to
-       * `position: absolute` instead of viewport-fixed).
-       */
       #stage {
-        position: relative;
-        overflow: hidden;
-        width: 900px;
+        display: flex;
+        justify-content: center;
+        width: 850px;
         max-width: calc(100vw - 32px);
-        height: 640px;
-        background:
-          radial-gradient(ellipse at center, rgba(10, 12, 15, 0) 0%, rgba(10, 12, 15, 0.9) 75%),
-          repeating-linear-gradient(to right, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 40px),
-          repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 40px),
-          var(--bg);
+        height: 580px;
         border: 1px solid #171c22;
-        border-radius: 14px;
+      }
+
+      /* ---- pasted as-is (SCSS nesting flattened to plain descendant selectors) ---- */
+      .gradient-bg {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+      }
+
+      .gradient-bg .base {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background: linear-gradient(
+          12deg,
+          #eceeed 0%,
+          #9cbeab 15%,
+          #4c9571 33%,
+          #355547 56%,
+          #161c1a 80%,
+          #060706 100%
+        );
+      }
+
+      .gradient-bg .treatment {
+        position: absolute;
+        inset: 0px;
+        z-index: 1;
+        background-image:
+          repeating-linear-gradient(0deg, transparent 0 2px, rgba(22, 28, 26, 0.4) 2px 4px),
+          repeating-linear-gradient(90deg, transparent 0 3px, rgba(71, 194, 134, 0.34) 3px 6px);
+        filter: blur(0px);
+        opacity: 0.2;
+      }
+
+      .gradient-bg .glow {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        background:
+          radial-gradient(ellipse at 56% 3%, rgba(255, 255, 255, 0.33), transparent 38%),
+          radial-gradient(ellipse at 57% 33%, rgba(71, 194, 134, 0.22), transparent 42%);
+      }
+
+      .gradient-bg .vignette {
+        position: absolute;
+        inset: 0;
+        z-index: 4;
+        background:
+          radial-gradient(circle at center, transparent 25%, rgba(0, 0, 0, 0.15) 58%, rgba(0, 0, 0, 0.83) 100%),
+          linear-gradient(to bottom, transparent 45%, rgba(0, 0, 0, 0.84) 100%);
+      }
+
+      .gradient-bg .noise {
+        position: absolute;
+        inset: 0;
+        z-index: 5;
+        mix-blend-mode: soft-light;
+        opacity: 0.19;
+        /* no noise texture was supplied with the snippet — filled in with an inline SVG turbulence pattern */
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+      /* ---- end pasted block ---- */
+
+      /*
+       * The library always mounts a panel flush to its container's top edge
+       * (see index.ts: xOffset is 0 for a left corner or `containerWidth -
+       * panelWidth` for a right one — either way flush, never centered — and
+       * yOffset is always 0). Each slot below is sized exactly to its panel's
+       * `width` option, so the built-in horizontal offset resolves to 0 and
+       * every side is flush; this rule then re-centers the panel vertically
+       * within the slot's full stage-height box, and lifts it above the
+       * z-index 0-5 background layers (it would otherwise paint underneath
+       * them, since a plain in-flow ancestor like .panels-row paints before
+       * positioned z-indexed siblings).
+       */
+      .gui-slot > .p-gui {
+        top: 50% !important;
+        transform: translate3d(0, -50%, 0) !important;
+        z-index: 10;
+      }
+
+      .panels-row {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        align-items: stretch;
+        gap: 20px;
+        height: 100%;
+      }
+
+      .gui-slot {
+        position: relative;
+        flex: 0 0 auto;
+      }
+
+      #slot-main {
+        width: 300px;
+      }
+
+      #slot-camera {
+        width: 280px;
       }
     </style>
   </head>
   <body>
-    <div id="stage"></div>
+    <div id="stage" class="gradient-bg">
+      <div class="base"></div>
+      <div class="treatment"></div>
+      <div class="glow"></div>
+      <div class="vignette"></div>
+      <div class="noise"></div>
+      <div class="panels-row">
+        <div class="gui-slot" id="slot-main"></div>
+        <div class="gui-slot" id="slot-camera"></div>
+      </div>
+    </div>
     <script type="module" src="/src/screenshot.ts"></script>
   </body>
 </html>
