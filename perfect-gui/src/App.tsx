@@ -10,6 +10,10 @@ import {
   buttonSnippet,
   sliderParams,
   sliderSnippet,
+  numberParams,
+  numberSnippet,
+  textParams,
+  textSnippet,
   toggleParams,
   toggleSnippet,
   listParams,
@@ -33,6 +37,8 @@ import {
 import {
   buttonDemo,
   sliderDemo,
+  numberDemo,
+  textDemo,
   toggleDemo,
   listDemo,
   imageDemo,
@@ -113,6 +119,26 @@ export default function App() {
         >
           <ParamTable params={sliderParams} />
           <CodeBlock code={sliderSnippet} demo={sliderDemo} />
+        </MethodSection>
+
+        <MethodSection
+          id="method-number"
+          signature=".number( object, property, options )"
+          description="Binds a plain numeric input (no slider) to a numeric property. Useful for precise values or ranges too wide for a slider. Updating the input changes the property, and assigning a new value to the property updates the input."
+          style={{ paddingBlock: '8px' }}
+        >
+          <ParamTable params={numberParams} />
+          <CodeBlock code={numberSnippet} demo={numberDemo} />
+        </MethodSection>
+
+        <MethodSection
+          id="method-text"
+          signature=".text( object, property, options )"
+          description="Binds a free text input to a string property, keeping the property and the UI in sync in both directions."
+          style={{ paddingBlock: '8px' }}
+        >
+          <ParamTable params={textParams} />
+          <CodeBlock code={textSnippet} demo={textDemo} />
         </MethodSection>
 
         <MethodSection

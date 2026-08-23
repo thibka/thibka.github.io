@@ -35,6 +35,44 @@ gui.slider(position, 'x', {
     el.style.transform = \`translateX(\${value}px)\`;
 });`;
 
+export const numberParams: MethodParam[] = [
+  { name: 'label', type: 'string', desc: 'Displayed label. Defaults to the property name.' },
+  { name: 'min', type: 'number', desc: 'Minimum allowed value. Unbounded by default.' },
+  { name: 'max', type: 'number', desc: 'Maximum allowed value. Unbounded by default.' },
+  { name: 'step', type: 'number', desc: "Increment applied by the input's spinner arrows. Default is 1." },
+  { name: 'placeholder', type: 'string', desc: 'Placeholder shown when the field is empty.' },
+  { name: 'tooltip', type: 'string|bool', desc: 'Shown on hover. `true` reuses the label.' },
+];
+
+export const numberSnippet = `const settings = { zoom: 1 };
+
+gui.number(settings, 'zoom', {
+    label: 'Zoom',
+    min: 0.5,
+    max: 3,
+    step: 0.1,
+}).onChange((value) => {
+    camera.zoom = value;
+    camera.updateProjectionMatrix();
+});`;
+
+export const textParams: MethodParam[] = [
+  { name: 'label', type: 'string', desc: 'Displayed label. Defaults to the property name.' },
+  { name: 'placeholder', type: 'string', desc: 'Placeholder shown when the field is empty.' },
+  { name: 'maxLength', type: 'number', desc: 'Maximum number of characters allowed.' },
+  { name: 'tooltip', type: 'string|bool', desc: 'Shown on hover. `true` reuses the label.' },
+];
+
+export const textSnippet = `const settings = { name: 'Player 1' };
+
+gui.text(settings, 'name', {
+    label: 'Name',
+    placeholder: 'Enter a name',
+    maxLength: 20,
+}).onChange((value) => {
+    el.textContent = value;
+});`;
+
 export const toggleParams: MethodParam[] = [
   { name: 'label', type: 'string', desc: 'Displayed label. Defaults to the property name.' },
   { name: 'tooltip', type: 'string|bool', desc: 'Shown on hover. `true` reuses the label.' },

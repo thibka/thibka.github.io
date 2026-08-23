@@ -18,6 +18,8 @@ const groups: NavGroup[] = [
     links: [
       { href: '#method-button', label: '.button()' },
       { href: '#method-slider', label: '.slider()' },
+      { href: '#method-number', label: '.number()' },
+      { href: '#method-text', label: '.text()' },
       { href: '#method-toggle', label: '.toggle()' },
       { href: '#method-list', label: '.list()' },
       { href: '#method-image', label: '.image()' },

@@ -36,6 +36,24 @@ export const sliderDemo: DemoSetup = (container) => {
   return () => gui.kill();
 };
 
+export const numberDemo: DemoSetup = (container) => {
+  const settings = { zoom: 1 };
+  const gui = new GUI({ container });
+
+  gui.number(settings, 'zoom', { label: 'Zoom', min: 0.5, max: 3, step: 0.1 });
+
+  return () => gui.kill();
+};
+
+export const textDemo: DemoSetup = (container) => {
+  const settings = { name: 'Player 1' };
+  const gui = new GUI({ container });
+
+  gui.text(settings, 'name', { label: 'Name', placeholder: 'Enter a name' });
+
+  return () => gui.kill();
+};
+
 export const toggleDemo: DemoSetup = (container) => {
   const settings = { isRound: false };
   const gui = new GUI({ container });

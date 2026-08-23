@@ -272,6 +272,8 @@ export default function GuiDemoPanel() {
       fov: 50,
       cameraX: 0,
       cameraRotation: 0,
+      near: 0.1,
+      canvasTitle: '',
     };
 
     const gui = new GUI({
@@ -379,12 +381,28 @@ export default function GuiDemoPanel() {
         if (camera) camera.rotation.z = (value * Math.PI) / 180;
       });
 
+    /* cameraTab
+      .number(settings, 'near', { label: 'Near clip', min: 0.1, max: 4, step: 0.1 })
+      .onChange((value) => {
+        if (!camera) return;
+        camera.near = value;
+        camera.updateProjectionMatrix();
+      });
+
+    cameraTab
+      .text(settings, 'canvasTitle', { label: 'Canvas tooltip', placeholder: 'Hover the canvas…' })
+      .onChange((value) => {
+        renderer?.domElement.setAttribute('title', value);
+      }); */
+
     cameraTab.button({ label: 'Reset camera' }).onClick(() => {
       settings.fov = 50;
       settings.cameraX = 0;
       settings.cameraRotation = 0;
+      settings.near = 0.1;
       if (!camera) return;
       camera.fov = 50;
+      camera.near = 0.1;
       camera.updateProjectionMatrix();
       camera.position.x = 0;
       camera.lookAt(0, 0, 0);

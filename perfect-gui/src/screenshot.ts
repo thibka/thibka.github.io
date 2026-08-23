@@ -85,6 +85,7 @@ main
 const camera = {
   fov: 50,
   positionX: 0,
+  near: 0.1,
   rotationZ: 0,
   bgColor: '#161616',
   quality: 'High',
@@ -92,6 +93,7 @@ const camera = {
   bloomStrength: 0.8,
   showGrid: false,
   debugMode: 'Wireframe',
+  label: 'cam-01',
 };
 
 const tabsPanel = new GUI({
@@ -111,6 +113,7 @@ if (general) {
   general
     .slider(camera, 'positionX', { label: 'Position X', min: -3, max: 3, step: 0.1 })
     .onChange(() => {});
+  general.number(camera, 'near', { label: 'Near clip', min: 0.1, max: 4, step: 1 }).onChange(() => {});
   general.button({ label: 'Reset camera' }).onClick(() => {});
 }
 
@@ -136,4 +139,5 @@ debugFolder.toggle(camera, 'showGrid', { label: 'Show grid' }).onChange(() => {}
 debugFolder
   .list(camera, 'debugMode', ['Wireframe', 'Normals', 'Depth'], { label: 'Mode' })
   .onChange(() => {});
+debugFolder.text(camera, 'label', { label: 'Session tag', placeholder: 'e.g. cam-01' }).onChange(() => {});
 debugFolder.button({ label: 'Log state', color: '#4ade4a', hoverColor: '#8bff8b' }).onClick(() => {});
