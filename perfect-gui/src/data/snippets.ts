@@ -23,6 +23,7 @@ export const sliderParams: MethodParam[] = [
   { name: 'max', type: 'number', desc: 'Default is 1.' },
   { name: 'step', type: 'number', desc: 'Increment of the value. Default gives 100 steps between min and max.' },
   { name: 'tooltip', type: 'string|bool', desc: 'Shown on hover. `true` reuses the label.' },
+  { name: 'readonly', type: 'boolean', desc: 'Displays the value as a monitor: the handle is hidden and dragging/typing is disabled, but it still updates live when the property changes elsewhere.' },
 ];
 
 export const sliderSnippet = `const position = { x: 0 };
@@ -42,6 +43,7 @@ export const numberParams: MethodParam[] = [
   { name: 'step', type: 'number', desc: "Increment applied by the input's spinner arrows. Default is 1." },
   { name: 'placeholder', type: 'string', desc: 'Placeholder shown when the field is empty.' },
   { name: 'tooltip', type: 'string|bool', desc: 'Shown on hover. `true` reuses the label.' },
+  { name: 'readonly', type: 'boolean', desc: 'Displays the value as a monitor: the stepper arrows are hidden and editing is disabled, but it still updates live when the property changes elsewhere.' },
 ];
 
 export const numberSnippet = `const settings = { zoom: 1 };
@@ -61,6 +63,7 @@ export const textParams: MethodParam[] = [
   { name: 'placeholder', type: 'string', desc: 'Placeholder shown when the field is empty.' },
   { name: 'maxLength', type: 'number', desc: 'Maximum number of characters allowed.' },
   { name: 'tooltip', type: 'string|bool', desc: 'Shown on hover. `true` reuses the label.' },
+  { name: 'readonly', type: 'boolean', desc: 'Displays the value as a monitor: editing is disabled, but it still updates live when the property changes elsewhere.' },
 ];
 
 export const textSnippet = `const settings = { name: 'Player 1' };
@@ -76,6 +79,7 @@ gui.text(settings, 'name', {
 export const toggleParams: MethodParam[] = [
   { name: 'label', type: 'string', desc: 'Displayed label. Defaults to the property name.' },
   { name: 'tooltip', type: 'string|bool', desc: 'Shown on hover. `true` reuses the label.' },
+  { name: 'readonly', type: 'boolean', desc: 'Displays the value as a monitor: clicking no longer toggles it, but it still updates live when the property changes elsewhere.' },
 ];
 
 export const toggleSnippet = `const settings = { value: false };
@@ -145,6 +149,7 @@ function changeBackground(img) {
 export const colorParams: MethodParam[] = [
   { name: 'label', type: 'string', desc: 'Displayed label. Defaults to the property name.' },
   { name: 'tooltip', type: 'string|bool', desc: 'Shown on hover. `true` reuses the label.' },
+  { name: 'readonly', type: 'boolean', desc: 'Displays the value as a monitor: the picker is disabled, but it still updates live when the property changes elsewhere.' },
 ];
 
 export const colorSnippet = `const settings = { color: '#06ff89' };
@@ -163,6 +168,7 @@ export const vector2Params: MethodParam[] = [
   { name: 'x', type: 'object', desc: 'Overrides for the X axis: min, max, step.' },
   { name: 'y', type: 'object', desc: 'Overrides for the Y axis: min, max, step.' },
   { name: 'tooltip', type: 'string|bool', desc: 'Shown on hover. `true` reuses the label.' },
+  { name: 'readonly', type: 'boolean', desc: 'Displays the value as a monitor: clicking/dragging the pad is disabled, but it still updates live when the properties change elsewhere.' },
 ];
 
 export const vector2Snippet = `const settings = { x: 0, y: 0 };
@@ -182,6 +188,7 @@ export const angleParams: MethodParam[] = [
   { name: 'max', type: 'number', desc: 'Maximum value. Default is a full turn above min.' },
   { name: 'step', type: 'number', desc: 'Increment applied when dragging. Default is 1deg.' },
   { name: 'tooltip', type: 'string|bool', desc: 'Shown on hover. `true` reuses the label.' },
+  { name: 'readonly', type: 'boolean', desc: 'Displays the value as a monitor: the dial handle is hidden and dragging/typing is disabled, but it still updates live when the property changes elsewhere.' },
 ];
 
 export const angleSnippet = `const settings = { angle: 0 };
