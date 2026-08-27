@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <title>perfect-gui — playground</title>
+    <style>
+      :root {
+        --bg: #0a0c0f;
+        --bg-raised: #10141a;
+        --text: #e6e9ec;
+        --muted: #9aa2ae;
+        --line: #1a1e24;
+        --accent: #06ff89;
+        --sans: 'IBM Plex Sans', system-ui, sans-serif;
+        --mono: 'IBM Plex Mono', ui-monospace, monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 320px 1fr;
+        grid-template-rows: 1fr 180px;
+        grid-template-areas:
+          'sidebar stage'
+          'sidebar log';
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ---- sidebar ---------------------------------------------------- */
+      #sidebar {
+        grid-area: sidebar;
+        overflow-y: auto;
+        padding: 16px;
+        border-right: 1px solid var(--line);
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      #sidebar h1 {
+        margin: 0;
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      fieldset {
+        margin: 0;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      legend {
+        padding: 0 6px;
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      label.row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        font-size: 13px;
+      }
+
+      label.row.check {
+        justify-content: flex-start;
+      }
+
+      input[type='text'],
+      input[type='number'],
+      select {
+        width: 130px;
+        padding: 4px 6px;
+        background: var(--bg);
+        color: var(--text);
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+
+      .btn-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+      }
+
+      button {
+        padding: 6px 8px;
+        background: var(--bg-raised);
+        color: var(--text);
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        font-family: var(--sans);
+        font-size: 12px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        border-color: var(--accent);
+      }
+
+      button.primary {
+        background: var(--accent);
+        color: #05130c;
+        border-color: var(--accent);
+        font-weight: 600;
+      }
+
+      button.danger:hover {
+        border-color: #ff5c5c;
+      }
+
+      #panel-list {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      #panel-list:empty::after {
+        content: 'No panels yet.';
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      #panel-list .panel-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 6px;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        font-size: 12px;
+        font-family: var(--mono);
+        cursor: pointer;
+      }
+
+      #panel-list .panel-row.active {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      /* ---- stage --------------------------------------------------- */
+      #stage {
+        grid-area: stage;
+        position: relative;
+        overflow: hidden;
+        margin: 16px;
+        border: 1px dashed var(--line);
+        border-radius: 6px;
+      }
+
+      #stage::after {
+        content: 'stage — panels created with "mount in stage" land here';
+        position: absolute;
+        left: 10px;
+        bottom: 8px;
+        font-size: 11px;
+        color: var(--muted);
+        pointer-events: none;
+      }
+
+      /* ---- log --------------------------------------------------- */
+      #log {
+        grid-area: log;
+        overflow-y: auto;
+        margin: 0 16px 16px;
+        padding: 10px 12px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: #06080b;
+        font-family: var(--mono);
+        font-size: 12px;
+        line-height: 1.6;
+      }
+
+      #log .entry {
+        color: var(--muted);
+      }
+
+      #log .entry b {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      #log .entry .val {
+        color: var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <aside id="sidebar">
+      <h1>perfect-gui playground</h1>
+
+      <fieldset>
+        <legend>New panel</legend>
+        <label class="row">Label <input type="text" id="opt-label" value="Panel" /></label>
+        <label class="row">
+          Position
+          <select id="opt-position">
+            <option value="top-right">top-right</option>
+            <option value="top-left">top-left</option>
+            <option value="bottom-right">bottom-right</option>
+            <option value="bottom-left">bottom-left</option>
+          </select>
+        </label>
+        <label class="row">Width <input type="number" id="opt-width" value="290" /></label>
+        <label class="row">maxHeight <input type="number" id="opt-maxheight" placeholder="none" /></label>
+        <label class="row">color <input type="text" id="opt-color" placeholder="#101317" /></label>
+        <label class="row">opacity <input type="number" id="opt-opacity" value="1" min="0" max="1" step="0.05" /></label>
+        <label class="row check"><input type="checkbox" id="opt-draggable" /> draggable</label>
+        <label class="row check"><input type="checkbox" id="opt-closed" /> closed</label>
+        <label class="row check"><input type="checkbox" id="opt-autorepo" checked /> autoRepositioning</label>
+        <label class="row check"><input type="checkbox" id="opt-instage" /> mount in stage</label>
+        <label class="row check"><input type="checkbox" id="opt-onupdate" checked /> log onUpdate</label>
+        <button class="primary" id="btn-create">Create panel</button>
+      </fieldset>
+
+      <fieldset>
+        <legend>Active panel</legend>
+        <div id="panel-list"></div>
+        <div class="btn-grid">
+          <button class="danger" id="btn-kill">Kill active</button>
+          <button class="danger" id="btn-killall">Kill all</button>
+        </div>
+        <button id="btn-toggle">toggleClose() active</button>
+      </fieldset>
+
+      <fieldset>
+        <legend>Add control to active panel</legend>
+        <label class="row check"><input type="checkbox" id="ctl-readonly" /> readonly</label>
+        <label class="row">tooltip <input type="text" id="ctl-tooltip" placeholder="none" /></label>
+        <div class="btn-grid">
+          <button data-add="button">button</button>
+          <button data-add="slider">slider</button>
+          <button data-add="number">number</button>
+          <button data-add="text">text</button>
+          <button data-add="toggle">toggle</button>
+          <button data-add="list">list</button>
+          <button data-add="color">color</button>
+          <button data-add="image">image</button>
+          <button data-add="angle">angle (deg)</button>
+          <button data-add="angle-rad">angle (rad)</button>
+          <button data-add="vector2">vector2</button>
+          <button data-add="folder">folder</button>
+          <button data-add="tabs">tabs</button>
+          <button data-add="sink">kitchen sink</button>
+        </div>
+      </fieldset>
+    </aside>
+
+    <main id="stage"></main>
+    <section id="log"></section>
+
+    <script type="module" src="/src/playground.ts"></script>
+  </body>
+</html>
