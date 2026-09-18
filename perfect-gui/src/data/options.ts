@@ -6,6 +6,7 @@ export const guiOptions: GuiOption[] = [
   { name: 'container', type: 'string|el', desc: 'Parent element of the panel. Default `document.body`.' },
   { name: 'position', type: 'string', desc: 'Corner of the screen: top/bottom left/right.' },
   { name: 'closed', type: 'boolean', desc: 'Whether the panel starts collapsed. Default `false`.' },
+  { name: 'collapsible', type: 'boolean', desc: 'Whether the collapse/expand button is shown in the header. Default `true`.' },
   { name: 'width', type: 'number', desc: 'Width of the panel in pixels. Default `290`.' },
   { name: 'maxHeight', type: 'number', desc: 'Max height before the panel scrolls.' },
   { name: 'color', type: 'string', desc: 'Custom background color of the panel.' },

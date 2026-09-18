@@ -13,6 +13,7 @@ declare module 'perfect-gui' {
     maxHeight?: number;
     width?: number;
     closed?: boolean;
+    collapsible?: boolean;
     draggable?: boolean;
     autoRepositioning?: boolean;
   }

@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "perfect-gui": "^6.1.0",
+    "perfect-gui": "^6.5.2",
     "prismjs": "^1.30.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",

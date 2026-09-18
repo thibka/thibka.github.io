@@ -107,6 +107,7 @@ $('btn-create').addEventListener('click', () => {
     opacity: numOrUndef('opt-opacity'),
     draggable: checked('opt-draggable'),
     closed: checked('opt-closed'),
+    collapsible: checked('opt-collapsible'),
     autoRepositioning: checked('opt-autorepo'),
     container: checked('opt-instage') ? stage : undefined,
     onUpdate: checked('opt-onupdate')
