@@ -14,6 +14,8 @@ import {
   numberSnippet,
   textParams,
   textSnippet,
+  displayTextParams,
+  displayTextSnippet,
   toggleParams,
   toggleSnippet,
   listParams,
@@ -39,6 +41,7 @@ import {
   sliderDemo,
   numberDemo,
   textDemo,
+  displayTextDemo,
   toggleDemo,
   listDemo,
   imageDemo,
@@ -139,6 +142,23 @@ export default function App() {
         >
           <ParamTable params={textParams} />
           <CodeBlock code={textSnippet} demo={textDemo} />
+        </MethodSection>
+
+        <MethodSection
+          id="method-displaytext"
+          signature=".displayText( object, property, options )"
+          description={
+            <>
+              Displays the value of a string property as read-only text — handy for titles, status
+              lines or debug values. It has no label and cannot be edited from the panel: assigning
+              a new value to the property updates the text, and the chained{' '}
+              <code>.onChange(callback)</code> receives the new value.
+            </>
+          }
+          style={{ paddingBlock: '8px' }}
+        >
+          <ParamTable params={displayTextParams} />
+          <CodeBlock code={displayTextSnippet} demo={displayTextDemo} demoHeight={180} />
         </MethodSection>
 
         <MethodSection

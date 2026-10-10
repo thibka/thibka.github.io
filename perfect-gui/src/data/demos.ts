@@ -54,6 +54,17 @@ export const textDemo: DemoSetup = (container) => {
   return () => gui.kill();
 };
 
+export const displayTextDemo: DemoSetup = (container) => {
+  const info = { title: 'Heading', copy: 'Lorem ipsum dolor sit amet', code: 'x = 42' };
+  const gui = new GUI({ container });
+
+  gui.displayText(info, 'title', { style: 'heading' });
+  gui.displayText(info, 'copy');
+  gui.displayText(info, 'code', { style: 'code' });
+
+  return () => gui.kill();
+};
+
 export const toggleDemo: DemoSetup = (container) => {
   const settings = { isRound: false };
   const gui = new GUI({ container });

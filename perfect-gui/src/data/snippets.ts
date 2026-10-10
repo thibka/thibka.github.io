@@ -76,6 +76,22 @@ gui.text(settings, 'name', {
     el.textContent = value;
 });`;
 
+export const displayTextParams: MethodParam[] = [
+  { name: 'style', type: 'string', desc: '"normal", "heading" or "code". Default is "normal".' },
+  { name: 'tooltip', type: 'string|bool', desc: 'Shown on hover. `true` reuses the property name.' },
+];
+
+export const displayTextSnippet = `const settings = {
+    title: 'Heading',
+    copy: 'Lorem ipsum dolor sit amet',
+    code: 'x = 42',
+};
+
+gui.displayText(settings, 'title', { style: 'heading' });
+gui.displayText(settings, 'copy');
+gui.displayText(settings, 'code', { style: 'code' });
+`;
+
 export const toggleParams: MethodParam[] = [
   { name: 'label', type: 'string', desc: 'Displayed label. Defaults to the property name.' },
   { name: 'tooltip', type: 'string|bool', desc: 'Shown on hover. `true` reuses the label.' },
